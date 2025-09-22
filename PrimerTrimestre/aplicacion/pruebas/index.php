@@ -1,5 +1,5 @@
 <?php
-include_once(dirname(__FILE__) . "/cabecera.php");
+include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 // Dibuja la plantilla de la vista
 inicioCabecera("APLICACION PRUEBA");
@@ -10,17 +10,15 @@ inicioCuerpo("APLICACION PRUEBA");
 cuerpo();
 finCuerpo();
 
-
-
 // **********************************************************
 
-function cabecera() 
-{}
-//vista
+function cabecera() {}
+
+
 function cuerpo()
 {
 ?>
-    ESTAS EN EL INDEX
+    <a href="sintaxisBasica.php">Sintaxis Básica</a>
 <?php
 
 }
