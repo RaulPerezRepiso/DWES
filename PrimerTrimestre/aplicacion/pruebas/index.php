@@ -2,11 +2,11 @@
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 // Dibuja la plantilla de la vista
-inicioCabecera("APLICACION PRUEBA");
+inicioCabecera("PRUEBAS");
 cabecera();
 finCabecera();
 
-inicioCuerpo("APLICACION PRUEBA");
+inicioCuerpo("PRUEBAS");
 cuerpo();
 finCuerpo();
 
