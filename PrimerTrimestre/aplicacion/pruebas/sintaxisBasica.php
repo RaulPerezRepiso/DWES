@@ -4,8 +4,10 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 $var=12;
 
-$var++;
+if(isset($Var))
+$Var++;
 
+unset($var);
 
 // Dibuja la plantilla de la vista
 inicioCabecera("pruebas");
