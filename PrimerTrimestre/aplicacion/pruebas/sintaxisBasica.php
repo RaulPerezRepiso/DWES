@@ -82,17 +82,26 @@ $var1 = 125;
 
 // Constantes 
 // Menor que -1, igual que 0 y mayor que 1
-$resultado=-14<=>-12;
-$resultado=-14<=>12;
-$resultado=12<=>12;
-$resultado=-14<=>12;
+$resultado = -14 <=> -12;
+$resultado = -14 <=> 12;
+$resultado = 12 <=> 12;
+$resultado = -14 <=> 12;
 
-//El primer valor definido es el que e asigna
-$resultado=$var3??-$num??0;
+//El primer valor definido es el que se asigna
+$resultado = $var3 ?? -$num ?? 0;
 
-$var3=null;
+$var3 = null;
 
-$resultado=$var3??-$num??0;
+$resultado = $var3 ?? -$num ?? 0;
+
+// Las {} nos determinan un bloque
+if ($num > 1) {
+    $resultado = "Todo correcto";
+    $cadena = "Ok";
+}
+$num = 10;
+
+
 
 // Dibuja la plantilla de la vista
 inicioCabecera("pruebas");
