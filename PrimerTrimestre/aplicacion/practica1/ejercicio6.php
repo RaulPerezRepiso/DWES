@@ -7,8 +7,6 @@ inicioCuerpo("Ejercicio 6: Array con ForEach");
 cuerpo();
 
 function cuerpo(){
-?>
-
-<?php
+    
 }
 ?>

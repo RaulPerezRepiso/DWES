@@ -7,8 +7,6 @@ inicioCuerpo("Ejercicio 5: Rellenar Array con un contenido definido");
 cuerpo();
 
 function cuerpo(){
-?>
-
-<?php
+    
 }
 ?>

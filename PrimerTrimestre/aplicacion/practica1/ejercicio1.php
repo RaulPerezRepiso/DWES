@@ -8,10 +8,11 @@ cuerpo();
 
 function cuerpo()
 {
-    // Número base para funciones
+    echo "<h1>Funciones Matemáticas</h1>";
     $numero = 7.65;
     echo "El numero es {$numero}<br/>";
 
+    // Funciones matemáticas
     $redondeArriba = round($numero);
     echo "Primer redondeo a la alza. {$redondeArriba}<br/>";
     $redondeAbajo = floor($numero);
@@ -29,30 +30,14 @@ function cuerpo()
     $valorPi = pi();
     echo "El valor de PI es: {$valorPi}<br/>";
 
+    echo "<h1>Variables en distintas bases</h1>";
 
-    // Variables en distintas bases
-    $binario = 0b1011;      // binario (11 en decimal)
-    $octal = 075;           // octal (61 en decimal)
-    $hexadecimal = 0x1F;    // hexadecimal (31 en decimal)
-
-?>
-    <h2>Funcionamiento de las Funciones matemáticas</h2>
-    <ul>
-        <li>Valor Redondeado Arriba de <?= $numero ?> es: <?= $redondeArriba ?></li>
-        <li>Valor Redondeado Abajo de <?= $numero ?> es: <?= $redondeAbajo ?></li>
-        <li>Valor De elevar $elevar = pow(2, 3) es: <?= $elevar ?></li>
-        <li>Valor de la raiz de $raiz = sqrt(49) es: <?= $raiz ?></li>
-        <li>Valor de convertir a decimal $convertirDecimal = dechex(255) es: <?= $convertirDecimal ?></li>
-        <li>Valor de convertir nuermo a base $baseConvert = base_convert('123', 4, 8) es: <?= $baseConvert ?></li>
-        <li>Valor absoluto de $valorAbsoluto = abs(-15) es: <?= $valorAbsoluto ?></li>
-        <li>Valor de PI de $valorPi = pi() <?= $valorPi ?></li>
-    </ul>
-    <h2>Variables en distintas bases</h2>
-    <ul>
-        <li>Binario <code>0b1011</code> = <?= $binario ?> (decimal)</li>
-        <li>Octal <code>075</code> = <?= $octal ?> (decimal)</li>
-        <li>Hexadecimal <code>0x1F</code> = <?= $hexadecimal ?> (decimal)</li>
-    </ul>
-<?php
+    //Varibles en distintas bases
+    $binario = 0b1011;
+    echo "Binario de 0b1011 es: {$binario}<br>";
+    $octal = 075;
+    echo "Octal de 075 es: {$octal}<br>";
+    $hexadecimal = 0x1F;
+    echo "Hexadecimal de 0x1f es: {$hexadecimal}<br>";     
 }
 ?>

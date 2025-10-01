@@ -7,8 +7,6 @@ inicioCuerpo("Ejercicio 7: Fechas");
 cuerpo();
 
 function cuerpo(){
-?>
-
-<?php
+    
 }
 ?>
