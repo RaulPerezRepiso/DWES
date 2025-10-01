@@ -10,31 +10,42 @@ function cuerpo()
 {
     // Número base para funciones
     $numero = 7.65;
+    echo "El numero es {$numero}<br/>";
 
     $redondeArriba = round($numero);
+    echo "Primer redondeo a la alza. {$redondeArriba}<br/>";
     $redondeAbajo = floor($numero);
+    echo "Primer redondeo a la baja. {$redondeAbajo}<br/>";
     $elevar = pow(2, 3);
+    echo "El resultado de elevaro 2^3 es: {$elevar}<br/>";
     $raiz = sqrt(49);
+    echo "El resultado de la raiz de 49 es: {$raiz}<br/>";
     $convertirDecimal = dechex(255);
+    echo "Convertir 255 de Decimal a Hexadecimal es: {$convertirDecimal}<br/>";
     $baseConvert = base_convert('123', 4, 8);
+    echo "El valor de: {$baseConvert}<br/>";
     $valorAbsoluto = abs(-15);
+    echo "El valor absoluto de -15 es: {$valorAbsoluto}<br/>";
     $valorPi = pi();
+    echo "El valor de PI es: {$valorPi}<br/>";
 
-       // Variables en distintas bases
+
+    // Variables en distintas bases
     $binario = 0b1011;      // binario (11 en decimal)
     $octal = 075;           // octal (61 en decimal)
     $hexadecimal = 0x1F;    // hexadecimal (31 en decimal)
+
 ?>
     <h2>Funcionamiento de las Funciones matemáticas</h2>
     <ul>
-        <li>Valor Redondeado Arriba de <?=$numero?> es: <?= $redondeArriba?></li>
-        <li>Valor Redondeado Abajo de <?=$numero?> es: <?= $redondeAbajo?></li>
-        <li>Valor De elevar  $elevar = pow(2, 3) es: <?= $elevar?></li>
-        <li>Valor de la raiz de $raiz = sqrt(49) es: <?= $raiz?></li>
-        <li>Valor de convertir a decimal $convertirDecimal = dechex(255) es: <?= $convertirDecimal?></li>
-        <li>Valor de convertir nuermo a base $baseConvert = base_convert('123', 4, 8) es: <?= $baseConvert?></li>
-        <li>Valor absoluto de  $valorAbsoluto = abs(-15) es: <?= $valorAbsoluto?></li>
-        <li>Valor de PI de  $valorPi = pi() <?= $valorPi?></li>
+        <li>Valor Redondeado Arriba de <?= $numero ?> es: <?= $redondeArriba ?></li>
+        <li>Valor Redondeado Abajo de <?= $numero ?> es: <?= $redondeAbajo ?></li>
+        <li>Valor De elevar $elevar = pow(2, 3) es: <?= $elevar ?></li>
+        <li>Valor de la raiz de $raiz = sqrt(49) es: <?= $raiz ?></li>
+        <li>Valor de convertir a decimal $convertirDecimal = dechex(255) es: <?= $convertirDecimal ?></li>
+        <li>Valor de convertir nuermo a base $baseConvert = base_convert('123', 4, 8) es: <?= $baseConvert ?></li>
+        <li>Valor absoluto de $valorAbsoluto = abs(-15) es: <?= $valorAbsoluto ?></li>
+        <li>Valor de PI de $valorPi = pi() <?= $valorPi ?></li>
     </ul>
     <h2>Variables en distintas bases</h2>
     <ul>
