@@ -11,7 +11,7 @@ define("FILAS", 5);
 
 // Crear el array usando bucles for
 $array = [];
-for ($i = 1; $i <= 5; $i++) {
+for ($i = 1; $i <= FILAS; $i++) {
     $fila = [];
     for ($j = 1; $j <= $i; $j++) {
         $fila[] = $i;

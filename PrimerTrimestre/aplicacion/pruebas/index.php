@@ -18,7 +18,9 @@ function cabecera() {}
 function cuerpo()
 {
 ?>
-    <a href="sintaxisBasica.php">Sintaxis Básica</a>
+    <a href="sintaxisBasica.php">Sintaxis Básica</a><br>
+    <a href="arrays.php">Arrays</a><br>
+    <a href="arrays.php">Fechas</a><br>
 <?php
 
 }
