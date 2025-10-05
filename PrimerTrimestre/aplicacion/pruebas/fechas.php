@@ -1,6 +1,13 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 
+$ubicacion = [
+    "Index Principal" => "/index.php",
+    "Pruebas" => "/aplicacion/pruebas/index.php",
+    "Fechas" => "/aplicacion/pruebas/fechas.php"
+];
+$GLOBALS['ubicacion'] = $ubicacion;
+
 // Dibuja la plantilla de la vista
 inicioCabecera("pruebas");
 cabecera();

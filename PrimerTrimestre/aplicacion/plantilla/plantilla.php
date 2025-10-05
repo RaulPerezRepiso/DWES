@@ -33,8 +33,7 @@ function inicioCabecera(string $titulo)
         <link rel="shortcut icon" href="/favicon.ico">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-        <link rel="stylesheet" type="text/css"
-            href="/estilos/base.css">
+        <link rel="stylesheet" type="text/css" href="../../estilos/base.css">
     <?php
 }
 function finCabecera()
@@ -60,13 +59,12 @@ function inicioCuerpo(string $cabecera)
             </div>
             <div id="barraMenu">
                 <ul>
-                    <li><a href="/index.php">Inicio</a></li>
-                    <li><a href="/aplicacion/pruebas/index.php">Pruebas</a></li>
-                    <li><a href="/aplicacion/practica1/index.php">Practica_1</a></li>
+                    <?php
+                    if (isset($GLOBALS['ubicacion'])) {
+                        mostrarBarraUbicacion($GLOBALS['ubicacion']);
+                    }
+                    ?>
                 </ul>
-            </div>
-
-            <div>
             <?php
         }
         function finCuerpo()
@@ -78,7 +76,7 @@ function inicioCuerpo(string $cabecera)
             <footer>
                 <hr width="90%" />
                 <div>
-                    &copy; Copyright by Profesor
+                    &copy; Copyright by Rául Pérez Repiso
                 </div>
             </footer>
         </div>
@@ -86,4 +84,21 @@ function inicioCuerpo(string $cabecera)
 
     </html>
 <?php
+        }
+        function mostrarBarraUbicacion(array $ubicacion)
+        {
+            echo "<nav class='barraModdle'>";
+            $total = count($ubicacion);
+            $contador = 0;
+
+            foreach ($ubicacion as $nombre => $url) {
+                $contador++;
+                if ($contador < $total) {
+                    echo "<a href='{$url}'>{$nombre}</a> &raquo; ";
+                } else {
+                    echo "<span>{$nombre}</span>";
+                }
+            }
+
+            echo "</nav><br>";
         }

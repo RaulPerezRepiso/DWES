@@ -1,5 +1,13 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
+
+$ubicacion = [
+    "Index Principal" => "/index.php",
+    "Pruebas" => "/aplicacion/pruebas/index.php",
+    "Sintaxis Básica" => "/aplicacion/pruebas/sintaxisBasica.php"
+];
+$GLOBALS['ubicacion'] = $ubicacion;
+
 // Controlador
 $var = 12;
 

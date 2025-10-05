@@ -1,7 +1,16 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 
+// Definir la barra de ubicación
+$ubicacion = [
+    "Index Principal" => "../../index.php",
+    "Relación I: arrays, fechas, librería math" => "./index.php",
+    "Ejercicio 2" => "ejercicio2.php"
+];
+$GLOBALS['ubicacion'] = $ubicacion;
 inicioCabecera("EJERCICO_2");
+
+inicioCuerpo("Ejercicio 2: Lanzamiento de un dado");
 
 // Lanzamiento de dado 6 veces
 $lanzamientos6 = [];
@@ -18,8 +27,9 @@ for ($i = 0; $i < $num_lanzamientos; $i++) {
     $cara = mt_rand(1, 6);
     $conteoCaras[$cara]++;
 }
-inicioCuerpo("Ejercicio 2: Lanzamiento de un dado");
+
 cuerpo($lanzamientos6, $num_lanzamientos, $conteoCaras);
+finCuerpo();
 ?>
 
 <?php

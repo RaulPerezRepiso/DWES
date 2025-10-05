@@ -1,10 +1,25 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 
+// Definir la barra de ubicación
+$ubicacion = [
+    "Index Principa" => "../../index.php",
+    "Relación I: arrays, fechas, librería math" => "./index.php",
+    "Ejercicio 1" => "ejercicio1.php"
+];
+$GLOBALS['ubicacion'] = $ubicacion;
+
 inicioCabecera("EJERCICO_1");
+cabecera();
+finCabecera();
 
 inicioCuerpo("Ejercicio 1: Funciones Matemáticas");
 cuerpo();
+finCuerpo();
+
+function cabecera()
+{
+}
 
 function cuerpo()
 {
@@ -38,6 +53,5 @@ function cuerpo()
     $octal = 075;
     echo "Octal de 075 es: {$octal}<br>";
     $hexadecimal = 0x1F;
-    echo "Hexadecimal de 0x1f es: {$hexadecimal}<br>";     
+    echo "Hexadecimal de 0x1f es: {$hexadecimal}<br>";
 }
-?>
