@@ -8,23 +8,15 @@ $ubicacion = [
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
-// Dibuja la plantilla de la vista
-inicioCabecera("pruebas");
-cabecera();
-finCabecera();
-
-inicioCuerpo("2DAW APLICACIÓN");
-cuerpo($dat);
-finCuerpo();
 // **********************************************************
-/* $valor[0] = 18;
+$valor[0] = 18;
 $valor[1] = "Hola";
 $valor[2] = true;
 $valor[3] = 3.4;
 $valor[5] = 25;
 $valor["primera"] = "esta es la primera posición del Array";
 
-$valor[] = 100; */
+$valor[] = 100;
 
 /* for ($cont=0; $cont<=$cont($valor); $cont++){
     $aux=$valor[$cont];
@@ -49,10 +41,22 @@ while (key($capital) != NULL) {
     next($capital);
 } */
 
+$array = $valor;
+$aux = end($valor); // corregido: accede al último valor sin warning
+
 $dat = [
     "array" => $array,
     "aux" => $aux
 ];
+
+// Dibuja la plantilla de la vista
+inicioCabecera("pruebas");
+cabecera();
+finCabecera();
+
+inicioCuerpo("2DAW APLICACIÓN");
+cuerpo($dat);
+finCuerpo();
 
 function cabecera() {}
 
@@ -61,10 +65,9 @@ function cuerpo(array $datos)
 ?>
     Estas en pruebas de sintaxis básica
 <?php
-    foreach ($datos["array"]as $indice=>$valor)
-        echo "en el array posocion $indice, valor $valor<br>".PHP_EOL;
+    foreach ($datos["array"] as $indice => $valor)
+        echo "En el array posición $indice, valor $valor<br>" . PHP_EOL;
 
-    echo "la variable auxiliar vale {$datos["aux"]}<br>";
-
+    echo "La variable auxiliar vale {$datos["aux"]}<br>";
 }
 ?>

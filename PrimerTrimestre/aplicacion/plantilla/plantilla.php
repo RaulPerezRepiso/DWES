@@ -65,40 +65,40 @@ function inicioCuerpo(string $cabecera)
                     }
                     ?>
                 </ul>
-            <?php
-        }
-        function finCuerpo()
-        {
-            ?>
-                <br />
-                <br />
             </div>
-            <footer>
-                <hr width="90%" />
-                <div>
-                    &copy; Copyright by Rául Pérez Repiso
-                </div>
-            </footer>
+        <?php
+    }
+    function finCuerpo()
+    {
+        ?>
+            <br />
+            <br />
+        <footer>
+            <hr width="90%" />
+            <div>
+                &copy; Copyright by Rául Pérez Repiso
+            </div>
+        </footer>
         </div>
     </body>
 
     </html>
 <?php
-        }
-        function mostrarBarraUbicacion(array $ubicacion)
-        {
-            echo "<nav class='barraModdle'>";
-            $total = count($ubicacion);
-            $contador = 0;
+    }
+    function mostrarBarraUbicacion(array $ubicacion)
+    {
+        echo "<nav class='barraModdle'>";
+        $total = count($ubicacion);
+        $contador = 0;
 
-            foreach ($ubicacion as $nombre => $url) {
-                $contador++;
-                if ($contador < $total) {
-                    echo "<a href='{$url}'>{$nombre}</a> &raquo; ";
-                } else {
-                    echo "<span>{$nombre}</span>";
-                }
+        foreach ($ubicacion as $nombre => $url) {
+            $contador++;
+            if ($contador < $total) {
+                echo "<a href='{$url}'>{$nombre}</a> &raquo; ";
+            } else {
+                echo "<span>{$nombre}</span>";
             }
-
-            echo "</nav><br>";
         }
+
+        echo "</nav><br>";
+    }

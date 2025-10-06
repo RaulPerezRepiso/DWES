@@ -3,8 +3,8 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 // Definir la barra de ubicación
 $ubicacion = [
-    "Index Principa" => "../../index.php",
-    "Relación I: arrays, fechas, librería math" => "./index.php",
+    "Index Principal" => "../../index.php",
+    "Relación I:" => "./index.php",
     "Ejercicio 1" => "ejercicio1.php"
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
