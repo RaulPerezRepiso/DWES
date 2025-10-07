@@ -35,5 +35,4 @@ function cuerpo()
         <li><a href="/aplicacion/pruebas/index.php">Pruebas</a></li>
     </ul>
 <?php
-
 }

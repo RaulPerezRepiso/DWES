@@ -12,6 +12,13 @@ inicioCabecera("EJERCICO_2");
 
 inicioCuerpo("Ejercicio 2: Lanzamiento de un dado");
 
+$cadena = "Está la niña en casa";
+$array = str_split($cadena, 1);
+
+foreach($array as $valor){
+    echo $valor;
+}
+
 
 cuerpo();
 finCuerpo();
