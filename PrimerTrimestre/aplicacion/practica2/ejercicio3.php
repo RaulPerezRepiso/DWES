@@ -9,15 +9,27 @@ $ubicacion = [
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
+$caracteres = array_merge(range('0', '9'), range('a', 'z'), range('A', 'Z'));
+
 inicioCabecera("EJERCICO_1");
 
 inicioCuerpo("Ejercicio 3: Arrays");
 
 
-cuerpo();
+
+cuerpo($caracteres);
 finCuerpo();
 
-function cuerpo()
+
+function cuerpo($caracteres)
 {
- 
+?>
+    <h2>Rellenar la cadena con 20 caracteres aleatorios</h2>
+    <?php
+    for ($i = 0; $i < 20; $i++) {
+        $aux = mt_rand(0, count($caracteres)-1);
+        echo $caracteres[$aux];;
+    }
+    ?>
+<?php
 }

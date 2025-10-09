@@ -36,6 +36,7 @@ function cuerpo($cadena)
             <?= str_repeat("&nbsp;", $i) . mb_substr($cadena, $i, 1) ?>
         </p>
     <?php } ?>
+
     <h2>Prueba substr</h2>
     <?php for ($i = 0; $i < strlen($cadena); $i++) { ?>
         <p>
@@ -45,10 +46,30 @@ function cuerpo($cadena)
 
     <!--Cadena inversas spliteadas  -->
     <h2>mb_substr con orden inverso y alteración de cadena</h2>
-    <?php for ($i = mb_strlen($cadena); mb_strlen($cadena) >= 0; $i--) { ?>
+    <?php
+    $len = mb_strlen($cadena);
+    $char = mb_substr($cadena, $len - 1 - $i, 1);
+    for ($i = 0; $i < $len; $i++) {
+        $char = mb_substr($cadena, $len - 1 - $i, 1); ?>
         <p>
-            <?= str_repeat("&nbsp;", $i) . mb_substr($cadena, $i, 1) ?>
+            <?= str_repeat("&nbsp;", $i) . ($i % 2 == 0 ? mb_strtoupper($char) : mb_strtolower($char)) ?>
         </p>
     <?php } ?>
+
+    <h2>Seperar la cadena en partes</h2>
+    <?php
+    // Explode busca lo que queremos dentro de una cadena y crear en array y lo guarda
+    $res = explode("a", $cadena);
+    foreach ($res as $clave => $valor) { ?>
+        <p>
+            <?= "Parte: " . $clave . " " . $valor ?>
+        </p>
+    <?php } ?>
+
+    <h2>Cambia el String niña por Mujer</h2>
+    <!-- Replace busca la cadena que le damos, lo que queremos cambiar y donde -->
+    <p>
+        <?= str_replace("niña", "niña/mujer", $cadena) ?>
+    </p>
 <?php
 }

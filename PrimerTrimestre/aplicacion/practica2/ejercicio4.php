@@ -9,10 +9,11 @@ $ubicacion = [
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
+
+
 inicioCabecera("EJERCICO_1");
 
 inicioCuerpo("Ejercicio 4: Array de valores");
-
 
 cuerpo();
 finCuerpo();
