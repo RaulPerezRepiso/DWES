@@ -29,6 +29,7 @@ function cuerpo()
         <li> <a href="sintaxisBasica.php">Sintaxis Básica</a></li>
         <li> <a href="arrays.php">Arrays</a></li>
         <li> <a href="fechas.php">Fechas</a></li>
+        <li> <a href="string.php">String</a></li>
     </ul>
 <?php
 
