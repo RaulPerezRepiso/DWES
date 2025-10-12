@@ -9,6 +9,7 @@ $ubicacion = [
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
+// Cadena HTML con HEREDOC
 $cadena = <<<HTML
     <div class="contenedor">
     <p>Este es un párrafo con número 42 y otro número 123456.</p>
@@ -21,6 +22,7 @@ $cadena = <<<HTML
 </div>
 HTML;
 
+// Buscar etiquteas, numero y emails
 $regex_etiquetas = '/<[^>]+>/';
 $regex_numeros = '/\d+/';
 $regex_emails = '/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/';

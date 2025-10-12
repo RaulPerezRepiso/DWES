@@ -9,11 +9,12 @@ $ubicacion = [
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
+// Cadena a modificar
 $cadena = "Está la niña en casa";
 
 inicioCabecera("EJERCICO_2");
 
-inicioCuerpo("Ejercicio 2: Lanzamiento de un dado");
+inicioCuerpo("Ejercicio 2: Mostrar cadenas");
 
 cuerpo($cadena);
 finCuerpo();
@@ -58,11 +59,12 @@ function cuerpo($cadena)
 
     <h2>Seperar la cadena en partes</h2>
     <?php
+    
     // Explode busca lo que queremos dentro de una cadena y crear en array y lo guarda
     $res = explode("a", $cadena);
     foreach ($res as $clave => $valor) { ?>
         <p>
-            <?= "Parte: " . $clave . " " . $valor ?>
+            <?= "Parte: " . ($clave +1). ". " . $valor ?>
         </p>
     <?php } ?>
 

@@ -9,6 +9,7 @@ $ubicacion = [
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
+// Números a formatear
 $num1 = 17.5;
 $num2 = 379987.24;
 
@@ -31,6 +32,7 @@ finCuerpo();
 function cuerpo($valor1_final, $valor2_final)
 {
 ?>
+    <!-- Mostramos los valores en un pre para que se vean los espacios -->
     <h2>Números mostrados con 15 caracteres totales</h2>
  
     <h3>Primer valor con 0</h3>

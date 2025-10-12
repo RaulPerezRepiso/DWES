@@ -4,7 +4,7 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 // Barra de ubicación para la página índice
 $ubicacion = [
     "Index Principal" => "/index.php",
-    "Relación II:" => "/aplicacion/practica1/index.php",
+    "Relación II:" => "#",
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
