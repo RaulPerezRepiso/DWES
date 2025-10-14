@@ -5,7 +5,7 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 $ubicacion = [
     "Index Principa" => "../../index.php",
     "Relación III:" => "./index.php",
-    "Ejercicio 1" => "ejercicio1.php"
+    "Ejercicio 1" => "#"
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 

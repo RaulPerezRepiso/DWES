@@ -12,6 +12,8 @@ $GLOBALS['ubicacion'] = $ubicacion;
 // Caracteres para generar la constraseña
 $caracteres = array_merge(range('0', '9'), range('a', 'z'), range('A', 'Z'));
 
+
+
 inicioCabecera("EJERCICO_1");
 
 inicioCuerpo("Ejercicio 3: Arrays");
@@ -30,8 +32,17 @@ function cuerpo($caracteres)
     <?php
     for ($i = 0; $i < 20; $i++) {
         $aux = mt_rand(0, count($caracteres) - 1);
-        echo $caracteres[$aux];;
+        echo $caracteres[$aux];
     }
+    ?>
+    <?php
+
+    // Coger valores concretos con su código ASCII
+    $caracteres2 = "";
+    for ($i = 0; $i < 20; $i++) {
+        $caracteres2 .= chr(mt_rand(48, 112));
+    }
+    echo "<br>".$caracteres2;
     ?>
 <?php
 }
