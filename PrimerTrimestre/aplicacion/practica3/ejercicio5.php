@@ -1,5 +1,6 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
+include_once(dirname(__FILE__) . "/libreria.php");
 
 // Definir la barra de ubicación
 $ubicacion = [
@@ -11,12 +12,14 @@ $GLOBALS['ubicacion'] = $ubicacion;
 
 inicioCabecera("EJERCICO_1");
 
-inicioCuerpo("Ejercicio 5: Rellenar Array con un contenido definido");
+inicioCuerpo("Ejercicio 5: Función hacerOperacion()");
 
 
 cuerpo();
 finCuerpo();
 function cuerpo()
 {
-
+    echo "<br>".hacerOperacion("resta", 2, 3);
+    echo "<br>".hacerOperacion("suma", 2, 3);
+    echo "<br>".hacerOperacion("multiplicacion", 2, 3);
 }
