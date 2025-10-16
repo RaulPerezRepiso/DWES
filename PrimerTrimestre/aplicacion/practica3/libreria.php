@@ -57,7 +57,8 @@ function generarCadenas(int $num): bool
 ?>
 
 <!-- /**
- * Undocumented function
+* Función recibe al menos tres parámetros. El primero (entero) es el
+* tipo de operación. Los demás son valores numéricos (los operandos).
 * 
 * Ejercico 3
 *
@@ -98,7 +99,9 @@ function operaciones(int $num, array $op): int
 ?>
 
 <!-- /**
-* Undocumented function
+* Función recibe como parámetros tres números (enteros) y devuelve la
+* suma de los tres valores en el primer parámetro y como resultado de la función el producto de los
+* tres valores
 *
 * Ejercico 4
 *
@@ -119,8 +122,15 @@ function devuelve(int &$valor, int $num1 = 4, int $num2 = 10): int
 
 <!-- /**
 *
+* Funciones suma, resta y multiplicacion que reciben cada una dos parámetros
+* numéricos (entero) y que devuelven el resultado de la operación que indica su nombre sobre los
+* parámetros.
+*
 * Ejercico 5
 *
+* @param [type] $num1
+* @param [type] $num2
+* @return string|false
 */ -->
 <?php
 
@@ -152,27 +162,37 @@ function hacerOperacion(string $cadena, int $num1, int $num2): string|false
 
 <!-- /**
 *
+* Funcion que recibe tres operandos (entero, entero y callable) y que
+* devuelve un entero que es el resultado de llamar al parámetro callback con los otros parámetros.
+*
 * Ejercicio 6
 *
 */ -->
 <?php
-function llamadaAFuncino(int $num1, int $num2) 
+function llamadaAFuncino(int $num1, int $num2, callable $callable): int
 {
 
-    return "";
+    return $callable($num1, $num2);
 }
 ?>
 
 
 <!-- /**
 *
+* Función se le pasa un array y lo ordena mediante una llamada a usort, 
+* al que se indicará como función callback una función anónima que ordenará en orden descendente
+* según el número de caracteres de cada elemento.
+*
 * Ejercicio 7
 *
+* @param array $array 
+* @return array Ya ordenado
 */ -->
 <?php
-function ordenar()
+function ordenar(array $array): array
 {
+    usort($array, fn($a, $b) => strlen($b) - strlen($a));
 
-    return "";
+    return $array;
 }
 ?>

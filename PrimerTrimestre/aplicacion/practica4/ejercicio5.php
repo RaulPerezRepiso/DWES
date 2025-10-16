@@ -5,7 +5,7 @@ include("libreria.php");
 // Definir la barra de ubicación
 $ubicacion = [
     "Index Principal" => "../../index.php",
-    "Relación III:" => "./index.php",
+    "Relación IV:" => "./index.php",
     "Ejercicio 5" => "#"
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
@@ -19,7 +19,5 @@ cuerpo();
 finCuerpo();
 function cuerpo()
 {
-    echo "<br>".hacerOperacion("resta", 2, 3);
-    echo "<br>".hacerOperacion("suma", 2, 3);
-    echo "<br>".hacerOperacion("multiplicacion", 2, 3);
+    
 }

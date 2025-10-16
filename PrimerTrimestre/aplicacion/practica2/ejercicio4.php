@@ -19,7 +19,7 @@ $formateado2 = number_format($num2, 2, ',', '.'); // "379.987,24"
 
 // Ajuste a 15 caracteres con relleno
 $valor1_final = str_pad($formateado1, 15, '0', STR_PAD_LEFT);
-$valor2_final = str_pad($formateado2, 15, ' ', STR_PAD_RIGHT);
+$valor2_final = str_pad($formateado2, 15, ' ', STR_PAD_LEFT);
 
 
 inicioCabecera("EJERCICO_1");

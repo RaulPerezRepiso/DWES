@@ -1,26 +1,25 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
-include("libreria.php");
 
 // Definir la barra de ubicación
 $ubicacion = [
     "Index Principal" => "../../index.php",
-    "Relación III:" => "./index.php",
-    "Ejercicio 7" => "#"
+    "Relación IV:" => "./index.php",
+    "Ejercicio 1" => "#"
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
 
 inicioCabecera("EJERCICO_1");
+cabecera();
+finCabecera();
 
-inicioCuerpo("Ejercicio 7: Función ordenar()");
-
-
+inicioCuerpo("Ejercicio 1: Función cuentaVeces()");
 cuerpo();
 finCuerpo();
+
+function cabecera() {}
+
 function cuerpo()
 {
-    $array = ["hola", "adios", "cumpleaños", "uno"];
-    foreach (ordenar($array) as $valor) {
-        echo "<br>" . $valor;
-    }
+   
 }
