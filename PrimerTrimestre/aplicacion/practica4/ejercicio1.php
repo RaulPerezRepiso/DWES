@@ -21,5 +21,7 @@ function cabecera() {}
 
 function cuerpo()
 {
-   
+   $instrumentoBase = new InstrumentoBase();
+   echo $instrumentoBase;
+
 }
