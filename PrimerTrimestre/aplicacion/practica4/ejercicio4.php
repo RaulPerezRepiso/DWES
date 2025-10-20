@@ -1,6 +1,5 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
-include("libreria.php");
 
 // Definir la barra de ubicación
 $ubicacion = [

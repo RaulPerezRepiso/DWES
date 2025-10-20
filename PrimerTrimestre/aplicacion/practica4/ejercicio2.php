@@ -1,6 +1,5 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
-include("libreria.php");
 
 // Definir la barra de ubicación
 $ubicacion = [
@@ -11,7 +10,7 @@ $ubicacion = [
 $GLOBALS['ubicacion'] = $ubicacion;
 inicioCabecera("EJERCICO_2");
 
-inicioCuerpo("Ejercicio 2: Función generarCadena()");
+inicioCuerpo("Ejercicio 2: Iterator");
 
 
 cuerpo();
