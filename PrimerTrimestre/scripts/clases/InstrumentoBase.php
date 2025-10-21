@@ -51,6 +51,16 @@ abstract class InstrumentoBase
     protected static int $_cont = 0;
     protected int $_ordenCreacion;
 
+    public function setOrdenCreacion(string $valor): void
+    {
+        $this->_ordenCreacion = $valor;
+    }
+
+    public function getOrdenCreacion(): int
+    {
+        return $this->_ordenCreacion;
+    }
+
 
     // Definición del constructor
     public function __construct(string $_descripcion = "Descripcioón por defecto", int $_edad = 10)
@@ -58,12 +68,12 @@ abstract class InstrumentoBase
         $this->_descripcion = $_descripcion;
         $this->_edad = $_edad;
         self::$_cont++;
-        $this->_ordenCreacion =self::$_cont;
+        $this->_ordenCreacion = self::$_cont;
     }
 
     // Definición del toString
     public function __toString(): string
     {
-        return "Instrumento con descripción:  {$this->_descripcion}, instancia {$this->_ordenCreacion} de un total de " .self::$_cont.  ". Tiene  {$this->_edad} años. La clase es ". get_class($this) ."<br>";
+        return "Instrumento con descripción:  {$this->_descripcion}, instancia {$this->_ordenCreacion} de un total de " . self::$_cont .  ". Tiene  {$this->_edad} años. La clase es " . get_class($this) . "<br>";
     }
 }

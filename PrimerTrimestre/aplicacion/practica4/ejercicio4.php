@@ -19,5 +19,10 @@ finCuerpo();
 
 function cuerpo()
 {
-    
+    $array = ["edad" => 12, "material" => "metal"];
+    $obj = Flauta::crearDesdeArray($array);
+    $obj2 = clone $obj;
+
+    echo $obj . "<br>";
+    echo $obj2;
 }
