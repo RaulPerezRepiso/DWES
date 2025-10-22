@@ -76,4 +76,13 @@ abstract class InstrumentoBase
     {
         return "Instrumento con descripción:  {$this->_descripcion}, instancia {$this->_ordenCreacion} de un total de " . self::$_cont .  ". Tiene  {$this->_edad} años. La clase es " . get_class($this) . "<br>";
     }
+
+    //Deshabilitar la sobre carga (ACTIVA POR DEFECTO)
+    public function __set(string $name, mixed $value):void{}
+
+    public function __get($name):mixed{return 0;}
+
+    public function __isset($name):bool{return true;}
+
+    public function __unset($name):void{}
 }

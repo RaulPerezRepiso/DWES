@@ -18,5 +18,6 @@ cuerpo();
 finCuerpo();
 function cuerpo()
 {
-    
+    $obj = new Persona();
+    echo $obj;
 }
