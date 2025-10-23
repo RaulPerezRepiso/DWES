@@ -30,6 +30,7 @@ function cuerpo()
         <li><a href="/aplicacion/practica2/index.php">Relación II</a></li>
         <li><a href="/aplicacion/practica3/index.php">Relación III</a></li>
         <li><a href="/aplicacion/practica4/index.php">Relación IV</a></li>
+        <li><a href="/aplicacion/practica5/index.php">Relación V</a></li>
     </ul>
     <h1>Pruebas</h1>
     <ul>

@@ -18,5 +18,13 @@ cuerpo();
 finCuerpo();
 function cuerpo()
 {
-  
+    echo "Valor de Fibonacci de 10 llamando a una nueva SerieFibonaccie:<br>";
+    foreach (new SerieFibonacci(10) as $valor) {
+        echo "$valor&nbsp;";
+    }
+
+    echo "<br><br>Valor de Fibonacci de 10 llamando al metodo fFibonacci de la SerieFibonaccie:<br>";
+    foreach (SerieFibonacci::fFibonacci(10) as $valor) {
+        echo "$valor&nbsp;";
+    }
 }
