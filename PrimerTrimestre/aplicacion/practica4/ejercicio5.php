@@ -18,6 +18,14 @@ cuerpo();
 finCuerpo();
 function cuerpo()
 {
-    $obj = new Persona();
+    // Obtener todos los casos posibles del enum EstadoCivil
+    $estados = EstadoCivil::cases();
+
+    // Seleccionar uno aleatoriamente
+    $estadoAleatorio = $estados[array_rand($estados)];
+
+    // Mostrarlo llamando a registrarPersona dandole parámetros para todo y el estado aleatorio
+    $obj = Persona::registrarPersona("Pepe", "12/07/2002", "Calle fuente albilla", "Antequera", $estadoAleatorio);
     echo $obj;
+
 }

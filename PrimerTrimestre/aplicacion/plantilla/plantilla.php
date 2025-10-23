@@ -52,6 +52,16 @@ function inicioCuerpo(string $cabecera)
 
             <header>
                 <h1 id="titulo"><?php echo $cabecera; ?></h1>
+                <div id="menuPrincipal">
+                    <ul>
+                        <li><a href="/index.php">Inicio</a></li>
+                        <li><a href="/aplicacion/practica1/index.php">Práctica 1</a></li>
+                        <li><a href="/aplicacion/practica2/index.php">Práctica 2</a></li>
+                        <li><a href="/aplicacion/practica3/index.php">Práctica 3</a></li>
+                        <li><a href="/aplicacion/practica4/index.php">Práctica 4</a></li>
+                        <li><a href="/aplicacion/pruebas/index.php">Pruebas</a></li>
+                    </ul>
+                </div>
             </header>
 
             <div id="barraLogin">
@@ -73,18 +83,21 @@ function inicioCuerpo(string $cabecera)
         ?>
             <br />
             <br />
-        <footer>
-            <hr width="90%" />
-            <div>
-                &copy; Copyright by Rául Pérez Repiso
-            </div>
-        </footer>
+            <footer>
+                <hr width="90%" />
+                <div>
+                    <strong>&copy; Copyright by Rául Pérez Repiso</strong>
+                </div>
+            </footer>
         </div>
     </body>
 
     </html>
 <?php
     }
+
+    function mostrarBarra(array $ubicacion) {}
+
     function mostrarBarraUbicacion(array $ubicacion)
     {
         echo "<nav class='barraModdle'>";

@@ -23,13 +23,13 @@ body {
 
 /* Cabecera */
 #cabecera {
-    background-color: #90caf9;
-    padding: 25px 30px;
-    color: #0d47a1;
+    background-color: #64b5f6; /* Igual que el pie */
+    padding: 20px 30px;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #64b5f6;
+    border-bottom: 2px solid #42a5f5;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
@@ -223,4 +223,41 @@ li:hover {
 ul {
     list-style-type: none;
     margin-left: -25px;
+}
+
+#menuPrincipal {
+    margin-left: auto;
+    margin-bottom: 1%;
+}
+
+#menuPrincipal ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menuPrincipal li {
+    background-color: #f2f9ff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#menuPrincipal li:hover {
+    background-color: #e0f0ff;
+    transform: translateY(-2px);
+}
+
+#menuPrincipal a {
+    text-decoration: none;
+    color: #0d47a1;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+#menuPrincipal a:hover {
+    color: #0078f0;
 }
