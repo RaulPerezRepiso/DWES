@@ -97,8 +97,6 @@ function inicioCuerpo(string $cabecera)
 <?php
     }
 
-    function mostrarBarra(array $ubicacion) {}
-
     function mostrarBarraUbicacion(array $ubicacion)
     {
         echo "<nav class='barraModdle'>";
