@@ -55,6 +55,9 @@ class Persona
         $this->_estado = $valor;
     }
 
+    /**
+     * Constructor al que no le llega nada y carga valores por defecto
+     */
     private function __construct()
     {
         $this->_nombre = "Prueba";
@@ -64,6 +67,16 @@ class Persona
         $this->_estado = EstadoCivil::Soltero;
     }
 
+    /**
+     * Función estatica que llama a la clase Persona para rellenarla
+     *
+     * @param [type] $_nombre
+     * @param [type] $_fecha_nacimiento
+     * @param [type] $_domicilio
+     * @param [type] $_localidad
+     * @param [type] $_estado
+     * @return static
+     */
     public static function registrarPersona($_nombre, $_fecha_nacimiento, $_domicilio, $_localidad, $_estado): static
     {
         $PersonaNueva = new Persona();
@@ -82,7 +95,11 @@ class Persona
         return $PersonaNueva;
     }
 
-    // Definición del toString
+    /**
+     *  Definición del toString
+     *
+     * @return string
+     */
     public function __toString(): string
     {
         return "{$this->_nombre} es una persona {$this->_estado->descripcion()} nacida el {$this->_fecha_nacimiento} y que vive en {$this->_localidad}";

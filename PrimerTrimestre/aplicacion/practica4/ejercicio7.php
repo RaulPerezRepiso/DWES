@@ -18,5 +18,12 @@ cuerpo();
 finCuerpo();
 function cuerpo()
 {
-    
+    $Objeto = new ClaseMisPropiedades();
+    $Objeto->propPublica = "publica";
+    $Objeto->_propPrivada="privada"; //no es valida al ser privada 
+    $Objeto->propiedad1 = 25;
+    $Objeto->propiedad2 = "cadena de texto";
+    echo "La propiedad 1 vale " . $Objeto->propiedad1 . "<br>";
+    echo "La propiedad 2 vale " . $Objeto->propiedad2 . "<br>";
+    echo $Objeto->propiedad3; // esto debería dar un error al no haber asignado previamente la propiedad
 }

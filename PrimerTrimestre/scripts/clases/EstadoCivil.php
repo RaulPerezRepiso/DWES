@@ -17,6 +17,11 @@ enum EstadoCivil: int
         return $this->value;
     }
 
+    /**
+     * Método que devuelve todos los casos que se encuentran en EstadoCivil
+     *
+     * @return array
+     */
     static function metodoEstatico(): array
     {
         return EstadoCivil::cases();

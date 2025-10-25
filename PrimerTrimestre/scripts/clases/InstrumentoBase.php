@@ -62,7 +62,12 @@ abstract class InstrumentoBase
     }
 
 
-    // Definición del constructor
+    /**
+     *  Definición del constructor con descripcion y edad cargadas por defecto
+     *
+     * @param string $_descripcion
+     * @param integer $_edad
+     */
     public function __construct(string $_descripcion = "Descripcioón por defecto", int $_edad = 10)
     {
         $this->_descripcion = $_descripcion;
@@ -71,7 +76,11 @@ abstract class InstrumentoBase
         $this->_ordenCreacion = self::$_cont;
     }
 
-    // Definición del toString
+    /**
+     * Definición del toString
+     *
+     * @return string
+     */
     public function __toString(): string
     {
         return "Instrumento con descripción:  {$this->_descripcion}, instancia {$this->_ordenCreacion} de un total de " . self::$_cont .  ". Tiene  {$this->_edad} años. La clase es " . get_class($this) . "<br>";
