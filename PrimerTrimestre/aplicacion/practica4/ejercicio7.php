@@ -26,4 +26,9 @@ function cuerpo()
     echo "La propiedad 1 vale " . $Objeto->propiedad1 . "<br>";
     echo "La propiedad 2 vale " . $Objeto->propiedad2 . "<br>";
     echo $Objeto->propiedad3; // esto debería dar un error al no haber asignado previamente la propiedad
+
+    echo "<br>Iterable recorrido con Foreach<br>";
+    foreach($Objeto as $clave => $valor){
+        echo $clave . ": $valor<br>";
+    }
 }

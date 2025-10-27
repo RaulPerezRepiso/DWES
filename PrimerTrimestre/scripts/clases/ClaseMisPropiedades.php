@@ -27,6 +27,13 @@ class ClaseMisPropiedades implements Iterator
         return null;
     }
 
+    public function __construct()
+    {
+        $this->_propPublica = null; // o cualquier valor por defecto
+        $this->_propiedades = [];   // también recomendable inicializar este array
+        $this->_cont = 0;           // inicializar el contador del Iterator
+    }
+
     /*
     * //Métodos de la clase Iterator
     *
@@ -56,7 +63,8 @@ class ClaseMisPropiedades implements Iterator
         );
     }
 
-    public function current(): mixed {
+    public function current(): mixed
+    {
         $valores = $this->getTodo();
         return array_values($valores)[$this->_cont];
     }

@@ -1,6 +1,6 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
-
+include_once("/Users/2daw/DWES/PrimerTrimestre/scripts/librerias/validacion.php");
 // Barra de ubicación para la página índice
 $ubicacion = [
     "Index Principal" => "/index.php",
@@ -24,10 +24,11 @@ function cabecera() {}
 function cuerpo()
 {
 ?>
-    <h1>Relación 2: </h1>
-    <ul>
-        <li> <a href="ejercicio1.php">Ejercicio 1</a></li>
-        <li> <a href="ejercicio2.php">Ejercicio 2</a></li>
-    </ul>
+    <h1>Relación 5: Introducción de información.</h1>
 <?php
+    $var = 1;
+    $resultado = validaEntero($var, 5, 7, 7);
+
+    echo "Resultado: " . ($resultado ? "válido" : "inválido") . "<br>";
+    echo "Valor final: $var";
 }
