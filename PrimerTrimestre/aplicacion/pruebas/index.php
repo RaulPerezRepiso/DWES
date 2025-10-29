@@ -30,6 +30,7 @@ function cuerpo()
         <li> <a href="arrays.php">Arrays</a></li>
         <li> <a href="fechas.php">Fechas</a></li>
         <li> <a href="string.php">String</a></li>
+        <li> <a href="formulario.php">Formulario</a></li>
     </ul>
 <?php
 

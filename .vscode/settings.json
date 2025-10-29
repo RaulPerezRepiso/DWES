@@ -10,5 +10,6 @@
         "statusBarItem.remoteBackground": "#060630",
         "titleBar.activeBackground": "#060630",
         "titleBar.inactiveBackground": "#06063099"
-    }
+    },
+    "liveServer.settings.port": 5501
 }
