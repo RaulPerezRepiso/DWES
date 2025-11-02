@@ -12,7 +12,7 @@
  */
 function validaEntero(int &$var, int $min, int $max, int $defecto): bool
 {
-    if (is_int($var) && $var >= $min && $var <= $max) {
+    if ($var >= $min && $var <= $max) {
         return true;
     } else {
         $var = $defecto;
@@ -32,7 +32,7 @@ function validaEntero(int &$var, int $min, int $max, int $defecto): bool
  */
 function validaReal(float &$var, float $min, float $max, float $defecto): bool
 {
-    if (is_float($var) && $var >= $min && $var <= $max) {
+    if ($var >= $min && $var <= $max) {
         return true;
     } else {
         $var = $defecto;
