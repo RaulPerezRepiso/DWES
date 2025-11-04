@@ -1,5 +1,5 @@
 <?php
-include_once(dirname(__FILE__) . "/../../cabecera.php");
+include_once(dirname(__FILE__) . "/cabecera.php");
 
 /* $ubicacion = [
     "Index Principal" => "/index.php",
@@ -7,11 +7,11 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 $GLOBALS['ubicacion'] = $ubicacion; */
 
 // Dibuja la plantilla de la vista
-inicioCabecera("2DAW TIENDA");
+inicioCabecera("Tienda Muebleando");
 cabecera();
 finCabecera();
 
-inicioCuerpo("2DAW TIENDA");
+inicioCuerpo("Tienda Muebleando");
 cuerpo();
 finCuerpo();
 

@@ -10,7 +10,7 @@ function paginaError(string $mensaje)
     echo "<br />\n";
     echo "<br />\n";
     echo "<br />\n";
-    echo "<a href='/index.php'>Ir a la pagina principal</a>\n";
+    echo "<a href='/aplicacion/principal/index.php'>Ir a la pagina principal</a>\n";
 
     finCuerpo();
 }
@@ -30,10 +30,10 @@ function inicioCabecera(string $titulo)
         <meta name="author" content="Administrador">
         <meta name="viewport" content="width=device-width; initialscale=1.0">
         <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-        <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-        <link rel="stylesheet" type="text/css" href="../../estilos/base.css">
+       
+        <!--      <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
+        <link rel="stylesheet" type="text/css" href="../../../estilos/base.css">
     <?php
 }
 function finCabecera()
@@ -51,6 +51,7 @@ function inicioCuerpo(string $cabecera)
         <div id="documento">
 
             <header>
+                <h1 id="titulo"><?php echo $cabecera ?></h1>
             </header>
 
             <div id="barraLogin">
