@@ -43,7 +43,7 @@ abstract class MueblesBase
         $this->setAnio($anio);
         $this->setFechaIniVenta($fechaIniVenta);
         $this->setFechaFinVenta($fechaFinVenta);
-        $this->materialPrincipal=self::getMaterialDescripcion($materialPrincipal);
+        $this->materialPrincipal = self::getMaterialDescripcion($materialPrincipal);
         $this->setPrecio($precio);
 
         self::$mueblesCreados++;
@@ -59,6 +59,59 @@ abstract class MueblesBase
         return self::MATERIALES_POSIBLES[$this->materialPrincipal] ?? "Desconocido";
     }
 
+    /**
+     * Método que da una lista de todas las propiedades de un mueble
+     *
+     * @return array Con todos los valores que le correspondan
+     */
+    public function dameListaPropiedades(): array
+    {
+        return [
+            "nombre",
+            "fabricante",
+            "pais",
+            "anio",
+            "fechaIniVenta",
+            "fechaFinVenta",
+            "materialPrincipal",
+            "precio"
+        ];
+    }
+
+    public function damePropiedad(string $propiedades, int $modo, mixed &$res): bool
+    {
+
+        return true;
+    }
+
+    /**
+     * Método para saber si podemos crear un nuevo mueble o no
+     *
+     * @return boolean true si se puede false si no
+     */
+    public function puedeCrear(): bool
+    {
+        $numero = self::MAXIMO_MUEBLES - self::$mueblesCreados;
+        return $numero > 0;
+    }
+
+    /**
+     * ToString
+     *
+     * @return string devuelvo la cadena con toda la información
+     */
+    public function __toString(): string
+    {
+        return "MUEBLE de clase " . get_class($this) .
+            " con nombre " . $this->getNombre() .
+            ", fabricante " . $this->getFabricante() .
+            ", fabricado en " . $this->getPais() .
+            " a partir del año " . $this->getAnio() .
+            ", vendido desde " . $this->getFechaIniVenta() .
+            " hasta " . $this->getFechaFinVenta() .
+            ", precio " . $this->getPrecio() .
+            " de material " . $this->getMaterialDescripcion();
+    }
 
     // Getter's & Setter's
     public function setNombre(string $valor): bool
