@@ -13,22 +13,22 @@ abstract class MueblesBase
     private string $nombre;
     private string $fabricante;
     private string $pais;
-    private string $anio;
+    private int $anio;
     private string $fechaIniVenta;
     private string $fechaFinVenta;
-    private int $materialPrincipal;
+    private int|string $materialPrincipal;
     private float $precio;
 
     //Constructor
     protected function __construct(
         string $nombre,
-        string $fabricante = '',
-        string $pais = 'ESPAÑA',
+        string $fabricante = "FMu",
+        string $pais = "ESPAÑA",
         int $anio = 2020,
-        string $fechaIniVenta = '01/01/2020',
-        string $fechaFinVenta = '31/12/2040',
-        int $materialPrincipal = 1,
-        float $precio = 30.0
+        string $fechaIniVenta = "01/01/2020",
+        string $fechaFinVenta = "31/12/2040",
+        int|string $materialPrincipal,
+        float $precio = 30
     ) {
         if (self::$mueblesCreados >= self::MAXIMO_MUEBLES) {
             throw new Exception("Se ha alcanzado el máximo de muebles permitidos.");
@@ -38,16 +38,27 @@ abstract class MueblesBase
             throw new Exception("Nombre inválido.");
         }
 
-        $this->setFabricante($fabricante) ?: $this->setFabricante('FMu:');
-        $this->setPais($pais) ?: $this->setPais('ESPAÑA');
-        $this->setAnio($anio) ?: $this->setAnio(2020);
-        $this->setFechaIniVenta($fechaIniVenta) ?: $this->setFechaIniVenta('01/01/2020');
-        $this->setFechaFinVenta($fechaFinVenta) ?: $this->setFechaFinVenta('31/12/2040');
-        $this->setMaterialPrincipal($materialPrincipal) ?: $this->setMaterialPrincipal(1);
-        $this->setPrecio($precio) ?: $this->setPrecio(30.0);
+        $this->setFabricante($fabricante);
+        $this->setPais($pais);
+        $this->setAnio($anio);
+        $this->setFechaIniVenta($fechaIniVenta);
+        $this->setFechaFinVenta($fechaFinVenta);
+        $this->materialPrincipal=self::getMaterialDescripcion($materialPrincipal);
+        $this->setPrecio($precio);
 
         self::$mueblesCreados++;
     }
+
+    /**
+     * Devuelve una cadena con la descripción correspondiente al material
+     *
+     * @return string
+     */
+    public function getMaterialDescripcion(): string
+    {
+        return self::MATERIALES_POSIBLES[$this->materialPrincipal] ?? "Desconocido";
+    }
+
 
     // Getter's & Setter's
     public function setNombre(string $valor): bool
@@ -66,8 +77,10 @@ abstract class MueblesBase
 
     public function setFabricante(string $valor): bool
     {
+        $valor = trim($valor);
+        if (!str_starts_with($valor, "FMu")) $valor = "FMu" . $valor;
         if (!validaCadena($valor, 30, "FMu")) return false;
-        if ($valor === 'Fmu') return false;
+        if ($valor === 'FMu') return false;
         $this->fabricante = $valor;
         return true;
     }
@@ -77,9 +90,12 @@ abstract class MueblesBase
         return $this->fabricante;
     }
 
-    public function setPais(string $valor): void
+    public function setPais(string $valor): bool
     {
+        $valor = trim($valor);
+        if (!validaCadena($valor, 20, "ESPAÑA")) return false;
         $this->pais = $valor;
+        return true;
     }
 
     public function getPais(): string
@@ -87,19 +103,29 @@ abstract class MueblesBase
         return $this->pais;
     }
 
-    public function setAnio(string $valor): void
+    public function setAnio(int $valor): bool
     {
+        $actual = (int)date("Y");
+        if (!validaEntero($valor, 2020, $actual, 2020)) return false;
         $this->anio = $valor;
+        return true;
     }
 
-    public function getAnio(): string
+    public function getAnio(): int
     {
         return $this->anio;
     }
 
-    public function setFechaIniVenta(string $valor): void
+    public function setFechaIniVenta(string $valor): bool
     {
+        $limite = "01/01/" . $this->anio;
+        if (!validaFecha($valor, $limite)) return false;
+        $fechaIni = DateTime::createFromFormat("d/m/Y", $valor);
+        $fechaLimite = DateTime::createFromFormat("d/m/Y", $limite);
+        if ($fechaIni < $fechaLimite) return false;
+
         $this->fechaIniVenta = $valor;
+        return true;
     }
 
     public function getFechaIniVenta(): string
@@ -107,9 +133,15 @@ abstract class MueblesBase
         return $this->fechaIniVenta;
     }
 
-    public function setFechaFinVenta(string $valor): void
+    public function setFechaFinVenta(string $valor): bool
     {
+        if (!validaFecha($valor, "31/12/2040")) return false;
+        $fechaFin = DateTime::createFromFormat("d/m/Y", $valor);
+        $fechaIni = DateTime::createFromFormat("d/m/Y", $this->fechaIniVenta);
+        if ($fechaFin < $fechaIni) return false;
+
         $this->fechaFinVenta = $valor;
+        return true;
     }
 
     public function getFechaFinVenta(): string
@@ -117,20 +149,26 @@ abstract class MueblesBase
         return $this->fechaFinVenta;
     }
 
-    public function setMaterialPrincipal(int $valor): void
+    public function setMaterialPrincipal(int $valor): bool
     {
-        $this->materialPrincipal = $valor;
+        if (validaRango($valor, MueblesBase::MATERIALES_POSIBLES, 2)) {
+            $this->materialPrincipal = $valor;
+            return true;
+        } else return false;
     }
 
-    // Método que devuelve una cadena con la descripción principal del material
+
     public function getMaterialPrincipal(): int
     {
         return $this->materialPrincipal;
     }
 
-    public function setPrecio(float $valor): void
+
+    public function setPrecio(float $valor): bool
     {
+        if (!validaReal($valor, 30, 9999, 30)) return false;
         $this->precio = $valor;
+        return true;
     }
 
     public function getPrecio(): float
