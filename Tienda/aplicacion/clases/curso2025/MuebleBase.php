@@ -19,6 +19,9 @@ abstract class MueblesBase
     private int|string $materialPrincipal;
     private float $precio;
 
+    private Caracteristicas $caracteristicas;
+
+
     //Constructor
     protected function __construct(
         string $nombre,
@@ -28,7 +31,8 @@ abstract class MueblesBase
         string $fechaIniVenta = "01/01/2020",
         string $fechaFinVenta = "31/12/2040",
         int|string $materialPrincipal,
-        float $precio = 30
+        float $precio = 30,
+        Caracteristicas $caracteristicas
     ) {
         if (self::$mueblesCreados >= self::MAXIMO_MUEBLES) {
             throw new Exception("Se ha alcanzado el máximo de muebles permitidos.");
@@ -45,6 +49,7 @@ abstract class MueblesBase
         $this->setFechaFinVenta($fechaFinVenta);
         $this->materialPrincipal = self::getMaterialDescripcion($materialPrincipal);
         $this->setPrecio($precio);
+        $this->caracteristicas = $caracteristicas;
 
         self::$mueblesCreados++;
     }
@@ -80,8 +85,33 @@ abstract class MueblesBase
 
     public function damePropiedad(string $propiedades, int $modo, mixed &$res): bool
     {
+        // Lista de propiedades válidas
+        $lista = $this->dameListaPropiedades();
 
-        return true;
+        // Si no existe la propiedad, devolvemos false
+        if (!in_array($propiedades, $lista)) {
+            return false;
+        }
+
+        // MODO 1: Usar método getX()
+        if ($modo === 1) {
+            $metodo = "get" . ucfirst($propiedades);
+            if (method_exists($this, $metodo)) {
+                $res = $this->$metodo();
+                return true;
+            }
+        }
+
+        // MODO 2: Acceso directo (no posible en clase base, así que usamos el getter)
+        if ($modo === 2) {
+            $metodo = "get" . ucfirst($propiedades);
+            if (method_exists($this, $metodo)) {
+                $res = $this->$metodo();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -93,6 +123,34 @@ abstract class MueblesBase
     {
         $numero = self::MAXIMO_MUEBLES - self::$mueblesCreados;
         return $numero > 0;
+    }
+
+    public function añadir(...$args)
+    {
+        $total = count($args);
+        if ($total < 2) {
+            return;
+        }
+        if ($total % 2 == 0) {
+            array_pop($args);
+        }
+
+        // Recorrer los argumentos en pares
+        for ($i = 0; $i < $total; $i += 2) {
+            $clave = $args[$i];
+            $valor = $args[$i + 1];
+
+            $this->caracteristicas->$clave = $valor;
+        }
+    }
+
+    public function exportarCaracteristicas(): string
+    {
+        $cadena = "";
+        foreach ($this->caracteristicas as $clave => $valor) {
+            $cadena .= "$clave : $valor\n";
+        }
+        return $cadena;
     }
 
     /**
@@ -110,7 +168,8 @@ abstract class MueblesBase
             ", vendido desde " . $this->getFechaIniVenta() .
             " hasta " . $this->getFechaFinVenta() .
             ", precio " . $this->getPrecio() .
-            " de material " . $this->getMaterialDescripcion();
+            " de material " . $this->getMaterialDescripcion() .
+            " con caracteristicas" . $this->exportarCaracteristicas();
     }
 
     // Getter's & Setter's
