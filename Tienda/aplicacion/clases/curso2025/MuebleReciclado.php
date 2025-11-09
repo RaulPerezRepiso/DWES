@@ -1,37 +1,59 @@
 <?php
 include_once("../../scripts/librerias/validacion.php");
 
-final class MuebleReciclado extends MueblesBase
+final class MuebleReciclado extends MuebleBase
 {
 
-    private int $porcentajeReciclado;
+    private float $porcentajeReciclado = 10;
 
-    public function setPorcentajeReciclado(int $valor): bool
+    /**
+     * Setter que valida que el porcentaje sea valido entre 0 y hasta 100
+     *
+     * @param float $valor
+     * @return boolean
+     */
+    public function setPorcentajeReciclado(float $valor): bool
     {
-        if (!validaEntero($valor, 0, 100, 10)) return false;
+        if (!validaReal($valor, 0, 100, 10)) return false;
         $this->porcentajeReciclado = $valor;
         return true;
     }
 
-    public function getPorcentajeReciclado(): int
+    public function getPorcentajeReciclado(): float
     {
         return $this->porcentajeReciclado;
     }
 
+    /**
+     * Constructor al que le llegan todos los parametros por defecto y sino lo estan les asigna el valor por defecto
+     *
+     * @param string $nombre
+     * @param integer|string $materialPrincipal
+     * @param Caracteristicas $caracteristicas
+     * @param string $fabricante
+     * @param string $pais
+     * @param integer $anio
+     * @param string $fechaIniVenta
+     * @param string $fechaFinVenta
+     * @param integer $precio
+     * @param integer $porcentajeReciclado
+     */
     public function __construct(
         string $nombre,
+        int|string $materialPrincipal,
+        Caracteristicas $caracteristicas,
         string $fabricante,
         string $pais,
         int $anio,
         string $fechaIniVenta,
         string $fechaFinVenta,
-        int|string $materialPrincipal,
         float $precio,
-        int $porcentajeReciclado
+        float $porcentajeReciclado
     ) {
-
-        parent::__construct($nombre, $fabricante, $pais, $anio, $fechaIniVenta, $fechaFinVenta, $materialPrincipal, $precio);
-        $this->setPorcentajeReciclado($porcentajeReciclado);
+        parent::__construct($nombre, $materialPrincipal, $caracteristicas, $fabricante, $pais, $anio, $fechaIniVenta, $fechaFinVenta, $precio);
+        if (!$this->setPorcentajeReciclado($porcentajeReciclado)) {
+            $this->setPorcentajeReciclado(10);
+        }
     }
 
     /**
@@ -50,16 +72,32 @@ final class MuebleReciclado extends MueblesBase
         return $array; */
     }
 
+    /**
+     * Obtiene dinámicamente el valor de una propiedad del objeto.
+     *
+     * @param string $propiedades Nombre de la propiedad a consultar
+     * @param integer $modo Modo de acceso: 1 = método get, 2 = acceso directo
+     * @param mixed $res Variable donde se almacena el valor de la propiedad
+     * @return boolean True si se obtiene el valor, false si la propiedad no existe
+     */
     public function damePropiedad(string $propiedad, int $modo, mixed &$res): bool
     {
         if ($propiedad === "porcentajeReciclado") {
-            $res = ($modo === 1) ? $this->getPorcentajeReciclado() : $this->porcentajeReciclado;
-            return true;
+            $metodo = "getPorcentajeReciclado";
+            if (method_exists($this, $metodo)) {
+                $res = $this->$metodo();
+                return true;
+            }
         }
 
         return parent::damePropiedad($propiedad, $modo, $res);
     }
 
+    /**
+     * Método to ToString que añade el porcentaje Reciclado al padre
+     *
+     * @return string
+     */
     public function __toString(): string
     {
         return parent::__toString() . ", reciclado en un " . $this->getPorcentajeReciclado() . "%";

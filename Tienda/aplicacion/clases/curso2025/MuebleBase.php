@@ -1,38 +1,50 @@
 <?php
 include_once("../../scripts/librerias/validacion.php");
 
-abstract class MueblesBase
+abstract class MuebleBase
 {
 
     // Declración de propiedades y constantes
-    public const MATERIALES_POSIBLES = ["madera", "plastico", "metal", "lana"];
+    public const MATERIALES_POSIBLES = ["Madera", "Plástico", "Metal", "Terciopelo"];
     const MAXIMO_MUEBLES = 20;
-    private static int $mueblesCreados;
+    private static int $mueblesCreados = 0;
 
     //Variables
     private string $nombre;
-    private string $fabricante;
-    private string $pais;
-    private int $anio;
-    private string $fechaIniVenta;
-    private string $fechaFinVenta;
+    private string $fabricante = "FMu";
+    private string $pais = "ESPAÑA";
+    private int $anio = 2020;
+    private string $fechaIniVenta = "01/01/2020";
+    private string $fechaFinVenta = "31/12/2040";
     private int|string $materialPrincipal;
-    private float $precio;
+    private float $precio = 30;
 
     private Caracteristicas $caracteristicas;
 
 
-    //Constructor
+    /**
+     * Contructor en el que asiganamos datos por defecto sino los pasamos
+     *
+     * @param string $nombre
+     * @param integer|string $materialPrincipal
+     * @param Caracteristicas $caracteristicas
+     * @param string $fabricante
+     * @param string $pais
+     * @param integer $anio
+     * @param string $fechaIniVenta
+     * @param string $fechaFinVenta
+     * @param integer $precio
+     */
     protected function __construct(
         string $nombre,
-        string $fabricante = "FMu",
-        string $pais = "ESPAÑA",
-        int $anio = 2020,
-        string $fechaIniVenta = "01/01/2020",
-        string $fechaFinVenta = "31/12/2040",
         int|string $materialPrincipal,
-        float $precio = 30,
-        Caracteristicas $caracteristicas
+        Caracteristicas $caracteristicas,
+        string $fabricante,
+        string $pais,
+        int $anio,
+        string $fechaIniVenta,
+        string $fechaFinVenta,
+        float $precio
     ) {
         if (self::$mueblesCreados >= self::MAXIMO_MUEBLES) {
             throw new Exception("Se ha alcanzado el máximo de muebles permitidos.");
@@ -42,13 +54,13 @@ abstract class MueblesBase
             throw new Exception("Nombre inválido.");
         }
 
-        $this->setFabricante($fabricante);
-        $this->setPais($pais);
-        $this->setAnio($anio);
-        $this->setFechaIniVenta($fechaIniVenta);
-        $this->setFechaFinVenta($fechaFinVenta);
-        $this->materialPrincipal = self::getMaterialDescripcion($materialPrincipal);
-        $this->setPrecio($precio);
+        if (!$this->setFabricante($fabricante)) $this->setFabricante("FMu:");
+        if (!$this->setAnio($anio)) $this->setAnio(2020);
+        if (!$this->setPais($pais)) $this->setPais("ESPAÑA");
+        if (!$this->setMaterialPrincipal($materialPrincipal)) $this->setMaterialPrincipal(0);
+        if (!$this->setPrecio($precio)) $this->setPrecio(30);
+        if (!$this->setFechaIniVenta($fechaIniVenta)) $this->setFechaIniVenta("01/01/2020");
+        if (!$this->setFechaFinVenta($fechaFinVenta)) $this->setFechaFinVenta("31/12/2040");
         $this->caracteristicas = $caracteristicas;
 
         self::$mueblesCreados++;
@@ -65,7 +77,7 @@ abstract class MueblesBase
     }
 
     /**
-     * Método que da una lista de todas las propiedades de un mueble
+     * Método que carga en un array todas la propiedades de un mueble
      *
      * @return array Con todos los valores que le correspondan
      */
@@ -83,6 +95,14 @@ abstract class MueblesBase
         ];
     }
 
+    /**
+     * Obtiene dinámicamente el valor de una propiedad del objeto.
+     *
+     * @param string $propiedades Nombre de la propiedad a consultar
+     * @param integer $modo Modo de acceso: 1 = método get, 2 = acceso directo
+     * @param mixed $res Variable donde se almacena el valor de la propiedad
+     * @return boolean True si se obtiene el valor, false si la propiedad no existe
+     */
     public function damePropiedad(string $propiedades, int $modo, mixed &$res): bool
     {
         // Lista de propiedades válidas
@@ -93,7 +113,7 @@ abstract class MueblesBase
             return false;
         }
 
-        // MODO 1: Usar método getX()
+        // MODO 1: Usando método get
         if ($modo === 1) {
             $metodo = "get" . ucfirst($propiedades);
             if (method_exists($this, $metodo)) {
@@ -102,7 +122,7 @@ abstract class MueblesBase
             }
         }
 
-        // MODO 2: Acceso directo (no posible en clase base, así que usamos el getter)
+        // MODO 2: Acceso directo 
         if ($modo === 2) {
             $metodo = "get" . ucfirst($propiedades);
             if (method_exists($this, $metodo)) {
@@ -115,7 +135,7 @@ abstract class MueblesBase
     }
 
     /**
-     * Método para saber si podemos crear un nuevo mueble o no
+     * Método para saber si podemos crear un nuevo mueble
      *
      * @return boolean true si se puede false si no
      */
@@ -125,13 +145,16 @@ abstract class MueblesBase
         return $numero > 0;
     }
 
+    /**
+     * Método que añade caracteristicas a un mueble
+     */
     public function añadir(...$args)
     {
         $total = count($args);
         if ($total < 2) {
             return;
         }
-        if ($total % 2 == 0) {
+        if ($total % 2 !== 0) {
             array_pop($args);
         }
 
@@ -144,6 +167,11 @@ abstract class MueblesBase
         }
     }
 
+    /**
+     * Método que manda las caracteristicas a una cadena
+     *
+     * @return string Devuelve las características
+     */
     public function exportarCaracteristicas(): string
     {
         $cadena = "";
@@ -169,10 +197,16 @@ abstract class MueblesBase
             " hasta " . $this->getFechaFinVenta() .
             ", precio " . $this->getPrecio() .
             " de material " . $this->getMaterialDescripcion() .
-            " con caracteristicas" . $this->exportarCaracteristicas();
+            " con caracteristicas " . $this->exportarCaracteristicas();
     }
 
     // Getter's & Setter's
+    /**
+     * Setter que valida que el nombre sea valido y de hasta 40 caracteres de longitud sin incluir espacios para que no de errores
+     *
+     * @param string $valor
+     * @return boolean
+     */
     public function setNombre(string $valor): bool
     {
         $valor = strtoupper(trim($valor));
@@ -187,6 +221,12 @@ abstract class MueblesBase
         return $this->nombre;
     }
 
+    /**
+     * Setter para validar el fabricante sino empieza por FMu se lo pondra delante y valida que la cadena sea de hasta 30 caracteres también  
+     *
+     * @param string $valor
+     * @return boolean
+     */
     public function setFabricante(string $valor): bool
     {
         $valor = trim($valor);
@@ -202,6 +242,12 @@ abstract class MueblesBase
         return $this->fabricante;
     }
 
+    /**
+     * Setter que valida que la cadena sea de hasta 20 caracteres y sino tiene nada por defecto pondra España
+     *
+     * @param string $valor
+     * @return boolean
+     */
     public function setPais(string $valor): bool
     {
         $valor = trim($valor);
@@ -215,6 +261,12 @@ abstract class MueblesBase
         return $this->pais;
     }
 
+    /**
+     * Setter que valida que el entero sea correcto entre 2020 y el año actual
+     *
+     * @param integer $valor
+     * @return boolean
+     */
     public function setAnio(int $valor): bool
     {
         $actual = (int)date("Y");
@@ -228,6 +280,12 @@ abstract class MueblesBase
         return $this->anio;
     }
 
+    /**
+     * Setter que valida que una cadena sea correcta para este año en adelante porque los muebles se han tenido que crear de este año en adelante
+     *
+     * @param string $valor
+     * @return boolean
+     */
     public function setFechaIniVenta(string $valor): bool
     {
         $limite = "01/01/" . $this->anio;
@@ -245,6 +303,12 @@ abstract class MueblesBase
         return $this->fechaIniVenta;
     }
 
+    /**
+     * Setter que válida que la fecha sea mayor a la fechaIniVenta y que la fecha sea menos a 2040 tambien
+     *
+     * @param string $valor
+     * @return boolean
+     */
     public function setFechaFinVenta(string $valor): bool
     {
         if (!validaFecha($valor, "31/12/2040")) return false;
@@ -261,9 +325,15 @@ abstract class MueblesBase
         return $this->fechaFinVenta;
     }
 
+    /**
+     * Setter que establece el valor principal del mueble actual
+     *
+     * @param integer $valor
+     * @return boolean
+     */
     public function setMaterialPrincipal(int $valor): bool
     {
-        if (validaRango($valor, MueblesBase::MATERIALES_POSIBLES, 2)) {
+        if (validaRango($valor, MuebleBase::MATERIALES_POSIBLES, 2)) {
             $this->materialPrincipal = $valor;
             return true;
         } else return false;
@@ -276,6 +346,12 @@ abstract class MueblesBase
     }
 
 
+    /**
+     * Setter que valida que el precio este entre 30 y hasta 9999.
+     *
+     * @param float $valor
+     * @return boolean
+     */
     public function setPrecio(float $valor): bool
     {
         if (!validaReal($valor, 30, 9999, 30)) return false;

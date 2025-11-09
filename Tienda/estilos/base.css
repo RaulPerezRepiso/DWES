@@ -7,7 +7,7 @@
 
 /* Tipografía general */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #a1c4fd, #c2e9fb, #89f7fe, #66a6ff);
   background-size: 400% 400%;
   animation: fondoAzul 15s ease infinite;
@@ -100,7 +100,8 @@ a:hover {
 }
 
 /* Botones (si los usas) */
-button, input[type="submit"] {
+button,
+input[type="submit"] {
   background: #4e54c8;
   color: white;
   border: none;
@@ -111,13 +112,67 @@ button, input[type="submit"] {
   font-weight: bold;
 }
 
-button:hover, input[type="submit"]:hover {
+button:hover,
+input[type="submit"]:hover {
   background: #3b3fc1;
 }
 
 /* Animación del fondo azul */
 @keyframes fondoAzul {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Modificar formulario*/
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Barra de Navegación*/
+/* Menú principal */
+#menuPrincipal {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  padding: 15px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  margin-top: 1%;
+}
+
+#menuPrincipal ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+#menuPrincipal ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#menuPrincipal ul li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
 }
