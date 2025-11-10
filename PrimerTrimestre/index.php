@@ -31,6 +31,7 @@ function cuerpo()
         <li><a href="/aplicacion/practica3/index.php">Relación III</a></li>
         <li><a href="/aplicacion/practica4/index.php">Relación IV</a></li>
         <li><a href="/aplicacion/practica5/index.php">Relación V</a></li>
+        <li><a href="/aplicacion/practica7/index.php">Relación VII</a></li>
     </ul>
     <h1>Pruebas</h1>
     <ul>
