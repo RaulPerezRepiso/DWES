@@ -31,6 +31,8 @@ function cuerpo()
         <li> <a href="fechas.php">Fechas</a></li>
         <li> <a href="string.php">String</a></li>
         <li> <a href="formulario.php">Formulario</a></li>
+        <li> <a href="pruebagd.php">Imagen GD</a></li>
+        <li> <a href="pruebaficheros.php">Prueba Ficheros</a></li>
     </ul>
 <?php
 
