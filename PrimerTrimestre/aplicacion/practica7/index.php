@@ -1,6 +1,6 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
-include_once(dirname(__FILE__) . "../scripts/librerias/validacion.php");
+include_once(dirname(__FILE__) . "/../../scripts/librerias/validacion.php");
 
 // Barra de ubicación para la página índice
 $ubicacion = [
@@ -8,6 +8,12 @@ $ubicacion = [
     "Relación VII:" => "#",
 ];
 $GLOBALS['ubicacion'] = $ubicacion;
+
+inicioCabecera("PRÁCTICA_7");
+cabecera();
+finCabecera();
+inicioCuerpo("PRÁCTICA_7");
+
 
 //inicializaciones
 $datos = [
@@ -21,50 +27,54 @@ $errores = [];
 
 //comprobar si se ha dado a insertar
 if (isset($_POST["crear"])) {
-    $nombre = "";
-    if (isset($_POST["nombre"])) {
-        $nombre = $_POST["nombre"];
-        // $nombre = mb_strtolower(trim($nombre)); Por si nos lo piden en minuscula y sin espacios
-        $nombre = trim($nombre);
+    $x = $_POST["x"] ?? 0;
+    if (isset($_POST["x"])) {
+        $x = intval($_POST["x"]);
     }
-    if (mb_strlen($nombre) < 10) {
-        $errores["nombre"][] = "El nombre debe tener al menos 10 carácteres";
+    if (!validaEntero($x, 0, 500, 0)) {
+        $errores["x"][] = "El punto X tiene que estar entre 0 y 20000";
     }
-    $datos["nombre"] = $nombre;
+    $datos["x"] = $x;
 
-    $edad = 0;
-    if (isset($_POST["edad"])) {
-        $edad = intval($_POST["edad"]);
+    $y = $_POST["y"] ?? 0;
+    if (isset($_POST["y"])) {
+        $y = intval($_POST["y"]);
     }
-
-    if ($edad < 15) {
-        $errores["edad"][] = "Debes tener al menos 15 años";
-        $edad = 15;
+    if (!validaEntero($y, 0, 500, 0)) {
+        $errores["y"][] = "El punto Y tiene que estar entre 0 y 20000";
     }
-    $datos["edad"] = $edad;
+    $datos["y"] = $y;
 
+    $color = $_POST["color"] ?? "";
+    if (array_key_exists($color, Punto::COLORES)) {
+        $color = $_POST["color"];
+    } else {
+        $errores["color"][] = "Color no válido";
+    }
+    $datos["color"] = $color;
 
-    if (!$errores) //no hay errores hago la insercion
-    {
-        //codigo para el nuevo articulo
-        $codigo = 1; //codigo
+    $grosor = $_POST["grosor"] ?? "";
+    if (array_key_exists($grosor, Punto::GROSORES)) {
+        $grosor = intval($_POST["grosor"]);
+    } else {
+        $errores["grosor"][] = "Grosor no válido";
+    }
+    $datos["grosor"] = $grosor;
 
-        //se guarda el articulo
-
-        //ir a ver el articulo insertado
-        echo "location: verArticulo.php?id=$codigo";
-        exit;
+    if (!$errores) {
+        try {
+            $nuevo = new Punto($x, $y, $color, $grosor);
+            $GLOBALS['Puntos'][] = $nuevo;
+            echo "<h3 style='color:green'>Punto guardado correctamente</h3>";
+        } catch (Exception $e) {
+            echo "<p style='color:red'>" . $e->getMessage() . "</p>";
+        }
     }
 }
 
-inicioCabecera("PRÁCTICA_7");
-cabecera($datos, $errores);
-finCabecera();
 
-inicioCuerpo("PRÁCTICA_7");
-cuerpo();
+cuerpo($datos, $errores);
 finCuerpo();
-
 
 // **********************************************************
 
@@ -82,7 +92,7 @@ function formulario($datos, $errores)
         echo "<div class='error'>";
         foreach ($errores as $clave => $valor) {
             foreach ($valor as $error)
-                echo "$clave => $error<br>" . PHP_EOL;
+                echo "$error<br>" . PHP_EOL;
         }
         echo "</div>";
     }
@@ -91,29 +101,32 @@ function formulario($datos, $errores)
 
     <form method="post">
         <label for="x"><strong>X:</strong></label>
-        <input type="number" name="x" id="x" min="0" max="20000"><br><br>
+        <input type="number" name="x" id="x" value="<?php echo $datos["x"]; ?>"><br><br>
 
         <label for="y"><strong>Y:</strong></label>
-        <input type="number" name="y" id="y" min="0" max="20000"><br><br>
+        <input type="number" name="y" id="y" value="<?php echo $datos["y"]; ?>"><br><br>
 
         <label for="color"><strong>Color:</strong></label>
         <select name="color" id="color">
-            <option value="black">Negro</option>
-            <option value="yellow">Amarillo</option>
-            <option value="blue">Azul</option>
-            <option value="green">Verde</option>
+            <option>Sin Seleccionar</option>
+            <option value="black" <?= $datos["color"] == "black" ? "selected" : "" ?>>Negro</option>
+            <option value="yellow" <?= $datos["color"] == "yellow" ? "selected" : "" ?>>Amarillo</option>
+            <option value="blue" <?= $datos["color"] == "blue" ? "selected" : "" ?>>Azul</option>
+            <option value="green" <?= $datos["color"] == "green" ? "selected" : "" ?>>Verde</option>
         </select><br><br>
 
         <label for="grosor"><strong>Grosor:</strong></label><br>
+        <input type="radio" name="grosor" value="1" id="grosor1" <?= $datos["grosor"] == 1 ? "checked" : "" ?>>
         <label for="grosor1">Fino</label>
-        <input type="radio" name="grosor" value="1" id="grosor1">
+
+        <input type="radio" name="grosor" value="2" id="grosor2" <?= $datos["grosor"] == 2 ? "checked" : "" ?>>
         <label for="grosor2">Medio</label>
-        <input type="radio" name="grosor" value="2" id="grosor2">
+
+        <input type="radio" name="grosor" value="3" id="grosor3" <?= $datos["grosor"] == 3 ? "checked" : "" ?>>
         <label for="grosor3">Grueso</label>
-        <input type="radio" name="grosor" value="3" id="grosor3">
         <br><br>
 
-        <button type="submit">Crear Punto</button>
+        <button type="submit" name="crear">Crear Punto</button>
     </form>
 <?php
 }
