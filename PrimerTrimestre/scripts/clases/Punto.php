@@ -24,6 +24,14 @@ class Punto
     private string $color;
     private int $grosor;
 
+    /**
+     * Constructor qu valida que los valores sean válidos
+     *
+     * @param integer $x
+     * @param integer $y
+     * @param string $color
+     * @param integer $grosor
+     */
     public function __construct(int $x, int $y, string $color, int $grosor)
     {
         $this->setX($x) ?: throw new Exception("Valor de X no válido");

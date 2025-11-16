@@ -232,8 +232,7 @@ if (isset($_POST['subir']) && isset($_FILES['fichero_puntos']) && $_FILES['fiche
                 try {
                     $almacenaPuntos[] = new Punto($x, $y, $color, $grosor);
                     $nuevos++;
-                } catch (Exception $e) {
-                    echo "<p style='color:red'>" . ($e->getMessage()) . "</p>";
+                } catch (Exception $e) { /* ignorar inválidos */
                 }
             }
         }
@@ -382,8 +381,8 @@ function formulario($datos, $errores, $almacenaPuntos, $rutaweb)
 function mostrarImagen($almacenaPuntos, $rutaphp, $nombreImagen)
 {
 
-    $rutaCompleta = $rutaphp . $nombreImagen;
-    if (!recrearImagen($almacenaPuntos, $rutaCompleta)) {
-        echo "<p style='color:red'>Error al guardar la imagen en $rutaCompleta</p>";
+    $rutaFull = $rutaphp . $nombreImagen;
+    if (!recrearImagen($almacenaPuntos, $rutaFull)) {
+        echo "<p style='color:red'>Error al guardar la imagen en $rutaFull</p>";
     }
 }
