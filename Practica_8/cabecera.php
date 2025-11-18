@@ -22,3 +22,7 @@ spl_autoload_register(function ($clase) {
 
 include(RUTABASE . "/aplicacion/plantilla/plantilla.php");
 // include(RUTABASE . "/aplicacion/config/acceso_bd.php");
+
+//Declaración de constantes para colores de texto y de fondo
+const COLORESTEXTO = ["negro", "azul", "blanco", "rojo"];
+const COLORESDEFONDO = ["blanco", "rojo", "verde", "azul", "cyan"];

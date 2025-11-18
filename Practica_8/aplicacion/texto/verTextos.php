@@ -2,6 +2,12 @@
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 //controlador
 
+$ubicacion = [
+    "Inicio" => "/index.php",
+    "Ver Texto" => "#",
+];
+
+
 //dibuja la plantilla de la vista
 inicioCabecera("Práctica 8");
 cabecera();

@@ -17,6 +17,7 @@ function paginaError(string $mensaje)
 function inicioCabecera(string $titulo)
 {
 ?>
+
     <!DOCTYPE html>
     <html lang="es">
 
@@ -35,6 +36,12 @@ function inicioCabecera(string $titulo)
 
         <link rel="stylesheet" type="text/css" href="../../estilos/base.css">
     <?php
+
+    if (!isset($_COOKIE["colorFondo"]))
+        setcookie("colorFondo", "white");
+
+    if (!isset($_COOKIE["colorLetra"]))
+        setcookie("colorLetra", "black");
 }
 function finCabecera()
 {
@@ -45,15 +52,31 @@ function finCabecera()
 function inicioCuerpo(string $cabecera)
 {
     global $acceso;
+
+    //Cookies que guardan el color de texto y de fondo para darles valor
+    $colorFondo = $_COOKIE["colorFondo"] ?? "white";
+    $colorLetra = $_COOKIE["colorLetra"] ?? "black";
+
 ?>
 
     <body>
+        <style>
+            h2 {
+                color: <?= $colorLetra ?>;
+                background-color: <?= $colorFondo ?>;
+            }
+        </style>
+
         <div id="documento">
 
             <header>
                 <h1 id="titulo"><?php echo $cabecera; ?></h1>
                 <div id="menuPrincipal">
-                    
+                    <ul>
+                        <li><a href="/index.php">Inicio</a></li>
+                        <li><a href="/aplicacion/texto/verTextos.php">Ver Texto</a></li>
+                        <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
+                    </ul>
                 </div>
             </header>
 
