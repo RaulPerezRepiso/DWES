@@ -6,13 +6,16 @@ $ubicacion = [
     "Inicio" => "/index.php",
 ];
 
+$cont = isset($_COOKIE["cont"]) ? $_COOKIE["cont"] : 0;
+$cont++;
+setcookie("cont", $cont);
 
 //dibuja la plantilla de la vista
 inicioCabecera("Práctica 8");
 cabecera();
 finCabecera();
 inicioCuerpo("Práctica 8");
-cuerpo();  //llamo a la vista
+cuerpo($cont);  //llamo a la vista
 finCuerpo();
 // **********************************************************
 
@@ -20,8 +23,9 @@ finCuerpo();
 function cabecera() {}
 
 //vista
-function cuerpo()
+function cuerpo($cont)
 {
+    echo "<h2>Has iniciado sesion: $cont </h2>";
 ?>
     <h1>Ver Texto</h1>
     <ul>
