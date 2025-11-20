@@ -26,3 +26,8 @@ include(RUTABASE . "/aplicacion/plantilla/plantilla.php");
 //Declaración de constantes para colores de texto y de fondo
 const COLORESTEXTO = ["negro", "azul", "blanco", "rojo"];
 const COLORESDEFONDO = ["blanco", "rojo", "verde", "azul", "cyan"];
+
+
+//Array que guarda lo textos
+$textos = [];
+$errores = [];

@@ -7,6 +7,12 @@ $ubicacion = [
     "Ver Texto" => "#",
 ];
 
+$texto;
+
+//Guardar el texto subido
+if (isset($_POST["subir"])) {
+    $textos["texto"] = $texto;
+}
 
 //dibuja la plantilla de la vista
 inicioCabecera("Práctica 8");
@@ -23,8 +29,28 @@ function cabecera() {}
 //vista
 function cuerpo()
 {
+    Formulario();
 ?>
-    <p>Estas en el Texto</p>
+
 <?php
 
+}
+
+function Formulario()
+{
+?>
+    <form action="" method="post">
+        <label for="texto">Texto: </label>
+        <input type="text" id="texto">
+        <input type="submit" name="subir" value="Subir">
+        <input type="reset" name="subir" value="Reset">
+        <textarea type="areaText" rows="12" cols="100" readonly><?php
+                                                                if (!empty($textos)) {
+                                                                    foreach ($textos as $p) {
+                                                                        echo  $p;
+                                                                    }
+                                                                }
+                                                                ?></textarea>
+    </form>
+<?php
 }
