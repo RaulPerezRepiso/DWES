@@ -39,7 +39,7 @@ class ACLArray extends ACLBase
         //añade los usuario
         $this->anadirUsuario("Es usuario alumno", "alumno", "alum", $this->getCodRole("normales"));
         $this->anadirUsuario("Es usuario profesor", "profesor", "profe", $this->getCodRole("administradores"));
-        $this->anadirUsuario("Vicente Tejero", "vicente", "profesor", $this->getCodRole("administradores"));
+        $this->anadirUsuario("Raúl Pérez", "raul", "1234", $this->getCodRole("administradores"));
     }
 
     /**
@@ -157,10 +157,10 @@ class ACLArray extends ACLBase
         if (!array_key_exists($codRole, $this->_roles)) {
             return false;
         }
-        if (!array_key_exists($numero, $this->_roles[$codRole]["permiso"])) {
+        if (!array_key_exists($numero, $this->_roles[$codRole]["permisos"])) {
             return false;
         }
-        return true;
+        return $this->_roles[$codRole]["permisos"][$numero];
     }
 
     /**
@@ -257,10 +257,11 @@ class ACLArray extends ACLBase
      */
     function existeUsuario(string $nick): bool
     {
-        if (!array_key_exists($nick, $this->_usuarios)) {
-            return false;
+        $nick = mb_strtolower($nick);
+        foreach ($this->_usuarios as $usu) {
+            if ($usu["nick"] === $nick) return true;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -273,7 +274,7 @@ class ACLArray extends ACLBase
      */
     function esValido(string $nick, string $contrasena): bool
     {
-        //pongo el nick n minuscula
+        //pongo el nick en minuscula
         $nick = mb_strtolower($nick);
 
         //compruebo si existe el nick
@@ -283,13 +284,12 @@ class ACLArray extends ACLBase
         //recojo cual es el codigo
         $codigo = $this->getCodUsuario($nick);
 
-        //establecer el metodo de encriptado
-        $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
 
-        if ($this->_usuarios[$codigo]["contrasenia"] != $contrasena)
+        // NO funciona (password_hash) porque generaría un hash distinto.
+        // Verifica la contraseña
+        if (!password_verify($contrasena, $this->_usuarios[$codigo]["contrasenia"])) {
             return false;
-
-        // es valido
+        }
         return true;
     }
 
@@ -303,13 +303,9 @@ class ACLArray extends ACLBase
      */
     function getPermiso(int $codUsuario, int $numero): bool
     {
-        if (!array_key_exists($codUsuario, $this->_usuarios)) {
-            return false;
-        }
-        if (!array_key_exists($numero, $this->_usuarios[$codUsuario]["permisos"])) {
-            return false;
-        }
-        return true;
+        if (!$this->existeCodUsuario($codUsuario)) return false;
+        $codRole = $this->_usuarios[$codUsuario]["cod_role"];
+        return $this->getPermisoRole($codRole, $numero);
     }
 
     /**
@@ -319,7 +315,12 @@ class ACLArray extends ACLBase
      * @return array|false Devuelve los permisos del usuario o false si 
      * no existe el usuario
      */
-    function getPermisos(int $codUsuario): array|false {}
+    function getPermisos(int $codUsuario): array|false
+    {
+        if (!$this->existeCodUsuario($codUsuario)) return false;
+        $codRole = $this->_usuarios[$codUsuario]["cod_role"];
+        return $this->getPermisosRole($codRole);
+    }
 
     /**
      * Función que devuelve el nombre de un usuario
@@ -342,7 +343,11 @@ class ACLArray extends ACLBase
      * @return boolean true si el usuario existe y no está borrado.
      * False en otro caso
      */
-    function getBorrado(int $codUsuario): bool {}
+    function getBorrado(int $codUsuario): bool
+    {
+        if (!$this->existeCodUsuario($codUsuario)) return false;
+        return $this->_usuarios[$codUsuario]["borrado"];
+    }
 
     /**
      * Devuelve el role que tiene un usuario concreto
@@ -383,7 +388,12 @@ class ACLArray extends ACLBase
      * @return boolean Devuelve true si ha podido asignar la contraseña
      * False en otro caso
      */
-    function setContrasenia(int $codUsuario, string $contrasenia): bool {}
+    function setContrasenia(int $codUsuario, string $contrasenia): bool
+    {
+        if (!$this->existeCodUsuario($codUsuario)) return false;
+        $this->_usuarios[$codUsuario]["contrasenia"] = password_hash($contrasenia, PASSWORD_BCRYPT);
+        return true;
+    }
 
     /**
      * Función que borra/desborra lógicamente un usuario 
@@ -412,7 +422,13 @@ class ACLArray extends ACLBase
      * @return boolean Devuelve true si ha podido asignar el role al usuario.
      * False si no existe el usuario, role o no ha podido asignarlo
      */
-    function setUsuarioRole(int $codUsuario, int $role): bool {}
+    function setUsuarioRole(int $codUsuario, int $role): bool
+    {
+        if (!$this->existeCodUsuario($codUsuario)) return false;
+        if (!$this->existeRole($role)) return false;
+        $this->_usuarios[$codUsuario]["cod_role"] = $role;
+        return true;
+    }
 
     /**
      * Devuelve un array con todos los usuarios existentes. 
@@ -420,7 +436,14 @@ class ACLArray extends ACLBase
      *
      * @return array Array con todos los usuarios existentes
      */
-    function dameUsuarios(): array {}
+    function dameUsuarios(): array
+    {
+        $usuarios = [];
+        foreach ($this->_usuarios as $cod => $usu) {
+            $usuarios[$cod] = $usu["nick"];
+        }
+        return $usuarios;
+    }
 
     /**
      * Devuelve un array con todos los roles existentes. 

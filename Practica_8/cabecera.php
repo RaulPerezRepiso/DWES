@@ -9,25 +9,38 @@ else
     error_reporting(E_ALL);
 
 
+
+
+// Autoload 1: scripts/clases 
 spl_autoload_register(function ($clase) {
     $ruta = RUTABASE . "/scripts/clases/";
     $fichero = $ruta . "$clase.php";
 
     if (file_exists($fichero)) {
         require_once($fichero);
-    } else {
-        throw new Exception("La clase $clase no se ha encontrado.");
+    }
+});
+
+// Autoload 2: aplicacion/clases 
+spl_autoload_register(function ($clase) {
+    $ruta = RUTABASE . "/aplicacion/clases/";
+    $fichero = $ruta . "$clase.php";
+
+    if (file_exists($fichero)) {
+        require_once($fichero);
     }
 });
 
 include(RUTABASE . "/aplicacion/plantilla/plantilla.php");
 // include(RUTABASE . "/aplicacion/config/acceso_bd.php");
 
+// Iniciar la sesión
+session_start();
+
+// Crear objetos globales de ACL y Acceso para controlar que esten en cualquier página
+$acl = new ACLArray();
+$acceso = new Acceso();
+
 //Declaración de constantes para colores de texto y de fondo
 const COLORESTEXTO = ["negro", "azul", "blanco", "rojo"];
 const COLORESDEFONDO = ["blanco", "rojo", "verde", "azul", "cyan"];
-
-
-//Array que guarda lo textos
-$textos = [];
-$errores = [];

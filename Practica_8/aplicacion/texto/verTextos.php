@@ -1,53 +1,80 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
-//controlador
 
+
+//Controlador
 $ubicacion = [
     "Inicio" => "/index.php",
     "Ver Texto" => "#",
 ];
 
-$texto;
-
-//Guardar el texto subido
-if (isset($_POST["subir"])) {
-    $textos["texto"] = $texto;
+// Redirigir si no hay usuario validado
+if (!$acceso->hayUsuario()) {
+    header("Location: /aplicacion/acceso/login.php");
+    exit;
 }
 
-//dibuja la plantilla de la vista
-inicioCabecera("Práctica 8");
+// Comprobar permiso 1 para acceso general
+if (!$acceso->puedePermiso(1)) {
+    paginaError("No tienes permiso para acceder a esta página");
+    exit;
+}
+
+// Recuperar textos de la sesión
+$textos = $_SESSION["textos"] ?? [];
+
+// Procesar formulario
+if (isset($_POST["subir"]) && $_POST["subir"] === "Subir" && !empty($_POST["texto"])) {
+    $nuevo = new RegistroTexto($_POST["texto"]);
+    $textos[] = $nuevo;
+}
+
+if (isset($_POST["limpiar"]) && $_POST["limpiar"] === "Reset") {
+    $textos = [];
+}
+
+// Guardar en sesión y refrescar
+if (isset($_POST["subir"]) || isset($_POST["limpiar"])) {
+    $_SESSION["textos"] = $textos;
+    header("Location: verTextos.php");
+    exit;
+}
+
+//Dibuja la plantilla de la vista
+inicioCabecera("Ver Textos");
 cabecera();
 finCabecera();
-inicioCuerpo("Práctica 8");
-cuerpo();  //llamo a la vista
+inicioCuerpo("Ver Textos");
+cuerpo($textos);  //Llamo a la vista
 finCuerpo();
 // **********************************************************
 
-//vista
+// Vista
 function cabecera() {}
 
-//vista
-function cuerpo()
+// Vista
+function cuerpo($textos)
 {
-    Formulario();
+    Formulario($textos);
 ?>
 
 <?php
 
 }
 
-function Formulario()
+// Formulario
+function Formulario($textos)
 {
 ?>
     <form action="" method="post">
         <label for="texto">Texto: </label>
-        <input type="text" id="texto">
+        <input type="text" id="texto" name="texto">
         <input type="submit" name="subir" value="Subir">
-        <input type="reset" name="subir" value="Reset">
+        <input type="submit" name="limpiar" value="Reset">
         <textarea type="areaText" rows="12" cols="100" readonly><?php
                                                                 if (!empty($textos)) {
                                                                     foreach ($textos as $p) {
-                                                                        echo  $p;
+                                                                        echo $p->getFechaHora() . " - " . $p->getCadena() . "\n";
                                                                     }
                                                                 }
                                                                 ?></textarea>

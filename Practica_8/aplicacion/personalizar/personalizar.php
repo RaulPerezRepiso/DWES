@@ -6,9 +6,33 @@ $ubicacion = [
     "Personalizar" => "#",
 ];
 
-//Guardar los colores
+// --- Restricciones de acceso ---
+// Comprobar si hay Usuario
+if (!$acceso->hayUsuario()) {
+    header("Location: /aplicacion/acceso/login.php");
+    exit;
+}
+// Si tiene los permisos podrá acceder
+if (!$acceso->puedePermiso(1)) {
+    paginaError("No tienes permiso para acceder a esta página");
+    exit;
+}
+if (!$acceso->puedePermiso(2)) {
+    paginaError("No tienes permiso para configurar colores");
+    exit;
+}
+
+//Guardar los colores en cookies
 if (isset($_POST["subir"])) {
-    $textos["texto"] = $texto;
+    $fondo = $_POST["colorFondo"] ?? "white";
+    $texto = $_POST["colorLetra"] ?? "black";
+
+    setcookie("colorFondo", $fondo);
+    setcookie("colorLetra", $texto);
+
+    // Refrescar la página para aplicar cambios
+    header("Location: personalizar.php");
+    exit;
 }
 
 // Dibuja la plantilla de la vista
@@ -36,22 +60,48 @@ function cuerpo()
 
 function Formulario()
 {
+    // Valores por defecto según el enunciado
+    $fondoDefecto = $_COOKIE["colorFondo"] ?? "white";
+    $textoDefecto =  $_COOKIE["colorLetra"]  ?? "black";
+
+    // Arrays asociativos: label en español => value en inglés
+    $fondos = [
+        "blanco" => "white",
+        "rojo" => "red",
+        "verde" => "green",
+        "azul" => "blue",
+        "cyan" => "cyan"
+    ];
+
+    $textos = [
+        "negro" => "black",
+        "azul" => "blue",
+        "blanco" => "white",
+        "rojo" => "red"
+    ];
+
 ?>
-    <label for="colorFondo"><strong>Color de Fondo:</strong></label>
-    <select name="colorFondo" id="colorFondo">
-        <option value="COLORESDEFONDO[0]" selected><?= (COLORESDEFONDO[0]) ?></option>
-        <option value="COLORESDEFONDO[1]"><?= (COLORESDEFONDO[1]) ?></option>
-        <option value="COLORESDEFONDO[2]"><?= (COLORESDEFONDO[2]) ?></option>
-        <option value="COLORESDEFONDO[3]"><?= (COLORESDEFONDO[3]) ?></option>
-        <option value="COLORESDEFONDO[4]"><?= (COLORESDEFONDO[4]) ?></option>
-    </select><br><br>
-    <label for="color"><strong>Color de Texto:</strong></label>
-    <select name="color" id="color">
-        <option value="COLORESTEXTO[0]" selected><?= (COLORESTEXTO[0]) ?></option>
-        <option value="COLORESTEXTO[1]"><?= (COLORESTEXTO[1]) ?></option>
-        <option value="COLORESTEXTO[2]"><?= (COLORESTEXTO[2]) ?></option>
-        <option value="COLORESTEXTO[3]"><?= (COLORESTEXTO[3]) ?></option>
-    </select><br><br>
-    <input type="submit" name="subir" value="Subir">
+
+    <form method="post" action="">
+        <label for="colorFondo"><strong>Color de Fondo:</strong></label>
+        <select name="colorFondo" id="colorFondo">
+            <?php foreach ($fondos as $label => $value): ?>
+                <option value="<?= $value ?>" <?= ($fondoDefecto == $value) ? 'selected' : '' ?>>
+                    <?= $label ?>
+                </option>
+            <?php endforeach; ?>
+        </select><br><br>
+
+        <label for="colorLetra"><strong>Color de Texto:</strong></label>
+        <select name="colorLetra" id="colorLetra">
+            <?php foreach ($textos as $label => $value): ?>
+                <option value="<?= $value ?>" <?= ($textoDefecto == $value) ? 'selected' : '' ?>>
+                    <?= $label ?>
+                </option>
+            <?php endforeach; ?>
+        </select><br><br>
+
+        <input type="submit" name="subir" value="Guardar">
+    </form>
 <?php
 }

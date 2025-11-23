@@ -24,8 +24,7 @@ function inicioCabecera(string $titulo)
     <head>
         <meta charset="utf-8">
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame Remove this if you use the .htaccess -->
-        <meta http-equiv="X-UA-Compatible"
-            content="IE=edge,chrome=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title><?php echo $titulo ?></title>
         <meta name="description" content="">
         <meta name="author" content="Administrador">
@@ -53,24 +52,17 @@ function inicioCuerpo(string $cabecera)
 {
     global $acceso;
 
-    //Cookies que guardan el color de texto y de fondo para darles valor
+    //Colores por defecto
     $colorFondo = $_COOKIE["colorFondo"] ?? "white";
-    $colorLetra = $_COOKIE["colorLetra"] ?? "black";
+    $colorLetra  = $_COOKIE["colorLetra"] ?? "black";
 
 ?>
 
     <body>
-        <style>
-            h2 {
-                color: <?= $colorLetra ?>;
-                background-color: <?= $colorFondo ?>;
-            }
-        </style>
-
         <div id="documento">
 
             <header>
-                <h1 id="titulo"><?php echo $cabecera; ?></h1>
+                <h1 style="background-color: <?= $colorFondo ?>; color: <?= $colorLetra ?>;" id="titulo"><?php echo $cabecera; ?></h1>
                 <div id="menuPrincipal">
                     <ul>
                         <li><a href="/index.php">Inicio</a></li>
@@ -81,8 +73,16 @@ function inicioCuerpo(string $cabecera)
             </header>
 
             <div id="barraLogin">
-
+                <?php
+                if ($acceso->hayUsuario()) {
+                    echo "Bienvenido, " . $acceso->getNombre() .
+                        " [ <a href='/aplicacion/acceso/logout.php'>Cerrar sesión</a> ]";
+                } else {
+                    echo "<a href='/aplicacion/acceso/login.php'>Iniciar sesión</a>";
+                }
+                ?>
             </div>
+
             <div id="barraMenu">
                 <ul>
                     <?php
