@@ -25,7 +25,10 @@ function cabecera() {}
 //vista
 function cuerpo($cont)
 {
-    echo "<h2>Has iniciado sesion: $cont </h2>";
+    if ($cont < 2) {
+        echo "<h2>Has iniciado sesión: $cont vez</h2>";
+    }else
+    echo "<h2>Has iniciado sesión: $cont veces</h2>";
 ?>
     <h1>Ver Texto</h1>
     <ul>
