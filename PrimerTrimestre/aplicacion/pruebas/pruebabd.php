@@ -45,7 +45,21 @@ while ($fila = $consulta->fetch_assoc()) {
 
 // Ejecucuón sentencias Borrado/Actualización/Inserción
 if (isset($_GET["oper"]) && $_GET["oper"] == 1) {
-    $sentencia = "update prueba1 set numero=200 where id=2";
+
+    // Para evitar problemas de inyeccion
+
+    // Con tipos distintos de cadena, convertir siempre el parametro recibido al tipo
+    $id = "2";
+    $id = intval($id);
+
+    // Para cadenas usamos la funcion de escape correspondiente a la base de datos
+    $cadena ="Esta 'Esto es el ataque'";
+
+    // Evitamos el ataque de la cadena (Los escapa y los considera una cadena)
+    $cadena=$bd->real_escape_string($cadena);
+    
+    // Se puede evitar el ataque por inyección de codigo usando las consultas parametrizadas
+    $sentencia = "update prueba1 set cadena='$cadena' where id=2";
 
     // Consulta de la sentencia creada
     $consulta = $bd->query($sentencia);
