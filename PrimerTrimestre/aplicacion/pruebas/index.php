@@ -35,6 +35,7 @@ function cuerpo()
     <a href="pruebagd.php">Prueba Imagen GD</a><br>
     <a href="pruebaficheros.php">Prueba ficheros</a><br>
     <a href="cookies_seciones.php">Prueba Cookies</a><br>
+    <a href="pruebabd.php">Prueba BD</a><br>
 <?php
 
 }
