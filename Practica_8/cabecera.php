@@ -32,7 +32,10 @@ spl_autoload_register(function ($clase) {
 });
 
 include(RUTABASE . "/aplicacion/plantilla/plantilla.php");
-// include(RUTABASE . "/aplicacion/config/acceso_bd.php");
+include(RUTABASE . "/aplicacion/config/acceso_bd.php");
+
+//Gestion BD
+mysqli_report(MYSQLI_REPORT_ERROR);
 
 // Iniciar la sesión
 session_start();
