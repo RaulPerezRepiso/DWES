@@ -15,7 +15,7 @@ body {
 #documento {
   margin: 50px auto;
   background-color: #f5f7fa;
-  width: 760px;
+  width: 990px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   padding: 40px 30px;
@@ -88,7 +88,7 @@ body {
 .tabla th {
   background-color: #64b5f6;
   color: #0d47a1;
-  padding: 14px;
+  padding: 8px;
   text-align: left;
   border-bottom: 2px solid #42a5f5;
   font-size: 1em;

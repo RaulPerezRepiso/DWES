@@ -57,19 +57,20 @@ function cuerpo($cont)
     }else
     echo "<h2>Has iniciado sesión: $cont veces</h2>";
 ?>
-    <h1>Ver Texto</h1>
-    <ul>
-        <li><a href="/aplicacion/texto/verTextos.php">Texto</a></li>
-    </ul>
-    <h1>Personalizar</h1>
-    <ul>
-        <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
-    </ul>
-
-     <h1>Crud</h1>
-    <ul>
-        <li><a href="/aplicacion/usuarios/index.php">CRUD</a></li>
-    </ul>
+    
 <?php
+// <h1>Ver Texto</h1>
+//     <ul>
+//         <li><a href="/aplicacion/texto/verTextos.php">Texto</a></li>
+//     </ul>
+//     <h1>Personalizar</h1>
+//     <ul>
+//         <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
+//     </ul>
+
+//      <h1>Crud</h1>
+//     <ul>
+//         <li><a href="/aplicacion/usuarios/index.php">CRUD</a></li>
+//     </ul>
 
 }

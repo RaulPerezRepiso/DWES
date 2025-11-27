@@ -28,7 +28,7 @@ function inicioCabecera(string $titulo)
         <title><?php echo $titulo ?></title>
         <meta name="description" content="">
         <meta name="author" content="Administrador">
-        <meta name="viewport" content="width=device-width; initialscale=1.0">
+        <meta name="viewport" content="width=device-width; initial-scale=1.0">
         <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
         <link rel="shortcut icon" href="/favicon.ico">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -62,26 +62,27 @@ function inicioCuerpo(string $cabecera)
         <div id="documento">
 
             <header>
-                <h1 style="background-color: <?= $colorFondo ?>; color: <?= $colorLetra ?>;" id="titulo"><?php echo $cabecera; ?></h1>
+                <!-- style="background-color: <?= $colorFondo ?>; color: <?= $colorLetra ?>;" id="titulo"zº -->
+                <h1><?php echo $cabecera; ?></h1>
                 <div id="menuPrincipal">
                     <ul>
                         <li><a href="/index.php">Inicio</a></li>
                         <li><a href="/aplicacion/texto/verTextos.php">Ver Texto</a></li>
                         <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
+                        <li><a href="/aplicacion/usuarios/index.php">Crud</a></li>
+                        <div id="barraLogin">
+                            <?php
+                            if ($acceso->hayUsuario()) {
+                                echo "Bienvenido, " . $acceso->getNombre() .
+                                    " [ <a href='/aplicacion/acceso/logout.php'>Cerrar sesión</a> ]";
+                            } else {
+                                echo "<a href='/aplicacion/acceso/login.php'>Iniciar sesión</a>";
+                            }
+                            ?>
+                        </div>
                     </ul>
                 </div>
             </header>
-
-            <div id="barraLogin">
-                <?php
-                if ($acceso->hayUsuario()) {
-                    echo "Bienvenido, " . $acceso->getNombre() .
-                        " [ <a href='/aplicacion/acceso/logout.php'>Cerrar sesión</a> ]";
-                } else {
-                    echo "<a href='/aplicacion/acceso/login.php'>Iniciar sesión</a>";
-                }
-                ?>
-            </div>
 
             <div id="barraMenu">
                 <ul>
