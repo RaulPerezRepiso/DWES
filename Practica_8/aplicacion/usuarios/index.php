@@ -40,7 +40,7 @@ if ($bd->errno) {
 // Array con los datos
 $filas = [];
 
-// Proceso los datos y los modifico fila a fila
+// Proceso los datos y los modifico fila a fila con fetch_assoc
 while ($fila = $consulta->fetch_assoc()) {
     // Ejemplo de columna calculada opcional
     $fila["descripcion"] = $fila["nombre"] . " (" . $fila["provincia"] . ")";
