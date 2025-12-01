@@ -21,9 +21,35 @@ if (!$acceso->puedePermiso(2)) {
 // Entrar a la base de datos con usuario correcto
 $bd = @new mysqli($servidor, $usuario, $contrasenia, $baseDatos);
 
-// Creación de sentecnia
-@$sentencia = "select * 
-    from usuarios";
+// ---Construcción dinámica de la sentencia--- 
+$condiciones = [];
+
+if (!empty($_GET['nick'])) {
+    $nick = $bd->real_escape_string($_GET['nick']);
+    $condiciones[] = "nick LIKE '%$nick%'";
+}
+if (!empty($_GET['provincia'])) {
+    $provincia = $bd->real_escape_string($_GET['provincia']);
+    $condiciones[] = "provincia LIKE '%$provincia%'";
+}
+if (isset($_GET['borrado']) && $_GET['borrado'] !== '') {
+    $borrado = (int)$_GET['borrado'];
+    $condiciones[] = "borrado = $borrado";
+}
+
+$sentencia = "SELECT * FROM usuarios";
+if ($condiciones) {
+    $sentencia .= " WHERE " . implode(" AND ", $condiciones);
+}
+
+
+// Ordenación segura
+$orden = $_GET['orden'] ?? 'nick';
+$ordenPermitidos = ['nick','provincia','nombre'];
+if (!in_array($orden, $ordenPermitidos)) {
+    $orden = 'nick';
+}
+$sentencia .= " ORDER BY $orden";
 
 // Consulta de la sentencia creada
 @$consulta = $bd->query($sentencia);
@@ -100,6 +126,28 @@ function cuerpo($filas)
     <ul>
         <a href="nuevoUsuario.php">Nuevo Usuario</a><br>
     </ul>
+    <form method="get" class="filtros">
+        <label>Nick:
+            <input type="text" name="nick" value="<?= $_GET['nick'] ?? '' ?>">
+        </label>
+        <label>Provincia:
+            <input type="text" name="provincia" value="<?= $_GET['provincia'] ?? '' ?>">
+        </label>
+        <label>Borrado:
+            <select name="borrado">
+                <option value="0" <?= (($_GET['borrado'] ?? '') === '0') ? 'selected' : '' ?>>No</option>
+                <option value="1" <?= (($_GET['borrado'] ?? '') === '1') ? 'selected' : '' ?>>Sí</option>
+            </select>
+        </label>
+        <label>Ordenar por:
+            <select name="orden">
+                <option value="nick">Nick</option>
+                <option value="provincia">Provincia</option>
+                <option value="nombre">Nombre</option>
+            </select>
+        </label>
+        <button type="submit" class="boton">Filtrar</button>
+    </form>
 <?php
 
 }
