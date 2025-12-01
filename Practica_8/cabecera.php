@@ -44,6 +44,9 @@ session_start();
 $acl = new ACLArray();
 $acceso = new Acceso();
 
+// Crear objetos globales para cargar usuraios y contreseña de la BD.
+// $aclbd = new ACLBD("localhost", "usu9", "2daw", "practica9");
+
 //Declaración de constantes para colores de texto y de fondo
 const COLORESTEXTO = ["negro", "azul", "blanco", "rojo"];
 const COLORESDEFONDO = ["blanco", "rojo", "verde", "azul", "cyan"];

@@ -5,8 +5,7 @@ class ACLBD extends ACLBase
 
     private $_sqli;
     private $_hayConeccion;
-    private $_prefijo = '_$"_';  //usado con algoritmo md5 como prefijo que se adjunta a la contraseña
-    //para darle mas seguridad
+    private $_prefijo = '_$"_';  //usado con algoritmo md5 como prefijo que se adjunta a la contraseña para darle mas seguridad
 
 
 

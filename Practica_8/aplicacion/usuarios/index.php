@@ -13,10 +13,6 @@ if (!$acceso->hayUsuario()) {
     exit;
 }
 // Si tiene los permisos podrá acceder
-if (!$acceso->puedePermiso(1)) {
-    paginaError("No tienes permiso para acceder a esta página");
-    exit;
-}
 if (!$acceso->puedePermiso(2)) {
     paginaError("No tienes permiso para acceder a esta página");
     exit;
@@ -43,7 +39,6 @@ $filas = [];
 // Proceso los datos y los modifico fila a fila con fetch_assoc
 while ($fila = $consulta->fetch_assoc()) {
     // Ejemplo de columna calculada opcional
-    $fila["descripcion"] = $fila["nombre"] . " (" . $fila["provincia"] . ")";
     $filas[] = $fila;
 }
 
@@ -93,11 +88,11 @@ function cuerpo($filas)
                     <td><?= $fila["fecha_nacimiento"] ?? "" ?></td>
                     <td><?= $fila["borrado"] ? "Sí" : "No" ?></td>
                     <td><?= $fila["foto"] ?></td>
-                        <td>
-                            <a href="verUsuario.php">Ver</a>
-                            <a href="modificarUsuario.php">Modificar</a>
-                            <a href="borrarUsuario.php">Borrar</a>
-                        </td>
+                    <td>
+                        <a href="verUsuario.php">Ver</a>
+                        <a href="modificarUsuario.php">Modificar</a>
+                        <a href="borrarUsuario.php">Borrar</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

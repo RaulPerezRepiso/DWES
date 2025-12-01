@@ -6,6 +6,12 @@ $ubicacion = [
     "Pruebas" => "#",
 ];
 
+// Si tiene los permisos podrá acceder
+if (!$acceso->puedePermiso(2)) {
+    paginaError("No tienes permiso para acceder a esta página");
+    exit;
+}
+
 
 // Dibuja la plantilla de la vista
 inicioCabecera("Ver Usuario");
