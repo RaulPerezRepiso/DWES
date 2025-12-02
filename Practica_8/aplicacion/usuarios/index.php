@@ -45,7 +45,7 @@ if ($condiciones) {
 
 // Ordenación segura
 $orden = $_GET['orden'] ?? 'nick';
-$ordenPermitidos = ['nick','provincia','nombre'];
+$ordenPermitidos = ['nick', 'provincia', 'nombre'];
 if (!in_array($orden, $ordenPermitidos)) {
     $orden = 'nick';
 }
@@ -115,9 +115,9 @@ function cuerpo($filas)
                     <td><?= $fila["borrado"] ? "Sí" : "No" ?></td>
                     <td><?= $fila["foto"] ?></td>
                     <td>
-                        <a href="verUsuario.php">Ver</a>
-                        <a href="modificarUsuario.php">Modificar</a>
-                        <a href="borrarUsuario.php">Borrar</a>
+                        <a href="verUsuario.php?id=<?= $fila['cod_usuario'] ?>">Ver</a>
+                        <a href="modificarUsuario.php?id=<?= $fila['cod_usuario'] ?>">Modificar</a>
+                        <a href="borrarUsuario.php?nick=<?= $fila['nick'] ?>">Borrar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -3,66 +3,145 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 $ubicacion = [
     "Index Principal" => "/index.php",
-    "Pruebas" => "#",
+    "Modificar Usuario" => "/aplicacion/usuarios/modificarUsuario.php"
 ];
 
-// Si tiene los permisos podrá acceder
-if (!$acceso->puedePermiso(3)) {
-    paginaError("No tienes permiso para acceder a esta página");
+// --- Permisos: necesita 2 y 3 ---
+if (!$acceso->puedePermiso(2) || !$acceso->puedePermiso(3)) {
+    paginaError("No tienes permisos para ver esta página");
     exit;
 }
 
+// --- Recoger id ---
+if (isset($_GET["id"])) {
+    $codUsuario = (int)$_GET["id"];
+} else {
+    paginaError("No se ha introducido ningún id");
+    exit;
+}
 
-// Dibuja la plantilla de la vista
+// --- Conexión BD ---
+$bd = new mysqli($servidor, $usuario, $contrasenia, $baseDatos);
+if ($bd->connect_errno) {
+    paginaError("Fallo al conectar a la base de datos: " . $bd->connect_error);
+    exit;
+}
+
+// --- ACLBD ---
+$aclbd = new ACLBD($servidor, $usuario, $contrasenia, $baseDatos);
+
+// --- Comprobar que existe ---
+$res = $bd->query("SELECT * FROM usuarios WHERE cod_usuario = $codUsuario");
+if (!$res || $res->num_rows === 0) {
+    paginaError("Usuario no existe");
+    exit;
+}
+$usuario = $res->fetch_assoc();
+
+// --- Rol actual desde ACL ---
+$rolActual = $aclbd->getUsuarioRole($aclbd->getCodUsuario($usuario["nick"]));
+
+// --- Procesar modificación ---
+if (isset($_POST["modificar"])) {
+    $nick       = $usuario["nick"]; // no se cambia
+    $nombre     = $_POST["nombre"];
+    $nif        = $_POST["nif"];
+    $direccion  = $_POST["direccion"];
+    $poblacion  = $_POST["poblacion"];
+    $provincia  = $_POST["provincia"];
+    $cp         = $_POST["cp"];
+    $fecha      = $_POST["fechaNacimiento"];
+    $borrado    = $_POST["borrado"];
+    $foto       = $_POST["foto"];
+    $rolNuevo   = $_POST["rol"];
+
+    // Actualizar BD
+    $sql = "UPDATE usuarios SET 
+                nombre='$nombre',
+                nif='$nif',
+                direccion='$direccion',
+                poblacion='$poblacion',
+                provincia='$provincia',
+                cp='$cp',
+                fecha_nacimiento='$fecha',
+                borrado='$borrado',
+                foto='$foto'
+            WHERE cod_usuario=$codUsuario";
+    if ($bd->query($sql)) {
+        if (!empty($_POST["contrasena"])) {
+            $aclbd->setContrasenia($aclbd->getCodUsuario($nick), $_POST["contrasena"]);
+        }
+        if (!empty($rolNuevo)) {
+            $aclbd->setUsuarioRole($aclbd->getCodUsuario($nick), $aclbd->getCodRole($rolNuevo));
+        }
+
+        header("Location: verUsuario.php?id=$codUsuario");
+        exit;
+    } else {
+        echo "<div class='error'>Error BD: ".$bd->error."</div>";
+    }
+}
+
+// --- Plantilla ---
 inicioCabecera("Modificar Usuario");
 cabecera();
 finCabecera();
 
 inicioCuerpo("Modificar Usuario");
-cuerpo();
+formulario($usuario, $rolActual, $aclbd, $codUsuario);
 finCuerpo();
 
-// **********************************************************
+function cabecera(){}
 
-function cabecera() {}
-
-
-function cuerpo()
-{
-    global $servidor, $usuario, $contrasenia, $baseDatos;
-    $bd = new mysqli($servidor, $usuario, $contrasenia, $baseDatos);
-
-    $id = (int)$_GET["cod_usuario"];
-    $res = $bd->query("SELECT * FROM usuarios WHERE cod_usuario=$id");
-    if (!$res || $res->num_rows == 0) {
-        echo "<div class='error'>Usuario no existe</div>";
-        return;
-    }
-    $fila = $res->fetch_assoc();
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $nombre = $bd->real_escape_string($_POST["nombre"]);
-        $provincia = $bd->real_escape_string($_POST["provincia"]);
-        $sql = "UPDATE usuarios SET nombre='$nombre', provincia='$provincia' WHERE cod_usuario=$id";
-        if ($bd->query($sql)) {
-            header("Location: verUsuario.php?cod_usuario=$id");
-            exit;
-        } else {
-            echo "<div class='error'>Error: " . $bd->error . "</div>";
-        }
-    }
-?>
+function formulario($usuario, $rolActual, $aclbd, $codUsuario){
+    ?>
+    <h2>MODIFICAR USUARIO</h2>
     <form method="post">
-        Nick: <input type="text" value="<?= $fila["nick"] ?>" readonly><br>
-        Nombre: <input type="text" name="nombre" value="<?= $fila["nombre"] ?>"><br>
-        Provincia: <input type="text" name="provincia" value="<?= $fila["provincia"] ?>"><br>
-        <button type="submit">Guardar</button>
-        <a href="index.php">Cancelar</a>
-        <a href="verUsuario.php?cod_usuario=<?= $id ?>">Volver</a>
+        <label>Nick:</label>
+        <input type="text" value="<?= ($usuario["nick"]) ?>" readonly>
+        <input type="hidden" name="nick" value="<?= ($usuario["nick"]) ?>"><br>
+
+        <label>Contraseña (opcional):</label>
+        <input type="password" name="contrasena"><br>
+
+        <label>Rol:</label>
+        <select name="rol">
+            <?php foreach($aclbd->dameRoles() as $rol){
+                $sel = ($rol == $rolActual) ? "selected" : "";
+                echo "<option value='$rol' $sel>$rol</option>";
+            } ?>
+        </select><br><br>
+
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="<?= ($usuario["nombre"]) ?>"><br>
+
+        <label>NIF:</label>
+        <input type="text" name="nif" value="<?= ($usuario["nif"]) ?>"><br>
+
+        <label>Dirección:</label>
+        <input type="text" name="direccion" value="<?= ($usuario["direccion"]) ?>"><br>
+
+        <label>Población:</label>
+        <input type="text" name="poblacion" value="<?= ($usuario["poblacion"]) ?>"><br>
+
+        <label>Provincia:</label>
+        <input type="text" name="provincia" value="<?= ($usuario["provincia"]) ?>"><br>
+
+        <label>Código postal:</label>
+        <input type="text" name="cp" value="<?= ($usuario["cp"]) ?>"><br>
+
+        <label>Fecha de Nacimiento:</label>
+        <input type="date" name="fechaNacimiento" value="<?= ($usuario["fecha_nacimiento"]) ?>"><br>
+
+        <label>Borrado (0-no, 1-sí):</label>
+        <input type="text" name="borrado" value="<?= ($usuario["borrado"]) ?>"><br>
+
+        <label>Foto:</label>
+        <input type="text" name="foto" value="<?= ($usuario["foto"]) ?>"><br>
+
+        <input type="submit" value="Modificar usuario" name="modificar"><br>
+        <a href="./index.php">Volver a usuarios</a>
+        <a href="verUsuario.php?id=<?= (int)$codUsuario ?>">Cancelar</a>
     </form>
     <?php
-    ?>
-
-<?php
-
 }

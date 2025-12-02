@@ -300,22 +300,21 @@ class ACLBD extends ACLBase
      */
     function esValido(string $nick, string $contrasena): bool
     {
-      /*   if (!$this->_hayConeccion)
+        if (!$this->_hayConeccion)
             return false;
+        if (!$this->existeUsuario($nick)) return false;
 
-        $consulta = "SELECT * from acl_usuarios
-                         where nick = '{$nick}'";
+        $nick = mb_strtolower($nick);
+        $nick = $this->_sqli->escape_string(mb_substr($nick, 0, 50));
 
-        //Comprobar que la query sea válida con más seguridad
-        $resul = $this->_sqli->query($consulta)->fetch_assoc();
+        $sentencia = "SELECT * from acl_usuarios where nick='{$nick}'";
+        $resul = $this->_sqli->query($sentencia);
 
-        if (is_null($resul))
-            return false;
+        if (!$resul) return false;
 
-        if ($resul["constrasenia"] != $contrasena)
-            return false;
-
-        return true; */
+        $resul = $resul->fetch_assoc();
+        if ($resul["contrasenia"] !== mb_substr(sha1($contrasena), 0, 64)) return false;
+        return true;
     }
 
     /**
@@ -423,7 +422,23 @@ class ACLBD extends ACLBase
      * @param integer $codUsuario Usuario a buscar
      * @return integer|false Devuelve el role del usuario o false si no existe.
      */
-    function getUsuarioRole(int $codUsuario): int|false {}
+    function getUsuarioRole(int $codUsuario): int|false
+    {
+        if (!$this->_hayConeccion) return false;
+        if (!$this->existeCodUsuario($codUsuario)) return false;
+
+        $sentencia = "SELECT * from acl_usuarios where cod_acl_usuario = {$codUsuario}";
+        $resul = $this->_sqli->query($sentencia);
+
+        if (!$resul) return false;
+
+        if ($resul->num_rows > 0) {
+            $resul = $resul->fetch_assoc();
+            return (int)$resul["cod_acl_role"];
+        }
+
+        return false;
+    }
 
     /**
      * Función que asigna un nombre a un usuario
@@ -510,7 +525,19 @@ class ACLBD extends ACLBase
      * @return boolean Devuelve true si ha podido asignar el role al usuario.
      * False si no existe el usuario, role o no ha podido asignarlo
      */
-    function setUsuarioRole(int $codUsuario, int $role): bool {}
+    function setUsuarioRole(int $codUsuario, int $role): bool
+    {
+        if (!$this->_hayConeccion) return false;
+        if (!$this->existeCodUsuario($codUsuario)) return false;
+        if (!$this->existeRole($role)) return false;
+
+        $sentencia = "UPDATE acl_usuarios SET cod_acl_role = {$role} where cod_acl_usuario= {$codUsuario}";
+        $consulta = $this->_sqli->query($sentencia);
+
+        if (!$consulta) return false;
+
+        return true;
+    }
 
 
     /**
@@ -544,5 +571,16 @@ class ACLBD extends ACLBase
      *
      * @return array Array con todos los roles existentes
      */
-    function dameRoles(): array {}
+    function dameRoles(): array
+    {
+        $sentencia = "SELECT * FROM acl_roles";
+        $consulta = $this->_sqli->query($sentencia);
+
+        $array = [];
+        while ($fila = $consulta->fetch_assoc()) {
+            $array[$fila["cod_acl_role"]] = $fila["nombre"];
+        }
+
+        return $array;
+    }
 }

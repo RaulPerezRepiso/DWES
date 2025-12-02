@@ -3,56 +3,95 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 $ubicacion = [
     "Index Principal" => "/index.php",
-    "Pruebas" => "#",
+    "verUsuario" => "/aplicacion/usuarios/verUsuario.php"
 ];
 
-// Si tiene los permisos podrá acceder
+// Recoger el id del usuario
+if (isset($_GET["id"])) {
+    $codUsuario = (int)$_GET["id"];
+} else {
+    paginaError("No se ha especificado id");
+    exit;
+}
+
+// Comprobar permisos
 if (!$acceso->puedePermiso(2)) {
     paginaError("No tienes permiso para acceder a esta página");
     exit;
 }
 
+// Conexión a la base de datos
+$bd = new mysqli($servidor, $usuario, $contrasenia, $baseDatos);
+if ($bd->connect_errno) {
+    paginaError("Fallo al conectar a la base de datos: " . $bd->connect_error);
+    exit;
+}
 
-// Dibuja la plantilla de la vista
+// Comprobar que el id existe del usuario selecionado existe
+$sentencia = "SELECT * FROM usuarios WHERE cod_usuario = {$codUsuario}";
+$consulta = $bd->query($sentencia);
+if (!$consulta || $consulta->num_rows === 0) {
+    paginaError("No existe el id introducido");
+    exit;
+}
+
+// Obtener datos del usuario
+$usuario = $consulta->fetch_assoc();
+
+// Dibujar la plantilla
 inicioCabecera("Ver Usuario");
 cabecera();
 finCabecera();
 
 inicioCuerpo("Ver Usuario");
-cuerpo();
+cuerpo($usuario, $acceso);
 finCuerpo();
 
 // **********************************************************
 
 function cabecera() {}
 
-
-function cuerpo()
+// vista
+function cuerpo($usuario, $acceso)
 {
-    global $servidor, $usuario, $contrasenia, $baseDatos;
-    $bd = new mysqli($servidor, $usuario, $contrasenia, $baseDatos);
-
-    $id = (int)$_GET["cod_usuario"];
-    $res = $bd->query("SELECT * FROM usuarios WHERE cod_usuario=$id");
-    if (!$res || $res->num_rows == 0) {
-        echo "<div class='error'>Usuario no existe</div>";
-        return;
-    }
-    $fila = $res->fetch_assoc();
 ?>
-    <form>
-        Nick: <input type="text" value="<?= htmlspecialchars($fila["nick"]) ?>" readonly><br>
-        Nombre: <input type="text" value="<?= htmlspecialchars($fila["nombre"]) ?>" readonly><br>
-        Provincia: <input type="text" value="<?= htmlspecialchars($fila["provincia"]) ?>" readonly><br>
-        Foto: <img src="/imagenes/fotos/<?= htmlspecialchars($fila["foto"]) ?>" width="80"><br>
-        <a href="index.php">Volver</a>
-        <?php if ($GLOBALS['acceso']->puedePermiso(3)): ?>
-            <a href="modificarUsuario.php?cod_usuario=<?= $id ?>">Modificar</a>
-            <a href="borrarUsuario.php?nick=<?= urlencode($fila["nick"]) ?>">Borrar</a>
-        <?php endif; ?>
-    </form>
-    <?php
-    ?>
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Nick</th>
+                <th>Nombre</th>
+                <th>NIF</th>
+                <th>Dirección</th>
+                <th>Población</th>
+                <th>Provincia</th>
+                <th>CP</th>
+                <th>Fecha nacimiento</th>
+                <th>Borrado</th>
+                <th>Foto</th>
+                <?php if ($acceso->puedePermiso(3)) echo "<th>Acciones</th>"; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?= $usuario["nick"] ?></td>
+                <td><?= $usuario["nombre"] ?></td>
+                <td><?= $usuario["nif"] ?></td>
+                <td><?= $usuario["direccion"] ?></td>
+                <td><?= $usuario["poblacion"] ?></td>
+                <td><?= $usuario["provincia"] ?></td>
+                <td><?= $usuario["cp"] ?></td>
+                <td><?= $usuario["fecha_nacimiento"] ?></td>
+                <td><?= $usuario["borrado"] == 1 ? "Sí" : "No" ?></td>
+                <td>
+                    <img src="/imagenes/fotos/<?= ($usuario["foto"] ?: 'default.jpg') ?>" width="80" alt="foto usuario">
+                </td>
+                <?php if ($acceso->puedePermiso(3)) echo "<td>
+                    <a href='modificarUsuario.php?id={$usuario["cod_usuario"]}'>Modificar</a>
+                    <a href='borrarUsuario.php?nick={$usuario["nick"]}'>Borrar</a>
+                </td>"; ?>
+            </tr>
+        </tbody>
+    </table>
+    <a href="./index.php">Volver a usuarios</a>
 <?php
-
 }
