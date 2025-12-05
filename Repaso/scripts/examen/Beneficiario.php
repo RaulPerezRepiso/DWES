@@ -32,7 +32,7 @@ class Beneficiario
         //Validar que la reduccion este entre los valores de la constante de tipos de reduccion
         if (!validaEntero($_reduccion, 1, count(self::TIPOSREDUCCION), 1)) {
             throw new Exception('Reducción no válida');
-        }else{
+        } else {
             $this->_reduccion = $_reduccion;
         }
         $this->_reduccion_texto = self::TIPOSREDUCCION[$_reduccion];
