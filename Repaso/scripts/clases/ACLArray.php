@@ -33,28 +33,44 @@ class ACLArray extends ACLBase
     function __construct()
     {
         //añade los roles
-        $this->anadirRole("normales", [1 => true]);
-        $this->anadirRole("administradores", [1 => true, 2 => true]);
-        $this->anadirRole("superadmin", [1 => true, 2 => true, 3=> true]);
+        // $this->anadirRole("normales", [1 => true]);
+        // $this->anadirRole("administradores", [1 => true, 2 => true]);
+
+        $this->anadirRole("rolePar", [1 => true]);
+        $this->anadirRole("roleImpar", [2 => true]);
 
         //añade los usuario
+        // $this->anadirUsuario(
+        //     "alumno1",
+        //     "alumno1",
+        //     "alum",
+        //     $this->getCodRole("normales")
+        // );
+        // $this->anadirUsuario(
+        //     "Es usuario profesor",
+        //     "profesor",
+        //     "profe",
+        //     $this->getCodRole("administradores")
+        // );
+        // $this->anadirUsuario(
+        //     "Pablo",
+        //     "Pablo",
+        //     "12345",
+        //     $this->getCodRole("administradores")
+        // );
+
         $this->anadirUsuario(
-            "Es usuario alumno",
-            "alumno",
-            "alum",
-            $this->getCodRole("normales")
+            "PAR",
+            "PAR",
+            "PAR",
+            $this->getCodRole("rolePar")
         );
+
         $this->anadirUsuario(
-            "Es usuario profesor",
-            "profesor",
-            "profe",
-            $this->getCodRole("superadmin")
-        );
-        $this->anadirUsuario(
-            "Vicente Tejero",
-            "vicente",
-            "profesor",
-            $this->getCodRole("administradores")
+            "IMPAR",
+            "IMPAR",
+            "IMPAR",
+            $this->getCodRole("roleImpar")
         );
     }
 
@@ -70,18 +86,10 @@ class ACLArray extends ACLBase
         //pongo el nombre en minuscula
         $nombre = mb_strtolower($nombre);
 
-        //inicializo un array con todos los permisos a false
+        //inicializo un arracon todos los permisos a false
         $per = [
-            1 => false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false
+            1 => false, false, false, false, false,
+            false, false, false, false, false
         ];
 
         //compruebo si ya existe el role
@@ -140,8 +148,13 @@ class ACLArray extends ACLBase
      */
     function existeRole(int $codRole): bool
     {
-        if (array_key_exists($codRole, $this->_roles)) return true;
-        else return false;
+        foreach ($this->_roles as $rol /*=> $rolValue*/) {
+            if (in_array($codRole, $rol)) { //$rolValue
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -168,11 +181,8 @@ class ACLArray extends ACLBase
      */
     function getPermisoRole(int $codRole, int $numero): bool
     {
-        if (array_key_exists($codRole, $this->_roles)) {
-            if (array_key_exists($numero, $this->_roles[$codRole]["permisos"]))
-                return $this->_roles[$codRole]["permisos"] === true;
-        }
-        return false;
+        $rol = array_search($codRole, $this->_roles);
+        return $rol["permisos"][$numero]; //devuelve un true o false dependiendo de si tiene el permiso o no
     }
 
     /**
@@ -199,8 +209,8 @@ class ACLArray extends ACLBase
             return false;
 
         //la contraseña la guardo encriptada
-        //establecer el método
-        $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
+        //establecer el método---
+        $contrasena = password_hash($contrasena, PASSWORD_BCRYPT); //PASSWORD_BCRYPT
 
         //busco cual es el ultimo codigo
         $cont = 0;
@@ -254,8 +264,14 @@ class ACLArray extends ACLBase
      */
     function existeCodUsuario(int $codUsuario): bool
     {
-        if (array_key_exists($codUsuario, $this->_usuarios)) return true;
-        return false;
+        $encontrado = false;
+        foreach ($this->_usuarios as $k => $v) {
+            if ($v["cod"] == $codUsuario) {
+                $encontrado = true;
+            }
+        }
+
+        return $encontrado;
     }
 
     /**
@@ -267,11 +283,14 @@ class ACLArray extends ACLBase
      */
     function existeUsuario(string $nick): bool
     {
-        foreach ($this->_usuarios as $valor) {
-            if ($valor["nick"] == $nick) return true;
+        $encontrado = false;
+        foreach ($this->_usuarios as $k => $v) {
+            if ($v["nick"] == $nick) {
+                $encontrado = true;
+            }
         }
 
-        return false;
+        return $encontrado;
     }
 
     /**
@@ -284,17 +303,26 @@ class ACLArray extends ACLBase
      */
     function esValido(string $nick, string $contrasena): bool
     {
+        //pongo el nick n minuscula
         $nick = mb_strtolower($nick);
 
-        if (!$this->existeUsuario($nick)) {
+        //compruebo si existe el nick
+        if (!$this->existeUsuario($nick))
             return false;
-        }
 
+        //recojo cual es el codigo
         $codigo = $this->getCodUsuario($nick);
 
-        if (!password_verify($contrasena, $this->_usuarios[$codigo]["contrasenia"])) {
+        //establecer el metodo de encriptado
+        //$contrasena= password_hash($contrasena, PASSWORD_BCRYPT);
+
+        // if ($this->_usuarios[$codigo]["contrasenia"] != $contrasena)
+        //      return false;
+
+        if (!password_verify($contrasena, $this->_usuarios[$codigo]["contrasenia"]))
             return false;
-        }
+
+        // es valido
         return true;
     }
 
@@ -308,10 +336,11 @@ class ACLArray extends ACLBase
      */
     function getPermiso(int $codUsuario, int $numero): bool
     {
-        if (array_key_exists($codUsuario, $this->_usuarios)) {
-            if ($this->_usuarios[$codUsuario]["cod_role"] == $numero) return true;
+        if (!$this->existeCodUsuario($codUsuario)) {
+            return false;
         }
-        return false;
+
+        return $this->_roles[$codUsuario]["permisos"][$numero];
     }
 
     /**
@@ -323,12 +352,12 @@ class ACLArray extends ACLBase
      */
     function getPermisos(int $codUsuario): array|false
     {
-        if (array_key_exists($codUsuario, $this->_usuarios)) {
-            $roles = $this->_usuarios[$codUsuario]["cod_role"];
+        if (!$this->existeCodUsuario($codUsuario))
+            return false;
 
-            return $this->_roles[$roles]["permisos"];
-        }
-        return false;
+        $rolID = $this->_usuarios[$codUsuario]["cod_role"];
+
+        return $this->_roles[$rolID]["permisos"];
     }
 
     /**
@@ -354,8 +383,7 @@ class ACLArray extends ACLBase
      */
     function getBorrado(int $codUsuario): bool
     {
-        if (array_key_exists($codUsuario, $this->_usuarios)) return true;
-        else return false;
+        return $this->_usuarios["cod"]["borrado"];
     }
 
     /**
@@ -399,11 +427,12 @@ class ACLArray extends ACLBase
      */
     function setContrasenia(int $codUsuario, string $contrasenia): bool
     {
-        if (array_key_exists($codUsuario, $this->_usuarios)) {
-            $this->_usuarios[$codUsuario]["contrasenia"] = password_hash($contrasenia, PASSWORD_BCRYPT);
-            return true;
+
+        if (!$this->existeCodUsuario($codUsuario)) {
+            return false;
         }
-        return false;
+
+        $this->_usuarios[$codUsuario]["contrasenia"] = $contrasenia;
     }
 
     /**
@@ -435,14 +464,13 @@ class ACLArray extends ACLBase
      */
     function setUsuarioRole(int $codUsuario, int $role): bool
     {
-        if (array_key_exists($codUsuario, $this->_usuarios)) {
-            if (array_key_exists($role, $this->_roles)) {
-                $this->_usuarios[$codUsuario]["cod_role"] = $role;
-                return true;
-            }
+
+        if (!$this->existeCodUsuario($codUsuario)) {
             return false;
         }
-        return false;
+
+        $this->_usuarios[$codUsuario]["cod_role"] = $role; //mirar
+
     }
 
     /**
@@ -453,11 +481,12 @@ class ACLArray extends ACLBase
      */
     function dameUsuarios(): array
     {
-        $array = [];
-        foreach ($this->_usuarios as $clave => $valor) {
-            $array[$clave] = $valor["nick"];
-        }
-        return $array;
+        $users = [];
+
+        foreach ($this->_usuarios as $clave => $user)
+            $users[$clave] = $user["nick"];
+
+        return $users;
     }
 
     /**

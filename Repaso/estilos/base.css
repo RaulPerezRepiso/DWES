@@ -1,184 +1,127 @@
-@charset "UTF-8";
+@charset "UTF8";
 
-/* Fuente minimalista estilo Apple */
 body {
-    background-color: #1e1e1e; /* fondo oscuro */
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Inter', sans-serif;
+    background-color: rgb(189, 189, 189); /*ctrl + F5 para recargar pagina completamente*/
     font-size: 16px;
-    color: #e0e0e0; /* texto claro */
-    margin: 0;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
 }
 
-/* Menú superior */
-#barraMenu {
-    padding: 12px 24px;
-    margin-top: 20px;
-    background: rgba(45, 45, 45, 0.85); /* transparencia elegante */
-    backdrop-filter: blur(8px); /* efecto vidrio */
-    border-bottom: 1px solid #3c3c3c;
-    border-radius: 12px;
+#documento {
+    margin: 0 auto;
+    background-color: #aedab4;
+    width: 60%;
+    min-width: 400px;
+    padding: 2%;
+    border: 1px solid black;
 }
 
-#barraMenu a,
-#barraMenu span {
-    color: #ffffff;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    transition: color 0.3s ease;
-}
-
-#barraMenu a:hover {
-    color: #007aff; /* azul Apple */
-}
-
-/* Barra secundaria */
-.barraModdle a {
-    color: #9cdcfe;
-    text-decoration: none;
-    margin-right: 16px;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.barraModdle a:hover {
-    color: #007aff;
-}
-
-/* Cabecera */
-header {
-    background: linear-gradient(180deg, #2d2d2d 0%, #1e1e1e 100%);
-    color: #ffffff;
-    padding: 40px 20px;
+#documento header{
+    padding-top: 1%;
     text-align: center;
-    border-bottom: 1px solid #3c3c3c;
 }
 
-header div a {
-    display: inline-block;
-    margin-left: 20px;
+#cuerpoEjer p{
+    padding-left: 10%;
+    text-align: left;
+    font-weight: bold;
+}
+
+#cabecera {
+    background-color: #14e737;
+    padding: 5px;
+}
+
+#cabecera #logo {
+    width: 75px;
+    height: 50px;
+}
+
+#cabecera #titulo {
+    font-size: 1.3em;
+    font-style: italic;
+}
+
+.boton {
+    background-color: blue;
+    color: white;
+    border: thin black solid;
+}
+
+.boton a {
     text-decoration: none;
-    margin-top: 10px;
-    color: #ffffff;
-    transition: transform 0.3s ease, color 0.3s ease;
+    color: white;
 }
 
-header a:hover {
-    transform: translateY(-2px);
-    color: #007aff;
-}
-
-/* Título */
-#titulo {
-    font-size: 2.6em;
-    margin: 0;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-
-/* Lista */
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 20px;
-}
-
-li a {
-    display: block;
-    padding: 14px 20px;
-    background: #252526;
-    margin-bottom: 8px;
-    border: 1px solid #3c3c3c;
-    border-radius: 10px;
-    color: #e0e0e0;
+.boton a:visited {
     text-decoration: none;
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    margin-left: 10px;
+    color: white;
 }
 
-li a:hover {
-    background: #007aff;
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,122,255,0.3);
+.boton a:hover {
+    background-color: cyan;
+    color: black;
 }
 
-/* Pie */
-footer {
-    text-align: center;
-    font-size: 0.9em;
-    color: #a0a0a0;
-    margin-top: 60px;
-    padding: 30px;
-    background: #1e1e1e;
-    font-weight: 400;
-    border-top: 1px solid #3c3c3c;
+.boton:hover {
+    background-color: cyan;
+    color: black;
 }
 
-/* Mensajes de error */
-.error {
-    background: rgba(255, 77, 77, 0.1);
-    color: #ff6b6b;
-    border: 1px solid #ff6b6b;
-    padding: 14px;
-    border-radius: 8px;
-    margin: 20px 0;
-    font-weight: 500;
-    box-shadow: 0 2px 6px rgba(255,107,107,0.2);
-}
-
-/* Inputs */
-.for_texto {
-    border: 1px solid #3c3c3c;
-    background: #2d2d2d;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 8px;
+.tabla {
     width: 100%;
-    box-sizing: border-box;
-    font-size: 15px;
-    color: #e0e0e0;
-    transition: border 0.3s ease, box-shadow 0.3s ease;
-}
-
-.for_texto:focus {
-    border: 1px solid #007aff;
-    box-shadow: 0 0 0 3px rgba(0,122,255,0.3);
-    outline: none;
-}
-
-/* Titulares */
-h2, h3 {
-    margin-left: 10px;
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-}
-
-/* Párrafos */
-p {
-    margin-left: 10px;
-    color: #d4d4d4;
-}
-
-/* Tablas */
-table, td, tr, th {
-    border: 1px solid #3c3c3c;
     border-collapse: collapse;
-    padding: 8px;
-    background: #252526;
-    color: #e0e0e0;
+    border: none;
+    background-color: white;
 }
 
-table {
-    margin: 10px 0 2px 10px;
-    border-radius: 8px;
-    overflow: hidden;
+.tabla th {
+    background-color: teal;
+    color: blue;
 }
+
+.tabla tr.par {
+    background-color: black;
+    color: white;
+
+}
+
+.tablaBorde, .tablaBorde tr, .tablaBorde td{
+    border: 1px solid black;
+    text-align: center;
+}
+
+.tablaBorde td{
+    padding: 1%;
+}
+
+.titulos{
+    background-color: rgb(210, 210, 210);
+}
+
+/* .tabla tr.impar{
+
+} */
+
+#pie {
+    background-color: #81e714;
+    color: blue;
+    font-size: 1.5 em;
+    padding: 5px;
+}
+
+.for_texto {
+    border: blue thin solid;
+    background-color: white;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 4px;
+}
+
+.error {
+    background-color: white;
+    color: red;
+    border: thin solid red;
+    padding: 5px;
+}
+
+/* Clases añadidas */
+
