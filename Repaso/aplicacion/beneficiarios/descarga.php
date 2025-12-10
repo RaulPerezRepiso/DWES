@@ -3,8 +3,6 @@
 //include_once("/index.php");
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 
-
-
 if (!isset($_POST["descargaBenef"]))
     {
         echo "parametros incorrectos";

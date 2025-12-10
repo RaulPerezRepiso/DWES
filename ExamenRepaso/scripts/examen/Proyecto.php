@@ -9,8 +9,8 @@ class Proyecto
 
     protected string $_nombre;
     protected string $_empresa;
-    protected DateTime $_fecha_inicio;
-    protected DateTime $_fecha_fin;
+    protected string|DateTime $_fecha_inicio;
+    protected string|DateTime $_fecha_fin;
     protected int $_duracion;
     protected int $_tipo;
     protected string $_tipo_descripcion;
@@ -117,7 +117,7 @@ class Proyecto
      * @return integer 0 Corecta 
      *                -1 No válida
      */
-    public function setFechaInicio(DateTime $fecha): int
+    public function setFechaInicio(string|DateTime $fecha): int
     {
         $hoy = new DateTime("now");
         if ($fecha > $hoy) {
@@ -200,7 +200,7 @@ class Proyecto
 
     /**
      * Método aniadeOtras
-     * Permite añadir propiedades dinámicas al objeto Otras
+     * Permite añadir propiedades dinámicas al objeto Libros
      */
     public function aniadeOtras(string $propiedad, mixed $valor, ...$mas): int
     {

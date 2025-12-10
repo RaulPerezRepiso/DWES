@@ -36,7 +36,7 @@ $PRO = $_SESSION["PRO"] ?? [];
 // --- CARGAR FICHERO ---
 if (isset($_GET["accion"]) && $_GET["accion"] === "cargar") {
     $objetosCargados = [];
-    cargarProyectosDesdeFichero("pro.txt", $objetosCargados);
+    cargarColeccionDesdeFichero("pro.txt", $objetosCargados);
 
     foreach ($objetosCargados as $objeto) {
         $PRO[] = $objeto;
@@ -104,7 +104,7 @@ function cuerpo($PRO, $usuario, $permiso)
 /**
  * Función para cargar proyectos desde un fichero de texto
  */
-function cargarProyectosDesdeFichero(string $nombreFichero, array &$datos): bool
+function cargarColeccionDesdeFichero(string $nombreFichero, array &$datos): bool
 {
     $ruta = RUTABASE . "/ficheros/" . $nombreFichero;
     if (!file_exists($ruta)) return false;
