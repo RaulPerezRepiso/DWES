@@ -3,8 +3,9 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 
 class Libro implements Iterator
 {
-    private string $_nombre;
-    private string $_autor;
+    // Propiedades privadas 
+    private string $_nombre = "";
+    private string $_autor = "";
 
     // Array asociativo con las propiedades dinámicas
     private array $_otras = [];
@@ -21,77 +22,128 @@ class Libro implements Iterator
     {
         $this->$_nombre = $_nombre;
         $this->$_autor = $_autor;
+        // El primer elemento es el nombre, el último es el autor.
+        $this->keys = ['nombre'];
 
-        // $this->$_mas = $_mas;
+        // Procesar las propiedades dinámicas
+        for ($i = 0; $i < count($_mas); $i += 2) {
+            $nombre_prop = $_mas[$i] ?? null;
+            $valor_prop = $_mas[$i + 1] ?? null;
 
-        $this->resetKeys();
-    }
+            // 1. Comprobar que el nombre_propiedad es de tipo cadena
+            if (is_string($nombre_prop)) {
+                // 2. Almacenar internamente en minúscula con el último carácter en mayúscula
+                $nombre_almacenado = substr($nombre_prop, 0, -1) . strtoupper(substr($nombre_prop, -1));
 
-    /**
-     * Método mágico SET
-     * Guarda propiedades en mayúsculas
-     */
-    public function __set(string $nombre, mixed $valor): void
-    {
-        $clave = strtolower($nombre);
+                // Si no hay valor, se asigna null
+                $this->_otras[$nombre_almacenado] = $valor_prop;
 
-        if (strlen($clave) > 1) {
-            strtolower(substr($clave, 1, -1)) .
-                strtoupper(substr($clave, -1));
-        } else {
-            strtoupper($clave);
+                // Añadir la clave dinámica a la lista de claves a iterar
+                $this->keys[] = strtolower($nombre_prop);
+            }
+            // Si no es string, se ignora ese par, y la iteración avanza $i += 2
         }
 
-        $this->_otras[$clave] = $valor;
-        $this->resetKeys();
-    }
-
-    /**
-     * Método mágico GET
-     */
-    public function __get(string $nombre): mixed
-    {
-        $clave = strtolower($nombre);
-        if (isset($this->_otras[$clave]))
-            return $this->_otras[$clave];
-        else
-            //si no existe lanza una excepción
-            throw new Exception('No existe la propiedad.');
-    }
-
-    /**
-     * Método mágico ISSET
-     */
-    public function __isset(string $nombre): bool
-    {
-        $clave = strtolower($nombre);
-        return (isset($this->_otras[$clave]));
-    }
-
-    /**
-     * Método mágico UNSET
-     */
-    public function __unset(string $nombre): void
-    {
-        $clave = strtolower($nombre);
-        unset($this->_otras[$clave]);
+        // El autor es el último en la iteración.
+        $this->keys[] = "autor";
     }
 
 
     /**
-     * Iterador: preparar claves
-     */
-    private function resetKeys(): void
-    {
-        $this->_keys = array_keys($this->_otras);
-        $this->_position = 0;
-    }
-
-    // ITERATOR
-    /**
-     * Vuelve a la posición inicial
+     * Método mágico __set()
+     * Permite definir nuevas propiedades dinámicas o modificar existentes usando ->.
      *
-     * @return void
+     * @param string $name Nombre de la propiedad a establecer.
+     * @param mixed $value Valor a asignar.
+     */
+    public function __set(string $name, mixed $value)
+    {
+        $name = mb_strtolower($name);
+        $ulitmo = mb_strtoupper(mb_substr($name, -1));
+
+        $name = mb_substr($name, 0, mb_strlen($name) - 1) . $ulitmo;
+
+        $nombre = mb_strtolower($name);
+        if ($nombre === 'nombre') {
+            $this->_nombre = $value;
+            return;
+        }
+        if ($nombre === 'autor') {
+            $this->_autor = $value;
+            return;
+        }
+
+        $this->_otras[$name] = $value;
+    }
+
+    /**
+     * Método mágico __get()
+     * Permite acceder a propiedades privadas y dinámicas usando ->.
+     *
+     * @param string $name Nombre de la propiedad a obtener (ej: anIo, NoMbRe, Autor).
+     * @return mixed El valor de la propiedad, o null si no existe.
+     */
+    public function __get($name)
+    {
+        $nombre = strtolower($name);
+
+        if ($nombre === 'nombre') {
+            return $this->_nombre;
+        } elseif ($nombre === 'autor') {
+            return $this->_autor;
+        }
+
+        $nombre_almacenado = substr($nombre, 0, -1) . strtoupper(substr($nombre, -1));
+
+        if (array_key_exists($nombre_almacenado, $this->_otras)) {
+            return $this->_otras[$nombre_almacenado];
+        }
+
+        return null;
+    }
+
+    public function convertirNombre(string $nombre): String
+    {
+        $name = mb_strtolower($nombre);
+        $ulitmo = mb_strtoupper(mb_substr($name, -1));
+
+        $name = mb_substr($name, 0, mb_strlen($name) - 1) . $ulitmo;
+
+        return $name;
+    }
+    
+    // --- Implementación de la Interfaz Iterator ---
+    /**
+     * Retorna el valor del elemento actual.
+     * @return mixed
+     */
+    public function current(): mixed
+    {
+        $current_key = $this->_keys[$this->_position];
+        // Usamos __get para obtener el valor correctamente
+        return $this->__get($current_key);
+    }
+
+    /**
+     * Retorna la clave del elemento actual (en minúscula).
+     * @return scalar
+     */
+    public function key(): mixed
+    {
+        // La clave debe devolverse toda en minúscula
+        return $this->_keys[$this->_position];
+    }
+
+    /**
+     * Mueve el puntero a la siguiente propiedad.
+     */
+    public function next(): void
+    {
+        $this->_position++;
+    }
+
+    /**
+     * Devuelve el puntero al inicio de la iteración.
      */
     public function rewind(): void
     {
@@ -99,44 +151,11 @@ class Libro implements Iterator
     }
 
     /**
-     * Valida que la clave este en una posicion
-     *
-     * @return boolean
+     * Comprueba si la posición actual es válida.
+     * @return bool
      */
     public function valid(): bool
     {
-        return isset($this->_keys[$this->_position]);
-    }
-
-    /**
-     * Devuelve la posicion de la clave actual
-     *
-     * @return mixed
-     */
-    public function current(): mixed
-    {
-        $clave = $this->_keys[$this->_position];
-        return $this->_otras[$clave];
-    }
-
-    /**
-     * Muestra la clave en minúscula
-     *
-     * @return mixed
-     */
-    public function key(): mixed
-    {
-        $clave = $this->_keys[$this->_position];
-        return strtolower($clave);
-    }
-
-    /**
-     * Avanza de posición
-     *
-     * @return void
-     */
-    public function next(): void
-    {
-        ++$this->_position;
+        return isset($this->keys[$this->_position]);
     }
 }
