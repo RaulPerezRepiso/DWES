@@ -1,0 +1,313 @@
+@charset "UTF8";
+
+/* Fondo general */
+body {
+  background-color: #a8c7f3;
+  font-size: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #006aff; /* Color de letras */
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+}
+
+/* Contenedor principal */
+#documento {
+  margin: 50px auto;
+  background-color: #affff2;
+  width: 80%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 40px 30px;
+}
+
+/* Cabecera */
+#cabecera {
+  background-color: #64b5f6; /* Igual que el pie */
+  padding: 20px 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #42a5f5;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+#cabecera #logo {
+  width: 75px;
+  height: 50px;
+}
+
+#cabecera #titulo {
+  font-size: 2em;
+  font-style: italic;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+/* Botones */
+.boton {
+  background-color: #64b5f6;
+  color: rgb(255, 255, 255);
+  border: 1px solid #42a5f5;
+  padding: 12px 24px;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 20px 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.boton a {
+  text-decoration: none;
+  color: white;
+}
+
+.boton a:visited {
+  color: white;
+}
+
+.boton a:hover,
+.boton:hover {
+  background-color: #bbdefb;
+  color: #0d47a1;
+}
+
+/* Tablas */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  margin: 40px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla th {
+  background-color: #64b5f6;
+  color: #0d47a1;
+  padding: 14px;
+  text-align: left;
+  border-bottom: 2px solid #42a5f5;
+  font-size: 1em;
+}
+
+.tabla tr.par {
+  background-color: #e3f2fd;
+  color: #333;
+}
+
+.tabla tr.impar {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.tabla td {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Pie de página */
+#pie {
+  background-color: #64b5f6;
+  color: white;
+  font-size: 1.2em;
+  padding: 25px;
+  text-align: center;
+  border-top: 2px solid #42a5f5;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  margin-top: 50px;
+}
+
+/* Formularios */
+.for_texto {
+  border: 1px solid #64b5f6;
+  background-color: #ffffff;
+  padding: 10px;
+  margin: 12px 0;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+/* Mensajes de error */
+.error {
+  background-color: #fff0f0;
+  color: red;
+  border: 1px solid red;
+  padding: 14px;
+  margin: 25px 0;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* Barra estilo Moodle Centros */
+#barraMenu {
+  background-color: #e3f2fd;
+  padding: 20px 30px;
+  font-size: 1em;
+  border-bottom: 2px solid #bbdefb;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+#barraMenu a {
+  background-image: linear-gradient(to right, #bfe1fd, #2ae2fe);
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #0078f0;
+  display: inline-block;
+  text-decoration: none;
+}
+
+#barraMenu a:hover {
+  background-image: linear-gradient(to right, #2ae2fe, #bfe1fd);
+}
+
+#barraMenu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+#barraMenu li {
+  color: #555;
+  position: relative;
+  font-size: 0.95em;
+}
+
+#barraMenu li::after {
+  content: "›";
+  margin-left: 10px;
+  color: #999;
+}
+
+#barraMenu li:last-child::after {
+  content: "";
+}
+
+#barraMenu li a {
+  text-decoration: none;
+  color: #1976d2;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+#barraMenu li a:hover {
+  text-decoration: underline;
+  color: #0d47a1;
+}
+
+li {
+  padding: 4px 8px;
+  background-color: #006aff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  font-weight: bold;
+  margin: 3px;
+}
+
+li a {
+  text-decoration: none;
+  color: white;
+}
+
+li:hover {
+  background-color: #e0f0ff;
+  transform: translateY(-2px);
+}
+
+li a:hover {
+  color: #0078f0;
+}
+
+ul {
+  list-style-type: none;
+  margin-left: -25px;
+}
+
+#menuPrincipal {
+  margin-left: auto;
+  margin-bottom: 1%;
+}
+
+#menuPrincipal ul {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menuPrincipal li {
+  background-color: #006aff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#menuPrincipal li:hover {
+  background-color: #e0f0ff;
+  transform: translateY(-2px);
+  color: #0078f0;
+}
+
+#menuPrincipal a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+#menuPrincipal a:hover {
+  color: #0078f0;
+}
+
+#menuPrincipal ul {
+  display: flex;
+  align-items: center;
+}
+
+#menuPrincipal ul div {
+  display: flex;
+  align-items: center;
+}
+
+#barraLogin {
+  margin-left: auto;
+}
+
+#barraLogin a {
+  text-decoration: none;
+  color: #0d47a1;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  text-align: right;
+}
+
+/*TARJETA DE PRODUCTOS*/
+.contenedor-productos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.tarjeta-producto {
+  width: 250px;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fafafa;
+  text-align: center;
+}
