@@ -24,13 +24,14 @@
 			</div>
 			<div class="titulo">
 				<a href="/index.php">
-					<h1>PROYECTO FRAMEWORK PEDROSA</h1>
+					<h1>RELACIÓN 13</h1>
 				</a>
 			</div>
 
 		</header><!-- #header -->
-		
-		<?php // =============================== // MÉTODO PARA PINTAR barraUbi // =============================== 
+
+		<!-- // MÉTODO PARA PINTAR barraUbi //  -->
+		<?php
 		function dibujaBarraUbi($barraUbi)
 		{
 			if (empty($barraUbi)) {
@@ -56,9 +57,6 @@
 			<aside>
 				<ul>
 					<?php
-
-					//Llamos al campo declarado en el inicialControlador
-					echo $this->nombre ?? "no existe";
 
 					if (isset($this->menuizq)) {
 						foreach ($this->menuizq as $opcion) {
@@ -87,7 +85,7 @@
 
 		</div>
 		<footer>
-			<h2><span>Copyright &copy:</span> <?php echo Sistema::app()->autor ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dirección:</span><?php echo Sistema::app()->direccion ?></h2>
+			<h2><span>Copyright:</span> <?php echo Sistema::app()->autor ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dirección:</span><?php echo Sistema::app()->direccion ?></h2>
 		</footer><!-- #footer -->
 
 	</div><!-- #wrapper -->

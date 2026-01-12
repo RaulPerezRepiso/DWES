@@ -4,9 +4,24 @@
 class usuariosControlador extends CControlador
 {
 	public array $menuizq = [];
+	public int $valor = 15;
+
+	public array $barraUbi = [];
+
+
 	public function accionIndex()
 	{
 
+		$this->barraUbi = [
+			[
+				"texto" => "Inicio",
+				"enlace" => ["inicial"]
+			],
+			[
+				"texto" => "Usuarios",
+				"enlace" => ["usuarios"]
+			],
+		];
 
 		$this->menuizq = [
 			[
@@ -15,25 +30,6 @@ class usuariosControlador extends CControlador
 			]
 		];
 
-
-
 		$this->dibujaVista("prueba", [], "Usuarios Existentes");
-	}
-
-
-	//Podemos cerar tantas páginas como queramos usando accionNombre que creara una página con ruta absoluta sin extensión
-	public function accionNuevo()
-	{
-		echo "Nuevo Usuario";
-	}
-
-	public function accionModificar()
-	{
-		echo "Modificar Usuario";
-	}
-
-	public function accionBorrar()
-	{
-		$this->dibujaVista("prueba", [], "Borrar Usuarios");
 	}
 }

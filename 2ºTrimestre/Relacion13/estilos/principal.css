@@ -1,0 +1,242 @@
+/* ============================================================
+   ESTILOS GENERALES
+============================================================ */
+@media screen {
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: #a0b8f6;
+        color: #1f2937;
+    }
+
+    #todo {
+        width: 94%;
+        margin: 1.5rem auto;
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    header {
+        background: #2f3a55;
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: #f9fafb;
+        border-bottom: 1px solid #2f3a55;
+    }
+
+    header .logo img {
+        width: 65px;
+        height: 65px;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    header .titulo h1 {
+        margin: 0;
+        font-size: 1.7rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
+    }
+
+    header .titulo a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* ============================================================
+       CONTENIDO PRINCIPAL
+    ============================================================ */
+    .contenido {
+        display: flex;
+        gap: 1.2rem;
+        padding: 1.2rem;
+        background: #a4b6d1;
+    }
+
+    /* ============================================================
+       ASIDE (MENÚ IZQUIERDO)
+    ============================================================ */
+    aside {
+        flex: 0 0 230px;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 1rem;
+        border: 1px solid #d7dce5;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    aside ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: .55rem;
+    }
+
+    aside ul li a {
+        display: block;
+        padding: .75rem 1rem;
+        border-radius: 8px;
+        background: #f7f9fc;
+        color: #2c3e50;
+        font-weight: 500;
+        transition: all .25s ease;
+    }
+
+    aside ul li a:hover {
+        background: #dce9ff;
+        color: #1a3d6f;
+        transform: translateX(4px);
+    }
+
+    /* ============================================================
+       ARTICLE
+    ============================================================ */
+    article {
+        flex: 1;
+        background: #ffffff;
+        padding: 1.4rem;
+        border-radius: 12px;
+        border: 1px solid #d7dce5;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    article p {
+        margin-bottom: 0.8rem;
+    }
+
+    /* ============================================================
+       TABLAS
+    ============================================================ */
+    div.tabla {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table.tabla,
+    table.tabla1 {
+        width: 100%;
+        border-collapse: collapse;
+        background: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: 0.95rem;
+    }
+
+    table.tabla th,
+    table.tabla1 th {
+        background: #1a73e8;
+        color: #ffffff;
+        padding: .75rem;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    table.tabla tr.par,
+    table.tabla1 tr.par {
+        background: #f5f7fa;
+    }
+
+    table.tabla tr.impar,
+    table.tabla1 tr.impar {
+        background: #e9eef5;
+    }
+
+    table.tabla td,
+    table.tabla1 td {
+        padding: .65rem;
+        border-bottom: 1px solid #dce3ec;
+    }
+
+    table.tabla tr:hover,
+    table.tabla1 tr:hover {
+        background: #eef4ff;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+        background: #1f2535;
+        padding: 1rem;
+        text-align: center;
+        border-top: 1px solid #2f3a55;
+        color: #f9fafb;
+    }
+
+    footer h2 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    footer h2 span {
+        font-weight: 600;
+        color: #a8c7ff;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media screen and (max-width: 800px) {
+        .contenido {
+            flex-direction: column;
+        }
+
+        aside {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #todo {
+            width: 100%;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+    }
+}
+
+/* ======= BARRA UBI ======= */
+.barraUbi {
+    background: #eef2ff;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid #d0d7e5;
+    font-size: 0.9rem;
+}
+
+.barraUbi ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.barraUbi li::after {
+    content: "➜";
+    margin-left: 0.5rem;
+    color: #6b7280;
+}
+
+.barraUbi li:last-child::after {
+    content: "";
+}

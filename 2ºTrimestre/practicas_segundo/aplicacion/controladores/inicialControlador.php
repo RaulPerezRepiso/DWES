@@ -7,7 +7,12 @@ class inicialControlador extends CControlador
 
 	public function accionIndex()
 	{
-
+		$this->barraUbi = [
+			[
+				"texto" => "Inicio",
+				"enlace" => ["inicial"]
+			],
+		];
 
 		$this->menuizq = [
 			[
@@ -29,8 +34,8 @@ class inicialControlador extends CControlador
 		$entero = 12;
 
 		// echo $direccion;
-		
-		$this->dibujaVista("index", ["c" => $cadena, "n" => $entero, "direccion"=>$direccion], "Pagina principal");
+
+		$this->dibujaVista("index", ["c" => $cadena, "n" => $entero, "direccion" => $direccion], "Pagina principal");
 
 		// Este clase dibuja la Vista sin la plantilla
 		// $contenido = $this->dibujaVistaParcial("index", ["c"=>$cadena, "n"=>$entero], true);
