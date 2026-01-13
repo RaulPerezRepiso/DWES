@@ -51,8 +51,7 @@
 
 		<!-- Llamamos a la barra de Ubicación -->
 		<?php dibujaBarraUbi($this->barraUbi ?? []); ?>
-
-
+		
 		<div class="contenido">
 			<aside>
 				<ul>

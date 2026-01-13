@@ -7,7 +7,7 @@ class practicas2Controlador extends CControlador
 
 	public function accionIndex()
 	{
-	$this->barraUbi = [
+		$this->barraUbi = [
 			[
 				"texto" => "Inicio",
 				"enlace" => ["inicial"]
@@ -22,6 +22,10 @@ class practicas2Controlador extends CControlador
 			[
 				"texto" => "Inicio",
 				"enlace" => ["inicial"]
+			],
+			[
+				"texto" => "Mi Error",
+				"enlace" => ["practicas2", "mierror"]
 			]
 		];
 
@@ -32,5 +36,11 @@ class practicas2Controlador extends CControlador
 			[],
 			"Pagina Prácticas 2"
 		);
+	}
+
+	public function accionMierror()
+	{
+		//Esta acción llama directamente a la página de error con un número de error y mensaje concreto
+		Sistema::app()->paginaError(001, "No seas malo, No accedas a esta página");
 	}
 }

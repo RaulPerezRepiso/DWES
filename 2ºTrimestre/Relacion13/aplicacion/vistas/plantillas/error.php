@@ -36,7 +36,7 @@
 			<div class="contenido">
 				
 	        	
-	        	<article>
+	        	<article class="error">
 	        		<br />
 	        		<br />
 					 <img id="logo_pag_error" src="/imagenes/error_320x320.png" alt="">

@@ -39,6 +39,10 @@ class practicas1Controlador extends CControlador
 				"texto" => "Ejercicio 7",
 				"enlace" => ["practicas1", "ejercicio7"]
 			],
+			[
+				"texto" => "Ejercicio 5",
+				"enlace" => ["practicas1", "vistaejer5"]
+			],
 		];
 
 
@@ -213,11 +217,11 @@ class practicas1Controlador extends CControlador
 		$array1[1] = mt_rand(1, 100);
 		$array1[16] = mt_rand(1, 100);
 		$array1[54] = mt_rand(1, 100);
-		$array1[] = 34;
 		$array1["uno"] = "cadena";
 		$array1["dos"] = true;
 		$array1["tres"] = 1.345;
 		$array1["ultima"] = [1, 34, "nueva"];
+		$array1[] = 34;
 
 		// Usando una sola sentencia con array 
 		$array2 = array(
@@ -227,7 +231,8 @@ class practicas1Controlador extends CControlador
 			"uno" => "cadena",
 			"dos" => true,
 			"tres" => 1.345,
-			"ultima" => array(1, 34, "nueva")
+			"ultima" => array(1, 34, "nueva"),
+			55 => 34
 		);
 
 		// Usando una sola sentencia con []
@@ -238,7 +243,8 @@ class practicas1Controlador extends CControlador
 			"uno" => "cadena",
 			"dos" => true,
 			"tres" => 1.345,
-			"ultima" => [1, 34, "nueva"]
+			"ultima" => [1, 34, "nueva"],
+			55 => 34
 		];
 
 		// Array que contiene los 3 arrays
@@ -290,10 +296,144 @@ class practicas1Controlador extends CControlador
 
 		];
 
+		// Usando la serie de funciones
+		$fechaActual = time();
+		$fechaActual_corta = date("d/m/Y", $fechaActual);
+		$fechaActual_larga = "día " . date("j", $fechaActual) .
+			", mes " . date("F", $fechaActual) .
+			", año " . date("Y", $fechaActual) .
+			", día de la semana " . date("l", $fechaActual);
+		$horaActual = date("H:i:s", $fechaActual);
+
+		// Usando la serie de funciones con una fecha fija
+		$fechaFija = strtotime("2024-03-29 12:45");
+		$fechaFija_corta = date("d/m/Y", $fechaFija);
+		$fechaFija_larga = "día " . date("j", $fechaFija) .
+			", mes " . date("F", $fechaFija) .
+			", año " . date("Y", $fechaFija) .
+			", día de la semana " . date("l", $fechaFija);
+		$horaFija = date("H:i:s", $fechaFija);
+
+		// Usando la serie de funciones con una fecha modificada
+		$fechaModificada = strtotime("-12 days -4 hours");
+		$fechaModificada_corta = date("d/m/Y", $fechaModificada);
+		$fechaModificada_larga = "día " . date("j", $fechaModificada) .
+			", mes " . date("F", $fechaModificada) .
+			", año " . date("Y", $fechaModificada) .
+			", día de la semana " . date("l", $fechaModificada);
+		$horaModificada = date("H:i:s", $fechaModificada);
+
+		// Usando DateTime
+		$fechaActualDT = new DateTime();
+		$fechaActualDT_corta = $fechaActualDT->format("d/m/Y");
+		$fechaActualDT_larga = "día " . $fechaActualDT->format("j") .
+			", mes " . $fechaActualDT->format("F") .
+			", año " . $fechaActualDT->format("Y") .
+			", día de la semana " . $fechaActualDT->format("l");
+		$horaActualDT = $fechaActualDT->format("H:i:s");
+
+		// Usando DateTime con una fecha fija
+		$fechaFijaDT = new DateTime("2024-03-29 12:45");
+		$fechaFijaDT_corta = $fechaFijaDT->format("d/m/Y");
+		$fechaFijaDT_larga = "día " . $fechaFijaDT->format("j") .
+			", mes " . $fechaFijaDT->format("F") .
+			", año " . $fechaFijaDT->format("Y") .
+			", día de la semana " . $fechaFijaDT->format("l");
+		$horaFijaDT = $fechaFijaDT->format("H:i:s");
+
+		// Usando DateTime con una fecha modificada
+		$fechaModificadaDT = new DateTime();
+		$fechaModificadaDT->modify("-12 days -4 hours");
+		$fechaModificadaDT_corta = $fechaModificadaDT->format("d/m/Y");
+		$fechaModificadaDT_larga = "día " . $fechaModificadaDT->format("j") .
+			", mes " . $fechaModificadaDT->format("F") .
+			", año " . $fechaModificadaDT->format("Y") .
+			", día de la semana " . $fechaModificadaDT->format("l");
+		$horaModificadaDT = $fechaModificadaDT->format("H:i:s");
+
+		// Arrays para mostrar en el cuerpo el contenido de todo
+		$arrayFunciones = [
+			"Fecha actual (d/m/Y)" => $fechaActual_corta,
+			"Fecha actual (larga)" => $fechaActual_larga,
+			"Hora actual" => $horaActual,
+			"Fecha fija (d/m/Y)" => $fechaFija_corta,
+			"Fecha fija (larga)" => $fechaFija_larga,
+			"Hora fija" => $horaFija,
+			"Fecha modificada (d/m/Y)" => $fechaModificada_corta,
+			"Fecha modificada (larga)" => $fechaModificada_larga,
+			"Hora modificada" => $horaModificada
+		];
+
+		$arrayDateTime = [
+			"Fecha actual (d/m/Y)" => $fechaActualDT_corta,
+			"Fecha actual (larga)" => $fechaActualDT_larga,
+			"Hora actual" => $horaActualDT,
+			"Fecha fija (d/m/Y)" => $fechaFijaDT_corta,
+			"Fecha fija (larga)" => $fechaFijaDT_larga,
+			"Hora fija" => $horaFijaDT,
+			"Fecha modificada (d/m/Y)" => $fechaModificadaDT_corta,
+			"Fecha modificada (larga)" => $fechaModificadaDT_larga,
+			"Hora modificada" => $horaModificadaDT
+		];
+
+		$cont = 0;
+
 		$this->dibujaVista(
 			"ejercicio7",
-			[],
+			[
+				"arrayFunciones" => $arrayFunciones,
+				"arrayDateTime" => $arrayDateTime,
+				"cont" => $cont
+			],
 			"Ejercicio 7"
+		);
+	}
+
+
+	public function accionVistaejer5()
+	{
+
+		$this->barraUbi = [
+			[
+				"texto" => "Inicio",
+				"enlace" => ["inicial"]
+			],
+			[
+				"texto" => "Prácticas 1",
+				"enlace" => ["practicas1"]
+			],
+			[
+				"texto" => "Ejercicio 5",
+				"enlace" => ["practicas1", "ejercicio5"]
+			],
+		];
+
+		$this->menuizq = [
+			[
+				"texto" => "Inicio",
+				"enlace" => ["inicial"]
+			],
+			[
+				"texto" => "Indice Práticas 1",
+				"enlace" => ["practicas1", "index"]
+			],
+		];
+
+		//Contenido del array
+		$vector = array();
+		$vector[1] = "esto es una cadena";
+		$vector["posi1"] = 25.67;
+		$vector[] = false;
+		$vector["ultima"] = array(2, 5, 96);
+		$vector[56] = 23;
+
+
+		$this->dibujaVista(
+			"vistaejer5",
+			[
+				"vector" => $vector
+			],
+			"Ejercicio 5"
 		);
 	}
 }

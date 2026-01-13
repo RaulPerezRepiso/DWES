@@ -93,6 +93,7 @@
         color: #2c3e50;
         font-weight: 500;
         transition: all .25s ease;
+        text-decoration: none;
     }
 
     aside ul li a:hover {
@@ -231,12 +232,86 @@
     gap: 0.5rem;
 }
 
+.barraUbi ul li a {
+    text-decoration: none;
+}
+
 .barraUbi li::after {
     content: "➜";
     margin-left: 0.5rem;
     color: #6b7280;
+
 }
 
 .barraUbi li:last-child::after {
     content: "";
+}
+
+/* ============================================================
+   ESTILOS ESPECÍFICOS PARA LA PÁGINA DE ERROR
+============================================================ */
+.error {
+    max-width: 650px;
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #cfd6e6;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Imagen del error */
+#logo_pag_error {
+    width: 220px;
+    height: auto;
+    margin-bottom: 1.2rem;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+}
+
+/* Mensaje principal del error */
+#mensaje_pag_error {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin: 1rem 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Texto secundario */
+article p,
+article span,
+article div {
+    font-size: 1.1rem;
+    color: #374151;
+}
+
+/* ============================================================
+   ESTILOS ESPECÍFICOS PARA LA PÁGINA DE ERROR
+============================================================ */
+.error {
+    max-width: 650px;
+    margin: 2rem auto;
+    text-align: center;
+    padding: 3rem 2.5rem;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #d5d9e5;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+
+    /* Nuevo: efecto suave */
+    animation: aparecerError 0.4s ease-out;
+}
+
+/* Animación suave de entrada */
+@keyframes aparecerError {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
