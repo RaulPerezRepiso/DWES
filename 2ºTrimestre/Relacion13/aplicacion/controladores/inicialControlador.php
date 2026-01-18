@@ -26,9 +26,6 @@ class inicialControlador extends CControlador
 			]
 		];
 
-
-
-
 		$this->dibujaVista(
 			"index",
 			[],

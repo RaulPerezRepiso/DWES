@@ -32,26 +32,44 @@
 
 		<!-- // MÉTODO PARA PINTAR barraUbi //  -->
 		<?php
-		function dibujaBarraUbi($barraUbi)
-		{
-			if (empty($barraUbi)) {
-				return;
+		if (!empty($this->barraUbi)) {
+
+			echo CHTML::dibujaEtiqueta("nav", ["class" => "barraUbi"], null, false);
+
+			$total = count($this->barraUbi);
+			$i = 0;
+
+			foreach ($this->barraUbi as $item) {
+				$i++;
+
+				$texto = $item["texto"];
+				$enlace = $item["enlace"];
+
+				// Si NO es el último elemento → enlace + separador
+				if ($i < $total) {
+
+					// Si el enlace está vacío, solo texto
+					if (empty($enlace)) {
+						echo CHTML::dibujaEtiqueta("span", [], $texto, true);
+					} else {
+						echo CHTML::link($texto, $enlace);
+					}
+
+					// Separador
+					echo CHTML::dibujaEtiqueta("span", ["class" => "sep"], "&raquo;", true);
+				}
+
+				// Último elemento → solo texto sin enlace
+				else {
+					echo CHTML::dibujaEtiqueta("span", ["class" => "actual"], $texto, true);
+				}
 			}
-			echo '<nav class="barraUbi">';
-			echo '<ul>';
-			foreach ($barraUbi as $item) {
-				echo '<li>';
-				echo CHTML::link($item["texto"], $item["enlace"]);
-				echo '</li>';
-			}
-			echo '</ul>';
-			echo '</nav>';
+
+			echo CHTML::dibujaEtiquetaCierre("nav");
 		}
 		?>
+	
 
-		<!-- Llamamos a la barra de Ubicación -->
-		<?php dibujaBarraUbi($this->barraUbi ?? []); ?>
-		
 		<div class="contenido">
 			<aside>
 				<ul>
