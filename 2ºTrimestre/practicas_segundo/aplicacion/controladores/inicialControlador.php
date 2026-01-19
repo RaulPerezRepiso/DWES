@@ -23,6 +23,10 @@ class inicialControlador extends CControlador
 			[
 				"texto" => "Productos",
 				"enlace" => ["productos"],
+			],
+			[
+				"texto" => "modelos",
+				"enlace" => ["ejemmodelos"],
 			]
 
 		];
