@@ -105,7 +105,7 @@ class ejemmodelosControlador extends CControlador
 			$pag=intval($_GET["pag"]);
 
 		$salida=[];
-		for($cont=($pag-1)*$regPag; $cont<$pag*$regPag; $cont++)
+		for($cont=($pag-1)*$regPag; $cont<$pag*$regPag && $cont<$totalRegistros; $cont++)
 			$salida[]=$filas[$cont];
 
 		$opcPaginador = array(
