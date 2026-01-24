@@ -315,3 +315,32 @@ article div {
         transform: translateY(0);
     }
 }
+
+/* Estilos para la barraLogin */
+.barraLogin {
+    background-color: #f2f2f2;      /* Fondo suave */
+    border-bottom: 1px solid #ccc;  /* Línea separadora */
+    padding: 8px 15px;              /* Espaciado interno */
+    font-size: 14px;
+    display: flex;                  /* Alineación horizontal */
+    justify-content: flex-end;      /* Todo alineado a la derecha */
+    align-items: center;
+    gap: 15px;                      /* Separación entre elementos */
+}
+
+.barraLogin span {
+    font-weight: bold;
+    color: #555;
+}
+
+.barraLogin a {
+    text-decoration: none;
+    color: #0066cc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.barraLogin a:hover {
+    background-color: #e6e6e6;
+}

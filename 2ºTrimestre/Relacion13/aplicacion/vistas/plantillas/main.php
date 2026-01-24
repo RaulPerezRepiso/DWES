@@ -30,6 +30,20 @@
 
 		</header><!-- #header -->
 
+		<!-- Método para pintar la barra de login -->
+		<div class="barraLogin">
+			<?php
+			echo CHTML::dibujaEtiqueta("span", [], "Usuario no conectado", true).PHP_EOL;
+
+			echo CHTML::link("Login", ["registro", "login"]);
+			echo " | ";
+			echo CHTML::link("Logout", "/registro/logout");
+			echo " | ";
+			echo CHTML::link("Registrarse", "/registro/pedirDatosRegistro");
+			?>
+		</div>
+
+
 		<!-- // MÉTODO PARA PINTAR barraUbi //  -->
 		<?php
 		if (!empty($this->barraUbi)) {
@@ -68,7 +82,7 @@
 			echo CHTML::dibujaEtiquetaCierre("nav");
 		}
 		?>
-	
+
 
 		<div class="contenido">
 			<aside>

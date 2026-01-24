@@ -8,7 +8,7 @@ class inicialControlador extends CControlador
 	public function accionIndex()
 	{
 
-	$this->barraUbi = [
+		$this->barraUbi = [
 			[
 				"texto" => "Inicio",
 				"enlace" => ["inicial"]
@@ -23,6 +23,10 @@ class inicialControlador extends CControlador
 			[
 				"texto" => "Prácticas 2",
 				"enlace" => ["practicas2"]
+			],
+			[
+				"texto" => "Productos",
+				"enlace" => ["productos"]
 			]
 		];
 
