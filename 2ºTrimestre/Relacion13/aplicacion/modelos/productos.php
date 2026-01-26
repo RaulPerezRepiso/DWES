@@ -23,13 +23,17 @@ class productos extends CActiveRecord
         return array(
             "cod_producto",
             "nombre",
+            "cod_categoria",
             "fabricante",
             "fecha_alta",
             "unidades",
+            "precio_base",
+            "iva",
+            "precio_iva",
             "precio_venta",
             "foto",
             "borrado",
-            "categoria"
+            "descripcion_categoria"
         );
     }
 
@@ -79,15 +83,26 @@ class productos extends CActiveRecord
                 "ATRI" => "precio_base",
                 "TIPO" => "FUNCION",
                 "DEFECTO" => 0,
-                "FUNCINO" => "validaReal",
+                "MIN" => 0,
                 "MENSAJE" => "El nuermo tiene que ser Real y mayor de 0"
             ),
             array(
                 "ATRI" => "iva",
-                "TIPO" => "FUNCION",
-                "FUNCION" => "validaIva",
+                // Validación con RANGO
+                "TIPO" => "RANGO",
+                "RANGO" => [4, 10, 21],
                 "DEFECTO" => 21,
                 "MENSAJE" => "Valor de IVA no válido"
+
+
+            ),
+            array(
+                "ATRI" => "precio_iva",
+                "TIPO" => "REAL"
+            ),
+            array(
+                "ATRI" => "precio_venta",
+                "TIPO" => "REAL"
             ),
             array(
                 "ATRI" => "foto",
@@ -108,30 +123,11 @@ class productos extends CActiveRecord
 
     protected function afterCreate(): void
     {
-        $this->precio_iva = $this->precio_base * $this->iva / 100;
-        $this->precio_venta = $this->precio_base + $this->precio_iva;
+        $base = floatval($this->precio_base);
+        $iva = floatval($this->iva);
+
+        $this->precio_iva = $base * $iva / 100;
+        $this->precio_venta = $base + $this->precio_iva;
     }
 
-
-    //Método para validar que el numero sea real y mayor de 0
-    protected function  validaReal(): bool
-    {
-
-        if ($this->precio_base < 0) {
-            $this->setError("precio_base", "El número tiene que ser negativo");
-            return false;
-        }
-
-        return true;
-    }
-
-    //Método que válida que el IVA sea valido
-    protected function validaIva(): bool
-    {
-        if ($this->iva != 4 && $this->iva != 10 && $this->iva != 21) {
-            $this->setError("iva", "Valor de iva no válido");
-            return false;
-        }
-        return true;
-    }
 }
