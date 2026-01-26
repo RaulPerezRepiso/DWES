@@ -33,7 +33,7 @@ class productos extends CActiveRecord
             "precio_venta",
             "foto",
             "borrado",
-            "descripcion_categoria"
+            "nombre_categoria"
         );
     }
 

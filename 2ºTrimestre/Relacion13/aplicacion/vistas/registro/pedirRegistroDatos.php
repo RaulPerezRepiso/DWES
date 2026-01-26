@@ -28,6 +28,7 @@ echo CHTML::modeloNumber($modelo, "estado");
 echo CHTML::modeloError($modelo, "estado");
 echo "<br>";
 
+
 echo CHTML::modeloLabel($modelo, "contrasenia") . PHP_EOL;
 echo CHTML::modeloPassword($modelo, "contrasenia", array("maxlength" => 30, "size" => 30));
 echo CHTML::modeloError($modelo, "contrasenia");
