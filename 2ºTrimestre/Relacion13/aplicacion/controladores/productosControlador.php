@@ -169,29 +169,14 @@ class productosControlador extends CControlador
 	public function accionModificar()
 	{
 		$this->barraUbi = [
-			[
-				"texto" => "Inicio",
-				"enlace" => ["inicial"]
-			],
-			[
-				"texto" => "Productos",
-				"enlace" => ["productos"]
-			],
+			["texto" => "Inicio", "enlace" => ["inicial"]],
+			["texto" => "Productos", "enlace" => ["productos"]],
 		];
 
 		$this->menuizq = [
-			[
-				"texto" => "Inicio",
-				"enlace" => ["inicial"]
-			],
-			[
-				"texto" => "Registro",
-				"enlace" => ["registro", "pedirDatosRegistro"]
-			],
-			[
-				"texto" => "Productos",
-				"enlace" => ["productos", "index"]
-			]
+			["texto" => "Inicio", "enlace" => ["inicial"]],
+			["texto" => "Registro", "enlace" => ["registro", "pedirDatosRegistro"]],
+			["texto" => "Productos", "enlace" => ["productos", "index"]],
 		];
 
 		// 1. Comprobar ID
@@ -202,36 +187,54 @@ class productosControlador extends CControlador
 		$id = intval($_GET["id"]);
 		$prod = new productos();
 
-		// 2. Cargar el producto
+		// 2. Cargar producto
 		if (!$prod->buscarPorId($id)) {
 			Sistema::app()->paginaError(404, "Producto no encontrado");
 		}
 
-		// 3. Si llega el formulario, procesarlo
+		// 3. Cargar categoría asociada
+		$cat = new categorias();
+		$nombreCategoria = "";
+
+		if ($cat->buscarPorId($prod->cod_categoria)) {
+			$nombreCategoria = $cat->descripcion;   // nombre real del campo
+		}
+
+		// Campo virtual para la vista
+		$prod->nombre_categoria = $nombreCategoria;
+
+		// 4. Procesar POST
 		if (isset($_POST["productos"])) {
 
-			// Cargar valores enviados
 			$prod->setValores($_POST["productos"]);
 
-			// Validar
 			if ($prod->validar()) {
-
-				// Guardar en BD
 				if ($prod->guardar()) {
-
-					// Volver al listado
 					Sistema::app()->irAPagina(["productos", "index"]);
 				}
 			}
 		}
 
-		// 4. Dibujar vista con el modelo cargado
+		// 5. Cargar lista completa de categorías para un <select>
+		$cat = new categorias();
+		$lista = $cat->buscarTodos();
+
+		$categorias = [];
+		foreach ($lista as $fila) {
+			$categorias[$fila["cod_categoria"]] = $fila["descripcion"];
+		}
+
+		// 6. Dibujar vista
 		$this->dibujaVista(
 			"modificar",
-			["modelo" => $prod],
+			[
+				"modelo" => $prod,
+				"categorias" => $categorias
+			],
 			"Modificar producto"
 		);
 	}
+
 
 
 	// --------------------------------------------------------- 
@@ -278,18 +281,24 @@ class productosControlador extends CControlador
 			Sistema::app()->paginaError(404, "Producto no encontrado");
 		}
 
-		// 3. Si llega confirmación por POST → borrar
+		// 3. Si llega confirmación por POST → cambiar 0/1
 		if (isset($_POST["confirmar"]) && $_POST["confirmar"] === "SI") {
 
-			// Aquí decides si borras físicamente o marcas borrado = 1
-			$prod->borrado = 1;
+			// Obtener valor actual
+			$valorActual = $prod->borrado;
 
-			if ($prod->guardar()) {
-				Sistema::app()->irAPagina(["productos", "index"]);
-			}
+			// Alternar 0 ↔ 1
+			$nuevoValor = ($valorActual == 0) ? 1 : 0;
+
+			// UPDATE directo
+			$sql = "UPDATE productos SET borrado = $nuevoValor WHERE cod_producto = $id";
+			sistema::app()->BD()->crearConsulta($sql);
+
+			// Volver al listado
+			Sistema::app()->irAPagina(["productos", "index"]);
 		}
 
-		// 4. Dibujar vista de confirmación
+		// 4. Dibujar vista
 		$this->dibujaVista(
 			"eliminar",
 			["modelo" => $prod],
@@ -383,20 +392,48 @@ class productosControlador extends CControlador
 		);
 	}
 
+	// --------------------------------------------------------- 
+	// ACCIÓN NUEVO 
+	// --------------------------------------------------------- 
 	public function accionNuevo()
 	{
 		$this->barraUbi = [
-			["texto" => "Inicio", "enlace" => ["inicial"]],
-			["texto" => "Productos", "enlace" => ["productos"]],
+			[
+				"texto" => "Inicio",
+				"enlace" => ["inicial"]
+			],
+			[
+				"texto" => "Productos",
+				"enlace" => ["productos"]
+			],
 		];
 
 		$this->menuizq = [
-			["texto" => "Inicio", "enlace" => ["inicial"]],
-			["texto" => "Registro", "enlace" => ["registro", "pedirDatosRegistro"]],
+			[
+				"texto" => "Inicio",
+				"enlace" => ["inicial"]
+			],
+			[
+				"texto" => "Registro",
+				"enlace" => ["registro", "pedirDatosRegistro"]
+			],
+			[
+				"texto" => "Productos",
+				"enlace" => ["productos", "index"]
+			]
 		];
 
 		// Crear modelo vacío
 		$prod = new productos();
+
+		// Cargar categorías
+		$cat = new categorias();
+		$lista = $cat->buscarTodos();
+
+		$categorias = [];
+		foreach ($lista as $fila) {
+			$categorias[$fila["cod_categoria"]] = $fila["descripcion"];
+		}
 
 		// Si llega el formulario
 		if (isset($_POST["productos"])) {
@@ -419,10 +456,14 @@ class productosControlador extends CControlador
 		// Dibujar vista
 		$this->dibujaVista(
 			"nuevo",
-			["modelo" => $prod],
+			[
+				"modelo" => $prod,
+				"categorias" => $categorias
+			],
 			"Nuevo producto"
 		);
 	}
+
 
 	// --------------------------------------------------------- 
 	// ACCIÓN DESCARGAR (exporta filtrados) 

@@ -7,7 +7,7 @@ echo CHTML::dibujaEtiqueta("h2", [], "Eliminar Producto");
 echo CHTML::dibujaEtiqueta("p", [], "¿Seguro que deseas eliminar este producto?");
 
 // Mostrar datos del producto en modo lectura
-echo CHTML::dibujaEtiqueta("div", ["style" => "margin-bottom:20px;"], "");
+echo CHTML::dibujaEtiqueta("div", ["style" => "margin-bottom:20px;"]);
 
 // Nombre
 echo CHTML::modeloLabel($modelo, "nombre") . "<br>";
@@ -33,7 +33,7 @@ if ($modelo->foto) {
     );
 }
 
-echo CHTML::dibujaEtiqueta("div", [], ""); // cerrar div
+echo CHTML::dibujaEtiquetaCierre("div");
 
 // FORMULARIO DE CONFIRMACIÓN
 echo CHTML::iniciarForm("", "post");

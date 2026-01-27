@@ -70,7 +70,8 @@ class productos extends CActiveRecord
             ),
             array(
                 "ATRI" => "fecha_alta",
-                "TIPO" => "FECHA",
+                "TIPO" => "CADENA",
+                "TAMANIO" => 10,
                 "DEFECTO" => date("Y-m-d")
             ),
             array(
@@ -81,7 +82,7 @@ class productos extends CActiveRecord
             ),
             array(
                 "ATRI" => "precio_base",
-                "TIPO" => "FUNCION",
+                "TIPO" => "ENTERO",
                 "DEFECTO" => 0,
                 "MIN" => 0,
                 "MENSAJE" => "El nuermo tiene que ser Real y mayor de 0"
@@ -93,8 +94,6 @@ class productos extends CActiveRecord
                 "RANGO" => [4, 10, 21],
                 "DEFECTO" => 21,
                 "MENSAJE" => "Valor de IVA no válido"
-
-
             ),
             array(
                 "ATRI" => "precio_iva",
@@ -130,4 +129,24 @@ class productos extends CActiveRecord
         $this->precio_venta = $base + $this->precio_iva;
     }
 
+    protected function fijarSentenciaUpdate(): string
+    {
+        $fecha = CGeneral::fechaNormalAMysql($this->fecha_alta);
+    
+        $sql = "UPDATE productos SET ";
+        $sql .= "nombre = '" . CGeneral::addSlashes($this->nombre) . "', ";
+        $sql .= "cod_categoria = " . intval($this->cod_categoria) . ", ";
+        $sql .= "fabricante = '" . CGeneral::addSlashes($this->fabricante) . "', ";
+        $sql .= "fecha_alta = '$fecha', ";
+        $sql .= "unidades = " . intval($this->unidades) . ", ";
+        $sql .= "precio_base = " . floatval($this->precio_base) . ", ";
+        $sql .= "iva = " . intval($this->iva) . ", ";
+        $sql .= "precio_iva = " . floatval($this->precio_iva) . ", ";
+        $sql .= "precio_venta = " . floatval($this->precio_venta) . ", ";
+        $sql .= "foto = '" . CGeneral::addSlashes($this->foto) . "', ";
+        $sql .= "borrado = " . intval($this->borrado) . " ";
+        $sql .= "WHERE cod_producto = " . intval($this->cod_producto);
+
+        return $sql;
+    }
 }

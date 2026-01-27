@@ -24,7 +24,7 @@ echo "<br><br>";
 // FECHA ALTA
 // -----------------------------
 echo CHTML::modeloLabel($modelo, "fecha_alta") . "<br>";
-echo CHTML::modeloDate($modelo, "fecha_alta");
+echo CHTML::modeloText($modelo, "fecha_alta");
 echo CHTML::modeloError($modelo, "fecha_alta");
 echo "<br><br>";
 
@@ -48,11 +48,7 @@ echo "<br><br>";
 // IVA
 // -----------------------------
 echo CHTML::modeloLabel($modelo, "iva") . "<br>";
-echo CHTML::modeloListaDropDown(
-    $modelo,
-    "iva",
-    [4 => "4%", 10 => "10%", 21 => "21%"]
-);
+echo CHTML::modeloListaDropDown($modelo, "iva", [4 => "4%", 10 => "10%", 21 => "21%"]);
 echo CHTML::modeloError($modelo, "iva");
 echo "<br><br>";
 
@@ -83,6 +79,14 @@ echo CHTML::modeloListaDropDown(
     [0 => "NO", 1 => "SI"]
 );
 echo CHTML::modeloError($modelo, "borrado");
+echo "<br><br>";
+
+// ----------------------------- 
+// CATEGORÍA 
+// ----------------------------- 
+echo CHTML::modeloLabel($modelo, "cod_categoria") . "<br>";
+echo CHTML::modeloListaDropDown($modelo, "cod_categoria", $categorias);
+echo CHTML::modeloError($modelo, "cod_categoria");
 echo "<br><br>";
 
 // -----------------------------
