@@ -12,6 +12,6 @@
 								"servidor"=>"localhost",
 								"usuario"=>"root",
 								"contra"=>"2daw",
-								"basedatos"=>"practica10") 			
+								"basedatos"=>"practica10") 	
 				  );
 
