@@ -7,7 +7,11 @@
 	 */
 	class Sistema
 	{
-		static private $_clasesBase=array("CAplicacion"=>"/base/CAplicacion.php",
+		static private $_clasesBase=array("CAcceso"=>"/acceso/CAcceso.php",
+											"CACLBase"=>"/acceso/CACLBase.php",
+											"CACLBD"=>"/acceso/CACLBD.php",
+											"CAplicacion"=>"/base/CAplicacion.php",
+											"CSesion"=>"/base/CSesion.php",
 											"CGeneral"=>"/general/CGeneral.php",
 											"CValidaciones"=>"/general/CValidaciones.php",
 											"CControlador"=>"/mvc/CControlador.php",

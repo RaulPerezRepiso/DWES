@@ -65,7 +65,7 @@ class CAplicacion
 			);
 		}
 
-		//Tendremos que añadir al constructor la sessino
+		// Tendremos que añadir al constructor la Sesión
 		$this->_sesion = new CSesion();
 	}
 

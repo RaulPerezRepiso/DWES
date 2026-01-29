@@ -7,8 +7,8 @@
 	 */
 	class Sistema
 	{
-		static private $_clasesBase=array("CAcceso"=>"/aceso/CAcceso.php",
-											"CACLBase"=>"/acceso/CALBase.php",
+		static private $_clasesBase=array("CAcceso"=>"/acceso/CAcceso.php",
+											"CACLBase"=>"/acceso/CACLBase.php",
 											"CACLBD"=>"/acceso/CACLBD.php",
 											"CAplicacion"=>"/base/CAplicacion.php",
 											"CSesion"=>"/base/CSesion.php",
