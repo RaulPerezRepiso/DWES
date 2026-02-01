@@ -43,12 +43,13 @@ class login extends CActiveRecord
     protected function validarPass()
     {
 
-        $valida = "c-" . $this->nick;
+        $acl = Sistema::app()->ACL();
 
-        if ($this->contrasenia != $valida) {
-            $this->setError("contrasenia", "La contraseña debe ser c-" . $this->nick);
+        if (!$acl->esValido($this->nick, $this->contrasenia)) {
+            $this->setError("contrasenia", "Usuario o contraseña incorrectos");
             return false;
         }
+
         return true;
     }
 }

@@ -18,8 +18,10 @@ class CACLBD extends CACLBase
         //Llama a la clase de Base de datos 
         $this->_BD = new CBaseDatos($servidor, $usuario, $contra, $bd);
 
-        if (!$this->_BD->error() !== 0)
+        if (!$this->_BD->error() !== 0) {
             $this->_hayConeccion = false;
+        }
+        $this->_hayConeccion = $this->_BD->error() === 0;
     }
 
     /**

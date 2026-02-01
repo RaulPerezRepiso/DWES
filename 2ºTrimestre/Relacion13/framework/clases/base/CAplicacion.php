@@ -122,7 +122,7 @@ class CAplicacion
 	 * crea automáticamente en el constructor	
 	 * @return CSesion|null
 	 */
-	public function acl(): ?CACLBD
+	public function ACL(): ?CACLBD
 	{
 		return $this->_ACL;
 	}

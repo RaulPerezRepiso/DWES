@@ -71,35 +71,21 @@ class registroControlador extends CControlador
 
         $login = new Login();
         $nombre = $login->getNombre();
+
         if (isset($_POST[$nombre])) {
             $login->setValores($_POST[$nombre]);
             if ($login->validar()) {
-                echo "Login correcto";
+                // El usuario ya está registrado en sesión por validarPass() 
+                Sistema::app()->irAPagina(["inicial"]);
                 return;
             }
         }
-
         $this->dibujaVista("login", ["modelo" => $login], "Login");
     }
 
     protected function accionLogout()
     {
-        //Asegurar que la sesión está iniciada 
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Eliminar los datos del usuario 
-        unset($_SESSION["nick"]);
-        unset($_SESSION["conectado"]);
-
-        // Si lo usas 
-        unset($_SESSION["usuario"]);
-
-        // Si lo usas 
-        // O borrar toda la sesión si quieres 
-        // Redirigir a la página inicial 
-
+        Sistema::app()->acceso()->destruirSesion();
         Sistema::app()->irAPagina(["inicial"]);
     }
 }
