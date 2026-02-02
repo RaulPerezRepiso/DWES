@@ -62,6 +62,7 @@ foreach ($productos as $p) {
     $this->dibujaVistaParcial("tarjeta", ["p" => $p]);
 }
 
+
 echo "</div>";
 
 // ===============================

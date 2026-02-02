@@ -85,7 +85,7 @@ class registroControlador extends CControlador
 
     protected function accionLogout()
     {
-        Sistema::app()->acceso()->destruirSesion();
+        Sistema::app()->sesion()->destruirSesion();
         Sistema::app()->irAPagina(["inicial"]);
     }
 }

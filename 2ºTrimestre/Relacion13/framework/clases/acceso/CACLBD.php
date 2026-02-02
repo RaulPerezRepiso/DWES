@@ -254,12 +254,15 @@ class CACLBD extends CACLBase
         $nick = mb_strtolower($nick);
         $nick = $this->_BD->getEnlace()->escape_string(mb_substr($nick, 0, 50));
 
-        $consulta = "SELECT cod_acl_usuario FROM acl_usuarios " .
-            "        WHERE nick = '$nick'";
+        $consulta = "SELECT cod_acl_usuario FROM acl_usuarios WHERE nick = '$nick'";
 
         $resul = $this->_BD->crearConsulta($consulta)->fila();
 
-        return (is_null($resul) ? false : intval($resul["cod_acl_usuario"]));
+        if ($resul === false) {
+            return false;
+        }
+
+        return intval($resul["cod_acl_usuario"]);
     }
 
     /**

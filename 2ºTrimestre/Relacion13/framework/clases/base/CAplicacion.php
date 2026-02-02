@@ -72,7 +72,7 @@ class CAplicacion
 		if (isset($config["sesion"]) && $config["sesion"]["controlAutomatico"] === true) {
 			$this->_sesion->crearSesion();
 		}
-		
+
 		// Tendremos que añadir al constructor Acceso
 		$this->_Acceso = new CAcceso();
 
@@ -110,7 +110,7 @@ class CAplicacion
 	/**
 	 * Método que devuelve un enlace al objeto de CAcceso que se
 	 * crea automáticamente en el constructor	
-	 * @return CSesion|null
+	 * @return CAcceso|null
 	 */
 	public function acceso(): ?CAcceso
 	{
@@ -120,7 +120,7 @@ class CAplicacion
 	/**
 	 * Método que devuelve un enlace al objeto de CALBD que se
 	 * crea automáticamente en el constructor	
-	 * @return CSesion|null
+	 * @return CACLBD|null
 	 */
 	public function ACL(): ?CACLBD
 	{

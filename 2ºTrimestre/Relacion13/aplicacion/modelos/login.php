@@ -47,9 +47,6 @@ class login extends CActiveRecord
 
         if (!$acl->esValido($this->nick, $this->contrasenia)) {
             $this->setError("contrasenia", "Usuario o contraseña incorrectos");
-            return false;
         }
-
-        return true;
     }
 }
