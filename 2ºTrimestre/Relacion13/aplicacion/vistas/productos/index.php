@@ -3,6 +3,8 @@
     //  TABLA (CGrid)
     // ===============================
 
+    $this->textoHead = CPager::requisitos();
+
     $tabla = new CGrid($cabecera, $fill, ["class" => "tabla1"]);
     echo $tabla->dibujate();
 

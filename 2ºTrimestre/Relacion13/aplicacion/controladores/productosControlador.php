@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 class productosControlador extends CControlador
 {
 	public array $menuizq = [];
@@ -152,7 +150,7 @@ class productosControlador extends CControlador
 			"TOTAL_REGISTROS" => $totalRegistros,
 			"PAGINA_ACTUAL" => $pag,
 			"REGISTROS_PAGINA" => $regPag,
-			"TAMANIOS_PAGINA" => [5 => "5", 10 => "10", 20 => "20"],
+			"TAMANIOS_PAGINA" => [5 => "5", 10 => "10", 20 => "20", 30 => "30", 40 => "40", 50 => "50"],
 			"MOSTRAR_TAMANIOS" => true,
 			"PAGINAS_MOSTRADAS" => 7,
 		];

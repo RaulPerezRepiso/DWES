@@ -1,4 +1,6 @@
 <?php
+$this->textoHead = CPager::requisitos();
+
 echo CHTML::dibujaEtiqueta("h1", [], "Listado de Productos");
 
 // ===============================
