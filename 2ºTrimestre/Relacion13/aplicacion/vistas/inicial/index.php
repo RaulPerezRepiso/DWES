@@ -4,6 +4,27 @@ $this->textoHead = CPager::requisitos();
 echo CHTML::dibujaEtiqueta("h1", [], "Listado de Productos");
 
 // ===============================
+// TARJETAS
+// ===============================
+echo "<div class='contenedor-tarjetas'>";
+
+foreach ($productos as $p) {
+    $this->dibujaVistaParcial("tarjeta", ["p" => $p]);
+}
+
+
+echo "</div>";
+
+// ===============================
+// PAGINADOR
+// ===============================
+$paginado = new CPager($paginador, []);
+echo $paginado->dibujate();
+
+echo CHTML::dibujaEtiqueta("br", []);
+
+
+// ===============================
 // FILTROS
 // ===============================
 echo CHTML::dibujaEtiqueta("form", [
@@ -55,20 +76,37 @@ echo CHTML::dibujaEtiqueta("p", [], CHTML::link("Descargar filtrados", $urlDesca
 $urlNuevo = Sistema::app()->generaURL(["productos", "nuevo"]);
 echo CHTML::dibujaEtiqueta("p", [], CHTML::link("Nuevo producto", $urlNuevo));
 
-// ===============================
-// TARJETAS
-// ===============================
-echo "<div class='contenedor-tarjetas'>";
 
-foreach ($productos as $p) {
-    $this->dibujaVistaParcial("tarjeta", ["p" => $p]);
-}
-
-
-echo "</div>";
-
-// ===============================
-// PAGINADOR
-// ===============================
-$paginado = new CPager($paginador, []);
-echo $paginado->dibujate();
+$cajaFiltrado = new CCaja(
+    "Criterios de filtrado (en caja)",
+    "",
+    array("style" => "width:80%;")
+);
+//dibuja el html correspondiente a apertura de caja
+echo $cajaFiltrado->dibujaApertura();
+//contenido de la caja
+echo CHTML::iniciarForm(
+    Sistema::app()->generaURL(
+        array("articulos", "index"),
+        array("reg_pag" => 5)
+    ),
+    "get",
+    array()
+);
+echo CHTML::campoLabel("Nombre: ", "nombre");
+echo CHTML::campoText(
+    "nombre",
+    (isset($fil["nombre"]) ? $fil["nombre"] : ""),
+    array("size" => 10)
+);
+echo CHTML::campoLabel(" Descripci&oacute;n: ", "desc");
+echo CHTML::campoText(
+    "desc",
+    (isset($fil["desc"]) ? $fil["desc"] : ""),
+    array("size" => 10)
+);
+echo CHTML::campoLabel(" Fabricante: ", "fab");
+echo CHTML::campoBotonSubmit("Filtrar");
+echo CHTML::finalizarForm();
+//cierro la caja
+echo $cajaFiltrado->dibujaFin();

@@ -105,15 +105,14 @@ class CACLBD extends CACLBase
         if (!$this->_hayConeccion)
             return false;
 
-        $consulta = "SELECT cod_acl_role from acl_usuarios
-                         where nombre = '{$nombre}'";
+        $consulta = "SELECT cod_acl_role FROM acl_roles WHERE nombre = '{$this->_BD->getEnlace()->real_escape_string($nombre)}'";
 
         $resul = $this->_BD->crearConsulta($consulta)->fila();
 
-        if (is_null($resul))
+        if ((!$resul))
             return false;
 
-        return true;
+        return (int)$resul["cod_acl_role"];
     }
 
     /**
@@ -363,16 +362,30 @@ class CACLBD extends CACLBase
     {
         if (!$this->_hayConeccion)
             return false;
+        if (!$this->existeCodUsuario($codUsuario)) return false;
 
-        $consulta = "SELECT perm1, perm2,perm3,perm4,perm5, perm6,perm7, perm8, perm9, perm10 from acl_usuarios
-                         where cod_acl_role = '{$codUsuario}'";
+        $sentencia = "SELECT * from acl_usuarios where cod_acl_usuario = {$codUsuario}";
+        $resul = $this->_BD->crearConsulta($sentencia);
 
-        $resul = $this->_BD->crearConsulta($consulta)->fila();
+        if (!$resul) return false;
 
-        if (is_null($resul))
-            return false;
+        $resul = $resul->fila();
+        $codRol = (int)$resul["cod_acl_role"];
 
-        return $resul;
+        $sentencia = "SELECT * FROM acl_roles where cod_acl_role= {$codRol}";
+        $resul = $this->_BD->crearConsulta($sentencia);
+
+        if (!$resul) return false;
+
+        $resul = $resul->fila();
+
+        $array = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $permisos[$i] = $resul["perm$i"] == 1;
+        }
+        return $permisos;
+
+        return $array;
     }
 
     /**

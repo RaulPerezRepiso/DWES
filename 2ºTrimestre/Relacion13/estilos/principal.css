@@ -366,3 +366,54 @@ article div {
 .tarjeta .acciones {
   margin-top: 10px;
 }
+
+/* ============== 
+(WIDGET CCaja)
+ ============== */
+
+.caja {
+  width: 100%;
+  margin-top: 1%;
+  border-collapse: collapse;
+  margin-bottom: 1.2rem; /* Integración con tu diseño */
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #d7dce5;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.caja .titulo {
+  background: #2f3a55;
+  color: #f9fafb;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #d7dce5;
+}
+
+.caja .titulo button {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  background: #f7f9fc;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.caja .titulo button:hover {
+  background: #dce9ff;
+  color: #1a3d6f;
+}
+
+.caja .cuerpo {
+  padding: 1rem;
+  background: #a4b6d1; 
+  border-top: 1px solid #d7dce5;
+  color: #1f2937;
+}

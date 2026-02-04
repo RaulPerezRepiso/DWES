@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-01-2026 a las 22:45:18
+-- Tiempo de generación: 04-02-2026 a las 19:03:00
 -- Versión del servidor: 12.1.2-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -71,14 +71,9 @@ CREATE TABLE `acl_usuarios` (
 --
 
 INSERT INTO `acl_usuarios` (`cod_acl_usuario`, `nick`, `nombre`, `contrasenia`, `cod_acl_role`, `borrado`) VALUES
-(1, 'comprador', 'Comprador', '$2y$10$nfQjJe6Q/vefQunvNqPzpO1mQ/UPBjLunJ7p7VCCbf1rzXdVBkKwS', 2, 0),
-(2, 'adminis', 'Administrativo', '$2y$10$5Vh4T2Kfq5M8QpvQnOfjeOxHSFvCzcFvfap6F0Vtsj2iPeoX/jnmW', 1, 0),
-(3, 'admin', 'ADMIN', '$2y$10$jjpBxr4D1HlAe6fgJQvfiehNj8IX0PVTODnrSIB8RI2plrBnDY.Dy', 3, 0),
 (4, 'raul', 'raul', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 3, 0),
-(5, 'carmen', 'carmen', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 1, 0),
-(6, 'pepe', 'pepe', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 1, 0),
-(7, 'marcos', 'ErBicho', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 1, 0),
-(8, 'mama', 'Caracola', '$2y$10$SofZFdDa5pY70zbZ6TI/IuSkugx90o8DrCRf/yFiDT/.ixd6t/qU.', 2, 0);
+(5, 'comp', 'comp', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 2, 0);
+(6, 'pepe', 'pepe', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 1, 0);
 
 -- --------------------------------------------------------
 

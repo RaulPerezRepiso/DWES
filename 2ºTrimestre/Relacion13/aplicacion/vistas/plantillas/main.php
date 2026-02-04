@@ -27,21 +27,23 @@
 					<h1>RELACIÓN 13</h1>
 				</a>
 			</div>
+			<!-- Método para pintar la barra de login -->
+			<div class="barraLogin"> <?php $acceso = Sistema::app()->acceso();
+										if ($acceso->hayUsuario()) {
+											// Usuario logeado 
+											echo CHTML::dibujaEtiqueta("span", [], "Conectado como: " . $acceso->getNombre(), true);
+											echo CHTML::link("Logout", ["registro", "logout"]);
+										} else {
 
+											// Usuario NO logeado 
+											echo CHTML::dibujaEtiqueta("span", [], "Usuario no conectado", true);
+											echo CHTML::link("Login", ["registro", "login"]);
+											echo " | ";
+											echo CHTML::link("Registrarse", ["registro", "pedirDatosRegistro"]);
+										} ?> </div>
 		</header><!-- #header -->
 
-		<!-- Método para pintar la barra de login -->
-		<div class="barraLogin">
-			<?php
-			echo CHTML::dibujaEtiqueta("span", [], "Usuario no conectado", true).PHP_EOL;
 
-			echo CHTML::link("Login", ["registro", "login"]);
-			echo " | ";
-			echo CHTML::link("Logout", "/registro/logout");
-			echo " | ";
-			echo CHTML::link("Registrarse", "/registro/pedirDatosRegistro");
-			?>
-		</div>
 
 
 		<!-- // MÉTODO PARA PINTAR barraUbi //  -->

@@ -3,79 +3,74 @@
 class CCaja extends CWidget
 {
 
+    private $_titulo;
+    private $_contenido;
+    private $_atributosHTML = array();
 
+    /**
+     * Constructor CCaja
+     * @param string $titulo Título de la caja
+     * @param string $contenido Contenido de la caja 
+     * @param array $atributosHTML Atributos HTML  
+     */
+    public function __construct($titulo, $contenido = "", $atributosHTML = array())
+    {
+        $this->_titulo = $titulo;
+        $this->_contenido = $contenido;
 
+        // Mantener los atributos y añadir clase por defecto
+        $this->_atributosHTML = $atributosHTML;
+        if (!isset($this->_atributosHTML["class"])) {
+            $this->_atributosHTML["class"] = "caja";
+        }
+    }
+
+    /**
+     * Dibuja la caja completa
+     * @return string HTML de 
+     */
     public function dibujate(): string
     {
         return $this->dibujaApertura() . $this->dibujaFin();
     }
 
+    /**
+     * Dibuja la apertura de la caja 
+     * @return string HTML de la apertura 
+     */
     public function dibujaApertura(): string
     {
+
         ob_start();
 
-        echo CHTML::dibujaEtiqueta(
-            "div",
-            $this->_atributosHTML,
-            "",
-            false
-        );
-        echo CHTML::dibujaEtiqueta(
-            "table",
-            $this->_atributosHTML,
-            "",
-            false
-        );
+        // Dibuja la Tabla 
+        echo CHTML::dibujaEtiqueta("table", $this->_atributosHTML, "", false);
+        echo "<tr>\n";
+        echo CHTML::dibujaEtiqueta("td", array("class" => "titulo"), $this->_titulo, false);
+        echo "<button id='mostrar'>Ocultar/mostrar</button>";
+        echo "</tr>\n";
+
 ?>
-        <tr>
-            <?php
-            foreach ($this->_columnas as $columna) {
-                $eti = $etiqueta = "th";
-                if ($columna["ANCHO"] != "")
-                    $etiqueta .= " width='" . $columna["ANCHO"] . "'";
+        <!-- Script que muestra o no la caja dependiendo de si le damos -->
+        <script defer>
+            document.getElementById("mostrar").onclick = function() {
 
-                if ($columna["VISIBLE"])
-                    echo "<$etiqueta>" . $columna["ETIQUETA"] . "</$eti>";
+                let estilos = window.getComputedStyle(document.getElementsByClassName("cuerpo")[0]);
+
+                estilos.display == "none" ? document.getElementsByClassName("cuerpo")[0].style.display = "block" :
+                    document.getElementsByClassName("cuerpo")[0].style.display = "none"
             }
-
-            ?>
-        </tr>
+        </script>
 <?php
-        $par = false;
 
-        foreach ($this->_filas as $fila) {
-            if ($par)
-                echo "<tr class='par'>\n";
-            else
-                echo "<tr class='impar'>\n";
-            $par = !$par;
+        // Cuerpo de la caja
+        echo "<tr>\n";
+        echo CHTML::dibujaEtiqueta("td", array("class" => "cuerpo"), "", false);
 
-            foreach ($this->_columnas as $columna) {
-                $campo = "";
-                if (isset($fila[$columna["CAMPO"]]))
-                    $campo = $fila[$columna["CAMPO"]];
-                $eti = $etiqueta = "td";
-
-                switch ($columna["ALINEA"]) {
-                    case 'izq':;
-                        break;
-
-                    case 'der':
-                        $etiqueta .= " align='right'";
-                        break;
-
-                    case 'cen':
-                        $etiqueta .= " align='center'";
-                        break;
-                }
-                if ($columna["VISIBLE"])
-                    echo "\t<$etiqueta>" . $campo . "</$eti>\n";
-            }
-            echo "</tr>\n";
+        // Mostrar si existe contenido o no
+        if (!empty($this->_contenido)) {
+            echo $this->_contenido;
         }
-
-        echo CHTML::dibujaEtiquetaCierre("table");
-        echo CHTML::dibujaEtiquetaCierre("div");
 
         $escrito = ob_get_contents();
         ob_end_clean();
@@ -83,8 +78,23 @@ class CCaja extends CWidget
         return $escrito;
     }
 
+    /**
+     * Cierre de la caja
+     * @return string HTML 
+     */
     public function dibujaFin(): string
     {
-        return "";
+        ob_start();
+
+        echo CHTML::dibujaEtiquetaCierre("td");
+
+        echo "</tr>\n";
+
+        echo CHTML::dibujaEtiquetaCierre("table");
+
+        $escrito = ob_get_contents();
+        ob_end_clean();
+
+        return $escrito;
     }
 }

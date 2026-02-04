@@ -19,6 +19,7 @@
 											"CHTML"=>"/forms/CHTML.php",
 											"CBaseDatos"=>"/bd/CBaseDatos.php",
 											"CCommand"=>"/bd/CCommand.php",
+											"CCaja"=>"/widget/CCaja.php",
 											"CWidget"=>"/widget/CWidget.php",
 											"CGrid"=>"/widget/CGrid.php",
 											"CPager"=>"/widget/CPager.php"

@@ -76,7 +76,8 @@ class registroControlador extends CControlador
             $login->setValores($_POST[$nombre]);
             if ($login->validar()) {
                 // El usuario ya está registrado en sesión por validarPass() 
-                Sistema::app()->irAPagina(["inicial"]);
+                $login->autenticar();
+                // Sistema::app()->irAPagina(["inicial"]);
                 return;
             }
         }

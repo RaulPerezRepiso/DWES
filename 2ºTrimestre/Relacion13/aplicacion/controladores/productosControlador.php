@@ -6,6 +6,13 @@ class productosControlador extends CControlador
 
 	public function accionIndex()
 	{
+
+		Sistema::app()->acceso()->hayUsuario() ? null : Sistema::app()->irAPagina(["registro", "login"]);
+		if (!Sistema::app()->acceso()->puedePermiso(9)) {
+			Sistema::app()->paginaError(001, "No tienes permisos para entrar en esta pagina");
+			return;
+		}
+
 		$this->barraUbi = [
 			[
 				"texto" => "Inicio",
@@ -170,6 +177,12 @@ class productosControlador extends CControlador
 	// --------------------------------------------------------- 
 	public function accionModificar()
 	{
+		Sistema::app()->acceso()->hayUsuario() ? null : Sistema::app()->irAPagina(["registro", "login"]);
+		if (!Sistema::app()->acceso()->puedePermiso(10)) {
+			Sistema::app()->paginaError(001, "No tienes permisos para modificar los productos");
+			return;
+		}
+
 		$this->barraUbi = [
 			["texto" => "Inicio", "enlace" => ["inicial"]],
 			["texto" => "Productos", "enlace" => ["productos"]],
@@ -244,6 +257,11 @@ class productosControlador extends CControlador
 	// --------------------------------------------------------- 
 	public function accionEliminar()
 	{
+		Sistema::app()->acceso()->hayUsuario() ? null : Sistema::app()->irAPagina(["registro", "login"]);
+		if (!Sistema::app()->acceso()->puedePermiso(10)) {
+			Sistema::app()->paginaError(001, "No tienes permisos para eliminar un producto");
+			return;
+		}
 		$this->barraUbi = [
 			[
 				"texto" => "Inicio",
@@ -314,6 +332,12 @@ class productosControlador extends CControlador
 	// --------------------------------------------------------- 
 	public function accionVer()
 	{
+
+		Sistema::app()->acceso()->hayUsuario() ? null : Sistema::app()->irAPagina(["registro", "login"]);
+		if (!Sistema::app()->acceso()->puedePermiso(10)) {
+			Sistema::app()->paginaError(001, "No tienes permisos para ver los productos");
+			return;
+		}
 		$this->barraUbi = [
 			[
 				"texto" => "Inicio",
@@ -399,6 +423,11 @@ class productosControlador extends CControlador
 	// --------------------------------------------------------- 
 	public function accionNuevo()
 	{
+		Sistema::app()->acceso()->hayUsuario() ? null : Sistema::app()->irAPagina(["registro", "login"]);
+		if (!Sistema::app()->acceso()->puedePermiso(10)) {
+			Sistema::app()->paginaError(001, "No tienes permisos para crear un producto");
+			return;
+		}
 		$this->barraUbi = [
 			[
 				"texto" => "Inicio",
@@ -472,6 +501,7 @@ class productosControlador extends CControlador
 	// --------------------------------------------------------- 
 	public function accionDescargar()
 	{
+
 		$filas = $_SESSION["productos_filtrados"] ?? [];
 
 		header("Content-Type: text/plain");

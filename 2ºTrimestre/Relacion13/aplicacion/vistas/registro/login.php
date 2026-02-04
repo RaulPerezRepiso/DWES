@@ -1,5 +1,5 @@
 <?php
-echo CHTML::iniciarForm("registro", "Login");
+echo CHTML::iniciarForm(["registro", "Login"]);
 
 echo CHTML::modeloLabel($modelo, "nick") . PHP_EOL;
 echo CHTML::modeloText($modelo, "nick");
