@@ -14,7 +14,7 @@ class productosControlador extends CControlador
 			[
 				"texto" => "Productos",
 				"enlace" => ["productos"]
-			],
+			]
 		];
 
 		$this->menuizq = [
@@ -24,7 +24,11 @@ class productosControlador extends CControlador
 			],
 			[
 				"texto" => "Registro",
-				"enlace" => ["registro", "pedirDatosRegistro"]
+				"enlace" => ["registro", "pedirRegistroDatos"]
+			],
+			[
+				"texto" => "Generar Pdf",
+				"enlace" => ["productos", "informe"]
 			]
 		];
 
@@ -173,7 +177,7 @@ class productosControlador extends CControlador
 
 		$this->menuizq = [
 			["texto" => "Inicio", "enlace" => ["inicial"]],
-			["texto" => "Registro", "enlace" => ["registro", "pedirDatosRegistro"]],
+			["texto" => "Registro", "enlace" => ["registro", "pedirRegistroDatos"]],
 			["texto" => "Productos", "enlace" => ["productos", "index"]],
 		];
 
@@ -258,7 +262,7 @@ class productosControlador extends CControlador
 			],
 			[
 				"texto" => "Registro",
-				"enlace" => ["registro", "pedirDatosRegistro"]
+				"enlace" => ["registro", "pedirRegistroDatos"]
 			],
 			[
 				"texto" => "Productos",
@@ -328,7 +332,7 @@ class productosControlador extends CControlador
 			],
 			[
 				"texto" => "Registro",
-				"enlace" => ["registro", "pedirDatosRegistro"]
+				"enlace" => ["registro", "pedirRegistroDatos"]
 			],
 			[
 				"texto" => "Productos",
@@ -413,7 +417,7 @@ class productosControlador extends CControlador
 			],
 			[
 				"texto" => "Registro",
-				"enlace" => ["registro", "pedirDatosRegistro"]
+				"enlace" => ["registro", "pedirRegistroDatos"]
 			],
 			[
 				"texto" => "Productos",
@@ -488,5 +492,54 @@ class productosControlador extends CControlador
 		}
 
 		return;
+	}
+	public function accionInforme($modo = "ver")
+	{
+		require_once __DIR__ . '/../../scripts/TCPDF/tcpdf.php';
+
+		// 1. Obtener productos
+		$prod = new productos();
+		$productos = $prod->buscarTodos();
+
+		// 2. Crear PDF
+		$pdf = new pdf();
+		$pdf->SetMargins(15, 35, 15);
+		$pdf->AddPage();
+
+		// 3. Construir tabla
+		$html = '
+        <h2 style="text-align:center;">Listado de Productos</h2>
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr style="background-color:#f0f0f0;">
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Fabricante</th>
+                    <th>Precio Venta</th>
+                </tr>
+            </thead>
+            <tbody>
+    ';
+
+		foreach ($productos as $p) {
+			$html .= "
+            <tr>
+                <td>{$p['cod_producto']}</td>
+                <td>{$p['nombre']}</td>
+                <td>{$p['fabricante']}</td>
+                <td>{$p['precio_venta']}</td>
+            </tr>
+        ";
+		}
+
+		$html .= '</tbody></table>';
+
+		$pdf->writeHTML($html);
+
+
+		// 4. Decidir según la URL
+		$pdf->Output('informe_productos.pdf', 'D'); // Descargar
+
+		exit;
 	}
 }

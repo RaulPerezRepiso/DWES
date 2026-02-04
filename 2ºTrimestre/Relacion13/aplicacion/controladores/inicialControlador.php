@@ -9,12 +9,13 @@ class inicialControlador extends CControlador
 	{
 		$this->barraUbi = [
 			["texto" => "Inicio", "enlace" => ["inicial"]],
-			["texto" => "Productos", "enlace" => ["productos"]],
 		];
 
 		$this->menuizq = [
-			["texto" => "Inicio", "enlace" => ["inicial"]],
+			["texto" => "Prácticas 1",	"enlace" => ["practicas1"]],
+			["texto" => "Prácticas 2",	"enlace" => ["practicas2"]],
 			["texto" => "Registro", "enlace" => ["registro", "pedirDatosRegistro"]],
+			["texto" => "Productos", "enlace" => ["productos"]],
 		];
 
 		// -----------------------------

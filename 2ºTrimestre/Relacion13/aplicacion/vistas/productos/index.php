@@ -66,12 +66,20 @@
         "categoria" => $fCategoria,
         "borrado" => $fBorrado
     ]);
+    $urlDescargarPDF = Sistema::app()->generaURL(["productos", "informe", "descargar"]);
 
     echo CHTML::dibujaEtiqueta(
         "p",
         [],
         CHTML::link("Descargar filtrados", $urlDescargar)
     );
+
+    echo CHTML::dibujaEtiqueta(
+        "p",
+        [],
+        CHTML::link("Descargar PDF", $urlDescargarPDF)
+    );
+
 
     $urlNuevo = Sistema::app()->generaURL(["productos", "nuevo"]);
     echo CHTML::dibujaEtiqueta("p", [], CHTML::link("Nuevo producto", $urlNuevo));

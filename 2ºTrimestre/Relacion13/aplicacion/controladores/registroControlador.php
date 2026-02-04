@@ -6,7 +6,7 @@ class registroControlador extends CControlador
     public array $menuizq = [];
     public array $barraUbi = [];
 
-    public function accionPedirDatosRegistro()
+    public function accionPedirRegistroDatos()
     {
 
         $this->barraUbi = [
