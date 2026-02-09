@@ -24,11 +24,14 @@ class partidaControlador extends CControlador
 
     public function accionIndex()
     {
+
         $this->menuizq = [
             ["texto" => "Inicio", "enlace" => ["partida"]],
         ];
 
-        $this->dibujaVista("index", [], "Listado de Partidas");
+        // $this->dibujaVista("index", [], "Listado de Partidas");
+
+        $this->accionVer();
     }
 
     // LOGIN
@@ -46,7 +49,8 @@ class partidaControlador extends CControlador
             "permisos" => [2, 4, 6]
         ];
 
-        $this->dibujaVista("login", [], "Login correcto");
+        // $this->dibujaVista("login", [], "Login correcto");
+        Sistema::app()->irAPagina("index", [], "Partidas");
     }
 
     // LOGOUT
@@ -66,7 +70,8 @@ class partidaControlador extends CControlador
 
         unset($_SESSION["usuario"]);
 
-        $this->dibujaVista("logout", [], "Logout correcto");
+        // $this->dibujaVista("logout", [], "Logout correcto");
+        Sistema::app()->irAPagina("index", [], "Partidas");
     }
 
     // INICIALIZAR PARTIDAS
@@ -118,5 +123,52 @@ class partidaControlador extends CControlador
                 $this->N_PartidasHoy++;
             }
         }
+    }
+
+    public function accionVer()
+    {
+        // Obtener partidas desde sesión
+        $partidas = $this->partidas;
+
+        // Sacar crupieres distintos
+        $crupieres = [];
+        foreach ($partidas as $p) {
+            $crupieres[$p->crupier] = $p->crupier;
+        }
+
+        // Crupier seleccionado
+        $crupierSel = $_POST["crupier"] ?? "";
+
+        // Filtrar si se ha elegido uno
+        $partidasFiltradas = $partidas;
+        $partidasFiltradas = array_filter($partidas, function ($p) use ($crupierSel) {
+            return $p->crupier === $crupierSel;
+        });
+
+        // Mostrar vista
+        $this->dibujaVista("ver", [
+            "crupieres" => $crupieres,
+            "crupierSel" => $crupierSel,
+            "partidas" => $partidasFiltradas
+        ], "Ver partidas");
+    }
+
+    //Acciçon que muestra la vista de nueva
+    public function accionNueva()
+    {
+        $this->menuizq = [
+            ["texto" => "Inicio", "enlace" => ["partida"]],
+        ];
+
+        $this->dibujaVista("nueva", [], "Nueva Partida");
+    }
+
+    public function accionDescarga()
+    {
+        $this->menuizq = [
+            ["texto" => "Inicio", "enlace" => ["partida"]],
+        ];
+
+        $this->dibujaVista("descarga", [], "Descargar");
     }
 }

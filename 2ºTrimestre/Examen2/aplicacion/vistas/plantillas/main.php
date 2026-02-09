@@ -28,54 +28,30 @@
 				</a>
 			</div>
 
-			<!-- BARRA VERDE DEL EXAMEN          -->
-			<?php
-
-			// Usuario validado o no
-			$usuario = isset($_SESSION["usuario"])
-				? $_SESSION["usuario"]["nick"]
-				: "Usuario no validado";
-
-			// Enlaces Login / Logout
-			$enlaceLogin = CHTML::link("Login", ["partida", "login"]);
-			$enlaceLogout = CHTML::link("Logout", ["partida", "logout"]);
-
-			$enlaces = isset($_SESSION["usuario"]) ? $enlaceLogout : $enlaceLogin;
-
-			// Mensaje flash
-			$mensaje = "";
-			if (isset($_SESSION["mensaje"])) {
-				$mensaje = " | Mensaje: " . $_SESSION["mensaje"];
-				unset($_SESSION["mensaje"]);
-			}
-
-			echo CHTML::dibujaEtiqueta(
-				"div",
-				["class" => "barraLogin"],
-				"Partidas: {$this->N_Partidas} | " .
-					"Hoy: {$this->N_PartidasHoy} | " .
-					"Usuario: {$usuario} | " .
-					$enlaces .
-					$mensaje
-			);
-
-			?>
-			<!-- FIN BARRA VERDE                 -->
-
 		</header><!-- #header -->
 
 		<div class="contenido">
 			<aside>
 				<ul>
 					<?php
+
 					if (isset($this->menuizq)) {
 						foreach ($this->menuizq as $opcion) {
-							echo CHTML::dibujaEtiqueta("li", [], "", false);
-							echo CHTML::link($opcion["texto"], $opcion["enlace"]);
+							echo CHTML::dibujaEtiqueta(
+								"li",
+								array(),
+								"",
+								false
+							);
+							echo CHTML::link(
+								$opcion["texto"],
+								$opcion["enlace"]
+							);
 							echo CHTML::dibujaEtiquetaCierre("li");
 							echo CHTML::dibujaEtiqueta("br") . "\r\n";
 						}
 					}
+
 					?>
 				</ul>
 			</aside>
@@ -85,15 +61,8 @@
 			</article><!-- #content -->
 
 		</div>
-
 		<footer>
-			<h2>
-				<span>Copyright:</span>
-				<?php echo Sistema::app()->autor ?>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span>Dirección:</span>
-				<?php echo Sistema::app()->direccion ?>
-			</h2>
+			<h2><span>Copyright:</span> <?php echo Sistema::app()->autor ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dirección:</span><?php echo Sistema::app()->direccion ?></h2>
 		</footer><!-- #footer -->
 
 	</div><!-- #wrapper -->
