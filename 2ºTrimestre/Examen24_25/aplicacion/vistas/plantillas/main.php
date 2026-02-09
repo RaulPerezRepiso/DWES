@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title><?php echo $titulo; ?></title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/estilos/principal.css" />
+
+	<link rel="icon" type="image/png" href="/imagenes/favicon.png" />
+	<?php
+	if (isset($this->textoHead))
+		echo $this->textoHead;
+	?>
+</head>
+
+<body>
+	<div id="todo">
+		<header>
+			<div class="logo">
+				<a href="/index.php"><img src="/imagenes/logo.png" width="50px" height="50px" /></a>
+			</div>
+			<div class="titulo">
+				<a href="/index.php">
+					<h1>PROYECTO FRAMEWORK PEDROSA</h1>
+				</a>
+			</div>
+
+			<!-- BARRA VERDE DEL EXAMEN          -->
+			<?php
+
+			// Usuario validado o no
+			$usuario = isset($_SESSION["usuario"])
+				? $_SESSION["usuario"]["nick"]
+				: "Usuario no validado";
+
+			// Enlaces Login / Logout
+			$enlaceLogin = CHTML::link("Login", ["partida", "login"]);
+			$enlaceLogout = CHTML::link("Logout", ["partida", "logout"]);
+
+			$enlaces = isset($_SESSION["usuario"]) ? $enlaceLogout : $enlaceLogin;
+
+			// Mensaje flash
+			$mensaje = "";
+			if (isset($_SESSION["mensaje"])) {
+				$mensaje = " | Mensaje: " . $_SESSION["mensaje"];
+				unset($_SESSION["mensaje"]);
+			}
+
+			echo CHTML::dibujaEtiqueta(
+				"div",
+				[
+					"style" =>
+					"background-color:green;
+                     color:yellow;
+                     padding:10px;
+                     font-weight:bold;
+                     text-align:center;
+                     margin-top:10px;"
+				],
+				"Partidas: " . $this->N_Partidas .
+					" | Partidas hoy: " . $this->N_PartidasHoy .
+					" | Usuario: " . $usuario .
+					" | " . $enlaces .
+					$mensaje
+			);
+
+			?>
+			<!-- FIN BARRA VERDE                 -->
+
+		</header><!-- #header -->
+
+		<div class="contenido">
+			<aside>
+				<ul>
+					<?php
+					if (isset($this->menuizq)) {
+						foreach ($this->menuizq as $opcion) {
+							echo CHTML::dibujaEtiqueta("li", [], "", false);
+							echo CHTML::link($opcion["texto"], $opcion["enlace"]);
+							echo CHTML::dibujaEtiquetaCierre("li");
+							echo CHTML::dibujaEtiqueta("br") . "\r\n";
+						}
+					}
+					?>
+				</ul>
+			</aside>
+
+			<article>
+				<?php echo $contenido; ?>
+			</article><!-- #content -->
+
+		</div>
+
+		<footer>
+			<h2>
+				<span>Copyright:</span>
+				<?php echo Sistema::app()->autor ?>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>Dirección:</span>
+				<?php echo Sistema::app()->direccion ?>
+			</h2>
+		</footer><!-- #footer -->
+
+	</div><!-- #wrapper -->
+</body>
+
+</html>
