@@ -8,6 +8,7 @@ class listas
             5 => ["nombre" => "española normal", "min_juga" => 2, "max_juga" => 4],
             6 => ["nombre" => "pocker", "min_juga" => 4, "max_juga" => 4],
             7 => ["nombre" => "figuras", "min_juga" => 4, "max_juga" => 8],
+            8 => ["nombre" => "invent", "min_juga" => 3, "max_juga" => 7],
         ];
 
         //Comprobamos si hay código
