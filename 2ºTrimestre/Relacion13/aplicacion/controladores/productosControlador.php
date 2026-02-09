@@ -7,7 +7,10 @@ class productosControlador extends CControlador
 	public function accionIndex()
 	{
 
-		Sistema::app()->acceso()->hayUsuario() ? null : Sistema::app()->irAPagina(["registro", "login"]);
+		if (!Sistema::app()->acceso()->hayUsuario()) {
+			Sistema::app()->irAPagina(["registro", "login"]);
+			return;
+		}
 		if (!Sistema::app()->acceso()->puedePermiso(9)) {
 			Sistema::app()->paginaError(001, "No tienes permisos para entrar en esta pagina");
 			return;
