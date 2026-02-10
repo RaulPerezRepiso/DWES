@@ -43,6 +43,7 @@ class login extends CActiveRecord
     protected function validarPass()
     {
 
+        
         $ACL = Sistema::app()->ACL();
 
         if (!$ACL->esValido($this->nick, $this->contrasenia)) {

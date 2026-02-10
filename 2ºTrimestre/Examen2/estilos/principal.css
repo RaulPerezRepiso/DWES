@@ -371,3 +371,15 @@
 		max-width: 100%;
 	}
 }
+
+
+.barraLogin {
+	background-color: green;
+	color: white;
+	padding: 8px 15px;
+	font-size: 14px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 15px;
+}

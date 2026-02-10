@@ -61,6 +61,35 @@
 			</article><!-- #content -->
 
 		</div>
+		<!-- BARRA VERDE DEL EXAMEN          -->
+		<?php
+
+		// Usuario validado o no
+		$usuario = isset($_SESSION["usuario"])
+			? $_SESSION["usuario"]["nick"]
+			: "sin usuario";
+
+		// Enlaces Login / Logout
+		$enlaceLogin = CHTML::link("Login", ["pueblos", "conectar"]);
+		$enlaceLogout = CHTML::link("Logout", ["pueblos", "desconectar"]);
+
+		// Mensaje flash
+		$mensaje = "";
+		if (isset($_SESSION["mensaje"])) {
+			$mensaje = " | Mensaje: " . $_SESSION["mensaje"];
+			unset($_SESSION["mensaje"]);
+		}
+
+		echo CHTML::dibujaEtiqueta(
+			"div",
+			["class" => "barraLogin"],
+			"Pueblos: {$this->N_Pueblos} | " .
+				"Pueblos de la Unesco: {$this->N_PueblosUnesco} | " .
+				"Usuario: {$usuario} | " .
+				$enlaceLogin . $enlaceLogout
+		);
+
+		?>
 		<footer>
 			<h2><span>Copyright:</span> <?php echo Sistema::app()->autor ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dirección:</span><?php echo Sistema::app()->direccion ?></h2>
 		</footer><!-- #footer -->
